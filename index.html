@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAORI.STUDIO — Diseñador Gráfico</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #777777;
+  --font:   'Poppins', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:var(--font); overflow-x:hidden; cursor:none; }
+a { text-decoration:none; color:inherit; }
+
+::-webkit-scrollbar { width:2px; }
+::-webkit-scrollbar-track { background:var(--black); }
+::-webkit-scrollbar-thumb { background:var(--white); }
+
+#cur  { position:fixed; width:8px; height:8px; background:var(--white); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+#curR { position:fixed; width:32px; height:32px; border:1px solid rgba(255,255,255,.25); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes blink  { 0%,100%{opacity:1} 50%{opacity:0} }
+
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.016;
+}
+
+/* HEADER */
+header {
+  position:fixed; top:0; width:100%; height:70px; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+  background:rgba(8,8,8,.88); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.h-logo { position:absolute; left:50%; transform:translateX(-50%); }
+.logo { height:44px; }
+.menu-btn { width:28px; height:18px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; }
+.menu-btn span { height:1.5px; background:var(--white); display:block; }
+
+/* SIDE MENU */
+.side-menu {
+  position:fixed; top:0; right:-100%; width:100%; height:100vh;
+  background:var(--black); display:flex; flex-direction:column;
+  justify-content:center; align-items:flex-start;
+  padding:0 5rem; gap:2rem;
+  transition:.55s cubic-bezier(.77,0,.175,1); z-index:499;
+  border-left:1px solid var(--border);
+}
+.side-menu a {
+  font-size:clamp(2.2rem,5vw,4rem); font-weight:800;
+  letter-spacing:-.02em; text-transform:uppercase;
+  color:rgba(255,255,255,.18); transition:color .3s;
+}
+.side-menu a:hover { color:var(--white); }
+.side-menu.active { right:0; }
+.side-menu.active a { animation:fadeUp .5s ease both; }
+.side-menu.active a:nth-child(1){animation-delay:.08s}
+.side-menu.active a:nth-child(2){animation-delay:.16s}
+.side-menu.active a:nth-child(3){animation-delay:.24s}
+.side-menu.active a:nth-child(4){animation-delay:.32s}
+.side-menu.active a:nth-child(5){animation-delay:.40s}
+
+/* TICKER */
+.ticker { margin-top:70px; background:var(--white); overflow:hidden; padding:.48rem 0; white-space:nowrap; }
+.t-track { display:inline-flex; animation:ticker 28s linear infinite; }
+.t-track span { font-size:.6rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--black); padding:0 2rem; }
+.t-track span.sep { color:rgba(0,0,0,.25); padding:0 .3rem; }
+
+/* SECCIÓN BASE */
+.sec { padding:7rem 5rem; }
+.s-label {
+  font-size:.55rem; font-weight:700; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.9rem; margin-bottom:.9rem;
+}
+.s-label::before { content:''; display:block; width:1.6rem; height:1px; background:var(--dim); }
+.s-title {
+  font-size:clamp(2.4rem,5vw,4.5rem); font-weight:800;
+  letter-spacing:-.03em; text-transform:uppercase; line-height:.92;
+}
+.s-sub { font-size:.88rem; font-weight:300; color:var(--dim); line-height:2; max-width:480px; margin-top:1rem; }
+.s-head { margin-bottom:4rem; }
+
+/* HERO */
+#inicio { min-height:100vh; display:grid; grid-template-columns:1.15fr .85fr; position:relative; overflow:hidden; }
+.hero-left { display:flex; flex-direction:column; justify-content:center; padding:9rem 5rem 6rem; z-index:2; }
+.hero-eyebrow {
+  font-size:.6rem; font-weight:600; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--dim); margin-bottom:2rem; display:flex; align-items:center; gap:.9rem;
+  opacity:0; animation:fadeUp .7s ease .3s forwards;
+}
+.hero-eyebrow::before { content:''; width:2rem; height:1px; background:var(--dim); }
+h1.name {
+  font-size:clamp(4.5rem,10vw,9.5rem); font-weight:900;
+  line-height:.88; letter-spacing:-.04em; text-transform:uppercase;
+  opacity:0; animation:fadeUp .9s ease .5s forwards;
+}
+.hero-tagline {
+  font-size:clamp(1rem,2vw,1.5rem); font-weight:300; font-style:italic;
+  color:var(--dim); margin-top:1.4rem;
+  opacity:0; animation:fadeUp .9s ease .65s forwards;
+}
+.hero-bio {
+  font-size:.88rem; font-weight:300; line-height:2.1; color:var(--dim);
+  max-width:400px; margin-top:1.2rem;
+  opacity:0; animation:fadeUp .9s ease .8s forwards;
+}
+.hero-btns {
+  display:flex; gap:1.2rem; align-items:center; margin-top:2.8rem;
+  opacity:0; animation:fadeUp .9s ease 1s forwards;
+}
+.btn-fill {
+  font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--black); background:var(--white); padding:1rem 2.4rem; transition:opacity .3s;
+}
+.btn-fill:hover { opacity:.82; }
+.btn-line {
+  font-size:.65rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--dim); border:1px solid var(--border); padding:1rem 2rem; transition:all .3s;
+}
+.btn-line:hover { color:var(--white); border-color:rgba(255,255,255,.3); }
+
+.hero-right { display:flex; align-items:center; justify-content:center; padding:8rem 3rem 6rem; position:relative; }
+.photo-frame { width:100%; max-width:350px; aspect-ratio:3/4; overflow:hidden; border:1px solid var(--border); background:var(--card); position:relative; }
+.hero-img { width:100%; height:100%; object-fit:cover; display:block; }
+.dec-box { position:absolute; bottom:-1rem; right:-1rem; width:50%; height:35%; border:1px solid var(--border); z-index:-1; }
+
+/* PORTAFOLIO */
+#portafolio { background:var(--black); }
+.carousel-outer { overflow:hidden; }
+.carousel-track {
+  display:flex; gap:1px;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  will-change:transform; background:var(--border);
+}
+.port-item { flex:0 0 calc(50% - .5px); position:relative; overflow:hidden; background:var(--card); aspect-ratio:4/3; cursor:pointer; }
+.port-item:first-child { flex:0 0 calc(58.333% - .5px); aspect-ratio:16/9; }
+.pp { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6rem; }
+.pp img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s ease; }
+.port-item:hover .pp img { transform:scale(1.05); }
+.pp-ico { font-size:1.8rem; opacity:.09; }
+.pp-lbl { font-size:.55rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); opacity:.35; }
+.port-ov {
+  position:absolute; inset:0; background:rgba(8,8,8,.93);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:1.8rem;
+  transform:translateY(100%); transition:transform .38s ease;
+}
+.port-item:hover .port-ov { transform:translateY(0); }
+.ov-cat { font-size:.52rem; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:.4rem; }
+.ov-title { font-size:1rem; font-weight:800; letter-spacing:.02em; text-transform:uppercase; }
+.ov-link { margin-top:.9rem; font-size:.6rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--white); }
+
+.carousel-controls { display:flex; align-items:center; gap:1rem; margin-top:1.8rem; }
+.car-btn { width:40px; height:40px; border:1px solid var(--border); background:transparent; color:var(--white); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s, background .3s; }
+.car-btn:hover { border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.05); }
+.car-dots { display:flex; gap:6px; align-items:center; }
+.car-dot { width:5px; height:5px; border-radius:50%; background:var(--dim); transition:all .3s; cursor:pointer; }
+.car-dot.active { width:20px; border-radius:2px; background:var(--white); }
+.car-counter { margin-left:auto; font-size:.56rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); }
+
+/* SERVICIOS */
+#servicios { background:var(--dark); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.services-grid { display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--border); }
+.svc-item { padding:2.2rem 0; border-bottom:1px solid var(--border); cursor:pointer; }
+.svc-item:nth-child(odd)  { border-right:1px solid var(--border); padding-right:3rem; }
+.svc-item:nth-child(even) { padding-left:3rem; }
+.svc-head {
+  font-size:1rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  display:flex; justify-content:space-between; align-items:center; transition:color .3s;
+}
+.svc-head::after { content:'+'; font-size:1.2rem; transition:transform .35s; color:var(--dim); }
+.svc-item.active .svc-head { color:var(--white); }
+.svc-item.active .svc-head::after { transform:rotate(45deg); color:var(--white); }
+.svc-body { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+.svc-body p { font-size:.88rem; color:var(--dim); margin-top:1rem; line-height:1.95; max-width:500px; }
+
+/* PROCESO */
+#procesos { background:var(--black); border-top:1px solid var(--border); }
+.process-grid { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-top:3rem; }
+.p-item { padding:3rem 2rem; position:relative; display:flex; align-items:center; transition:background .3s; }
+.p-item:hover { background:var(--card); }
+.p-item:not(:last-child)::after { content:''; position:absolute; top:25%; right:0; width:1px; height:50%; background:var(--border); }
+.p-row { display:flex; align-items:center; gap:1rem; }
+.p-num { font-size:1.8rem; font-weight:900; letter-spacing:.08em; color:rgba(255,255,255,.15); }
+.p-name { font-size:1.1rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+
+/* CONTACTO */
+#contacto { background:var(--dark); border-top:1px solid var(--border); }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.cinfo { display:flex; flex-direction:column; gap:1rem; margin-top:2.5rem; }
+.ci { display:flex; gap:1rem; align-items:flex-start; padding:1.3rem; border:1px solid var(--border); transition:border-color .3s, background .3s; }
+.ci:hover { border-color:rgba(255,255,255,.22); background:rgba(255,255,255,.03); }
+.ci-ico { width:36px; height:36px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.9rem; }
+.ci-lbl { font-size:.52rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--dim); margin-bottom:.28rem; }
+.ci-val { font-size:.82rem; font-weight:400; }
+.cform { display:flex; flex-direction:column; gap:1.1rem; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.ffield { display:flex; flex-direction:column; gap:.5rem; }
+.flbl { font-size:.55rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--dim); }
+.finp, .ftxt { background:var(--card); border:1px solid var(--border); color:var(--white); padding:.88rem 1rem; font-family:var(--font); font-size:.82rem; font-weight:300; outline:none; transition:border-color .3s; resize:none; }
+.finp:focus, .ftxt:focus { border-color:rgba(255,255,255,.35); }
+.finp::placeholder, .ftxt::placeholder { color:rgba(255,255,255,.16); }
+.ftxt { min-height:125px; }
+.fsub { font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; background:var(--white); color:var(--black); border:none; padding:1rem 2.4rem; cursor:pointer; font-family:var(--font); align-self:flex-start; transition:opacity .3s; }
+.fsub:hover { opacity:.82; }
+
+/* FOOTER */
+footer { background:var(--black); border-top:1px solid var(--border); padding:3.5rem 5rem 2rem; }
+.foot-top { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.f-logo { font-size:2rem; font-weight:900; letter-spacing:-.03em; text-transform:uppercase; line-height:1; }
+.f-tagline { font-size:.65rem; font-weight:300; font-style:italic; color:var(--dim); margin-top:.4rem; }
+.soc-lbl { font-size:.55rem; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:1.2rem; }
+.soc-list { display:flex; flex-direction:column; gap:.65rem; }
+.soc { display:flex; align-items:center; gap:.9rem; font-size:.78rem; color:var(--dim); padding:.32rem 0; border-bottom:1px solid transparent; transition:all .3s; }
+.soc:hover { color:var(--white); border-bottom-color:var(--border); }
+.soc-ico { width:30px; height:30px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; flex-shrink:0; transition:border-color .3s; }
+.soc:hover .soc-ico { border-color:rgba(255,255,255,.3); }
+.soc-arr { margin-left:auto; opacity:0; transition:opacity .3s, transform .3s; }
+.soc:hover .soc-arr { opacity:1; transform:translateX(3px); }
+.foot-bot { display:flex; justify-content:space-between; align-items:center; }
+.f-copy { font-size:.58rem; font-weight:400; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); }
+.f-up { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); transition:color .3s; }
+.f-up:hover { color:var(--white); }
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  #inicio { grid-template-columns:1fr; }
+  .hero-right { display:none; }
+  .contact-grid { grid-template-columns:1fr; }
+  .process-grid { grid-template-columns:1fr 1fr; }
+  .port-item { flex:0 0 calc(80% - .5px) !important; aspect-ratio:4/3 !important; }
+}
+@media(max-width:768px){
+  .sec { padding:5rem 1.6rem; }
+  .services-grid { grid-template-columns:1fr; }
+  .svc-item:nth-child(odd),.svc-item:nth-child(even) { padding:2rem 0; border-right:none; }
+  .frow { grid-template-columns:1fr; }
+  footer { padding:3rem 1.6rem 2rem; }
+  .foot-top { flex-direction:column; gap:2.5rem; }
+  .hero-left { padding:6rem 1.6rem 4rem; }
+  .process-grid { grid-template-columns:1fr 1fr; }
+  .port-item { flex:0 0 calc(94% - .5px) !important; aspect-ratio:4/3 !important; }
+  .side-menu { padding:0 2rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<header>
+  <div></div>
+  <div class="h-logo">
+    <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
+         onerror="this.outerHTML='<span style=\'font-family:Poppins,sans-serif;font-weight:900;font-size:1rem;letter-spacing:.18em;text-transform:uppercase;\'>SAORI.STUDIO</span>'">
+  </div>
+  <div class="menu-btn" id="menuBtn"><span></span><span></span></div>
+</header>
+
+<div class="side-menu" id="sideMenu">
+  <a href="#inicio">Inicio</a>
+  <a href="#portafolio">Proyectos</a>
+  <a href="#servicios">Servicios</a>
+  <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+
+
+<section id="inicio">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Diseñador Gráfico — México</div>
+    <h1 class="name">SAORI.STUDIO</h1>
+    <p class="hero-tagline">vivir, existir y diseñar.</p>
+    <p class="hero-bio">Hola, soy Mascorro, a.k.a. @SAORI.STUDIO.<br>
+    Diseñador gráfico/editorial, con experiencia en branding y motion graphic.
+    Me especializo en diseño, maquetación y producción de libros,
+    así como en el desarrollo de identidad visual.</p>
+    <div class="hero-btns">
+      <a href="#portafolio" class="btn-fill">Ver proyectos</a>
+      <a href="#contacto"   class="btn-line">Contacto</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="photo-frame">
+      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Foto" class="hero-img" onerror="this.style.display='none'">
+    </div>
+    <div class="dec-box"></div>
+  </div>
+</section>
+
+<section id="portafolio">
+  <div class="sec">
+    <div class="s-head">
+      <div class="s-label">Portafolio</div>
+      <h2 class="s-title">Proyectos<br>seleccionados</h2>
+    </div>
+
+    <div class="carousel-outer">
+      <div class="carousel-track" id="carTrack">
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="NUEVO AMANECER/PORTADA.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">NUEVO AMANECER</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Branding</div>
+            <div class="ov-title">Nuevo Amanecer — 01</div>
+            <a href="proyecto-nuevo-amanecer.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="GARABATOS/PORTADA.jpg" alt="Garabatos" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">GARABATOS</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Fotografía</div>
+            <div class="ov-title">Garabatos — 02</div>
+            <a href="proyecto-garabatos.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="DRIFT/PORTADA.jpg" alt="Drift" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">DRIFT</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Ilustración</div>
+            <div class="ov-title">Drift — 03</div>
+            <a href="proyecto-drift.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="SAORI ARCHIVE/SAORI. ARCHIVE.gif" alt="Saori Archive" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">SAORI ARCHIVE</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Motion Graphics</div>
+            <div class="ov-title">Saori Archive — 04</div>
+            <a href="proyecto-saori-archive.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="FOTOS HTML 1/Sin título-1.png" alt="Proyecto 05" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">PROYECTO 05</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Editorial</div>
+            <div class="ov-title">Libro Maquetado — 05</div>
+            <a href="proyecto-05.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+        <div class="port-item">
+          <div class="pp">
+            <img src="FOTOS HTML 1/Sin título-1.png" alt="Proyecto 06" onerror="this.style.display='none'">
+            <div class="pp-ico">◻</div><div class="pp-lbl">PROYECTO 06</div>
+          </div>
+          <div class="port-ov">
+            <div class="ov-cat">Impresión</div>
+            <div class="ov-title">Campaña Impresa — 06</div>
+            <a href="proyecto-06.html" class="ov-link">Ver proyecto →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="car-btn" id="carPrev" aria-label="Anterior">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="car-btn" id="carNext" aria-label="Siguiente">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="car-dots" id="carDots"></div>
+      <div class="car-counter" id="carCounter">01 / 06</div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="sec">
+    <div class="s-head">
+      <div class="s-label">Servicios</div>
+      <h2 class="s-title">Lo que hago</h2>
+    </div>
+    <div class="services-grid">
+      <div class="svc-item">
+        <div class="svc-head">Maquetación / Editorial</div>
+        <div class="svc-body"><p>Diseño, maquetación y producción de libros y documentos editoriales. Desde el layout hasta el archivo listo para imprenta.</p></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head">Impresión</div>
+        <div class="svc-body"><p>Preparación de archivos y gestión de impresión profesional. Materiales con acabado y calidad de imprenta.</p></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head">Branding</div>
+        <div class="svc-body"><p>Identidad visual completa: logotipo, paleta, tipografía y sistema gráfico coherente y memorable.</p></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head">Motion Graphic</div>
+        <div class="svc-body"><p>Animación de marca y contenido audiovisual. Piezas que comunican en movimiento.</p></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head">Fotografía</div>
+        <div class="svc-body"><p>Fotografía editorial y de producto con dirección de arte y retoque profesional.</p></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head">Ilustración</div>
+        <div class="svc-body"><p>Ilustración personalizada para proyectos visuales. Estilo adaptado a cada concepto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="procesos">
+  <div class="sec">
+    <div class="s-head">
+      <div class="s-label">Metodología</div>
+      <h2 class="s-title">El proceso</h2>
+    </div>
+    <div class="process-grid">
+      <div class="p-item"><div class="p-row"><span class="p-num">01</span><span class="p-name">Diagnóstico</span></div></div>
+      <div class="p-item"><div class="p-row"><span class="p-num">02</span><span class="p-name">Investigación</span></div></div>
+      <div class="p-item"><div class="p-row"><span class="p-num">03</span><span class="p-name">Concepto</span></div></div>
+      <div class="p-item"><div class="p-row"><span class="p-num">04</span><span class="p-name">Ejecución</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="sec">
+    <div class="s-head">
+      <div class="s-label">Contacto</div>
+      <h2 class="s-title">¿Listo para crear algo?</h2>
+      <p class="s-sub">Cuéntame tu proyecto y construyamos algo memorable juntos.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="cinfo">
+        <div class="ci"><div class="ci-ico">✉</div><div><div class="ci-lbl">Correo</div><div class="ci-val">contacto.saori.studio@gmail.com</div></div></div>
+        <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Ubicación</div><div class="ci-val">Ciudad, México</div></div></div>
+        <div class="ci"><div class="ci-ico">⏱</div><div><div class="ci-lbl">Respuesta</div><div class="ci-val">Menos de 24 horas</div></div></div>
+      </div>
+      <form class="cform" action="https://formspree.io/f/xdayppwq" method="POST">
+        <div class="frow">
+          <div class="ffield"><label class="flbl">Nombre</label><input type="text" name="nombre" class="finp" placeholder="Tu nombre" required></div>
+          <div class="ffield"><label class="flbl">Email</label><input type="email" name="email" class="finp" placeholder="tu@email.com" required></div>
+        </div>
+        <div class="ffield"><label class="flbl">Servicio</label><input type="text" name="servicio" class="finp" placeholder="¿Qué necesitas?"></div>
+        <div class="ffield"><label class="flbl">Mensaje</label><textarea name="message" class="ftxt" placeholder="Cuéntame sobre tu proyecto..." required></textarea></div>
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio">
+        <input type="hidden" name="_captcha" value="false">
+        <button class="fsub" type="submit">Enviar mensaje →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="f-logo">ADRIAN MASCORRO LEOS</div>
+      <div class="f-tagline">Diseñador Gráfico Creativo — México</div>
+    </div>
+    <div>
+      <div class="soc-lbl">Redes & Contacto</div>
+      <div class="soc-list">
+        <a href="https://linkedin.com" target="_blank" class="soc"><div class="soc-ico">in</div><span>LinkedIn</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.youtube.com/@SAORISTUDIO-g2i" target="_blank" class="soc"><div class="soc-ico">▶</div><span>YouTube</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.instagram.com/sa0ri.studio/" target="_blank" class="soc"><div class="soc-ico">◎</div><span>Instagram</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.behance.net/saoristudio" target="_blank" class="soc"><div class="soc-ico">Bē</div><span>Behance</span><span class="soc-arr">↗</span></a>
+        <a href="mailto:contacto.saori.studio@gmail.com" class="soc"><div class="soc-ico">@</div><span>contacto.saori.studio@gmail.com</span><span class="soc-arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <div class="f-copy">© 2025 Saori Studio — Todos los derechos reservados</div>
+    <a href="#inicio" class="f-up">↑ Volver arriba</a>
+  </div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+const menuBtn=document.getElementById('menuBtn'),sideMenu=document.getElementById('sideMenu');
+menuBtn.addEventListener('click',()=>sideMenu.classList.toggle('active'));
+sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMenu.classList.remove('active')));
+
+(function(){
+  const track=document.getElementById('carTrack'),dotsEl=document.getElementById('carDots'),counter=document.getElementById('carCounter');
+  const items=Array.from(track.querySelectorAll('.port-item')),total=items.length;
+  let cur=0;
+  function vis(){return window.innerWidth<=1024?1:2;}
+  let steps=Math.max(0,total-vis());
+  function buildDots(){
+    dotsEl.innerHTML='';steps=Math.max(0,total-vis());
+    for(let i=0;i<=steps;i++){const d=document.createElement('div');d.className='car-dot'+(i===0?' active':'');d.addEventListener('click',()=>goTo(i));dotsEl.appendChild(d);}
+  }
+  function goTo(n){
+    cur=Math.max(0,Math.min(n,steps));
+    track.style.transform=`translateX(-${cur*(items[0].getBoundingClientRect().width+1)}px)`;
+    dotsEl.querySelectorAll('.car-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+  }
+  document.getElementById('carPrev').addEventListener('click',()=>goTo(cur-1));
+  document.getElementById('carNext').addEventListener('click',()=>goTo(cur+1));
+  let tx=0;
+  track.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>40)goTo(d>0?cur+1:cur-1);},{passive:true});
+  window.addEventListener('resize',()=>{buildDots();goTo(Math.min(cur,steps));});
+  buildDots();goTo(0);
+})();
+
+document.querySelectorAll('.svc-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('active');
+    document.querySelectorAll('.svc-item').forEach(i=>{i.classList.remove('active');i.querySelector('.svc-body').style.maxHeight=null;});
+    if(!isOpen){item.classList.add('active');item.querySelector('.svc-body').style.maxHeight=item.querySelector('.svc-body').scrollHeight+'px';}
+  });
+});
+</script>
+</body>
+</html>
