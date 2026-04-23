@@ -255,6 +255,60 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   .port-item { flex:0 0 calc(94% - .5px) !important; aspect-ratio:4/3 !important; }
   .side-menu { padding:0 2rem; }
 }
+  /* FIX MOBILE REAL */
+@media(max-width:768px){
+
+  /* HERO */
+  h1.name {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
+
+  .hero-tagline {
+    font-size: .95rem;
+  }
+
+  .hero-bio {
+    font-size: .8rem;
+    line-height: 1.8;
+  }
+
+  /* BOTONES */
+  .hero-btns {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .8rem;
+  }
+
+  /* MENU */
+  .side-menu a {
+    font-size: 2rem;
+  }
+
+  /* PORTAFOLIO */
+  .carousel-track {
+    gap: 0;
+  }
+
+  .port-item {
+    flex: 0 0 100% !important;
+  }
+
+  /* TITULOS */
+  .s-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  /* PROCESO */
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* CONTACTO */
+  .contact-grid {
+    gap: 2rem;
+  }
+
+}
 </style>
 </head>
 <body>
