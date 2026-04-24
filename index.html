@@ -29,7 +29,6 @@ a { text-decoration:none; color:inherit; }
 #curR { position:fixed; width:32px; height:32px; border:1px solid rgba(255,255,255,.25); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:0} }
 
 body::before {
@@ -48,37 +47,34 @@ header {
 }
 .h-logo { position:absolute; left:50%; transform:translateX(-50%); }
 .logo { height:44px; }
-.menu-btn { width:28px; height:18px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; }
+.menu-btn { width:28px; height:18px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; background:none; border:none; }
 .menu-btn span { height:1.5px; background:var(--white); display:block; }
 
 /* SIDE MENU */
 .side-menu {
-  position:fixed; top:0; right:-100%; width:100%; height:100vh;
-  background:var(--black); display:flex; flex-direction:column;
+  position:fixed; top:0; right:-100%; width:min(480px,100%); height:100vh;
+  background:var(--dark); display:flex; flex-direction:column;
   justify-content:center; align-items:flex-start;
-  padding:0 5rem; gap:2rem;
-  transition:.55s cubic-bezier(.77,0,.175,1); z-index:499;
+  padding:0 clamp(2rem,6vw,5rem); gap:1.8rem;
+  transition:.5s cubic-bezier(.77,0,.175,1); z-index:600;
   border-left:1px solid var(--border);
 }
+.menu-overlay { display:none; position:fixed; inset:0; z-index:599; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); }
+.menu-overlay.active { display:block; }
 .side-menu a {
-  font-size:clamp(2.2rem,5vw,4rem); font-weight:800;
+  font-size:clamp(1.8rem,5vw,3rem); font-weight:800;
   letter-spacing:-.02em; text-transform:uppercase;
-  color:rgba(255,255,255,.18); transition:color .3s;
+  color:rgba(255,255,255,.2); transition:color .3s;
 }
 .side-menu a:hover { color:var(--white); }
 .side-menu.active { right:0; }
-.side-menu.active a { animation:fadeUp .5s ease both; }
-.side-menu.active a:nth-child(1){animation-delay:.08s}
-.side-menu.active a:nth-child(2){animation-delay:.16s}
-.side-menu.active a:nth-child(3){animation-delay:.24s}
-.side-menu.active a:nth-child(4){animation-delay:.32s}
-.side-menu.active a:nth-child(5){animation-delay:.40s}
-
-/* TICKER */
-.ticker { margin-top:70px; background:var(--white); overflow:hidden; padding:.48rem 0; white-space:nowrap; }
-.t-track { display:inline-flex; animation:ticker 28s linear infinite; }
-.t-track span { font-size:.6rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--black); padding:0 2rem; }
-.t-track span.sep { color:rgba(0,0,0,.25); padding:0 .3rem; }
+.side-menu.active a { animation:fadeUp .45s ease both; }
+.side-menu.active a:nth-child(1){animation-delay:.05s}
+.side-menu.active a:nth-child(2){animation-delay:.12s}
+.side-menu.active a:nth-child(3){animation-delay:.19s}
+.side-menu.active a:nth-child(4){animation-delay:.26s}
+.side-menu.active a:nth-child(5){animation-delay:.33s}
+.side-menu.active a:nth-child(6){animation-delay:.40s}
 
 /* SECCIÓN BASE */
 .sec { padding:7rem 5rem; }
@@ -95,7 +91,7 @@ header {
 .s-head { margin-bottom:4rem; }
 
 /* HERO */
-#inicio { min-height:100vh; display:grid; grid-template-columns:1.15fr .85fr; position:relative; overflow:hidden; }
+#inicio { min-height:100vh; display:grid; grid-template-columns:1.15fr .85fr; position:relative; overflow:hidden; margin-top:70px; }
 .hero-left { display:flex; flex-direction:column; justify-content:center; padding:9rem 5rem 6rem; z-index:2; }
 .hero-eyebrow {
   font-size:.6rem; font-weight:600; letter-spacing:.42em; text-transform:uppercase;
@@ -136,7 +132,6 @@ h1.name {
 .hero-right { display:flex; align-items:center; justify-content:center; padding:8rem 3rem 6rem; position:relative; }
 .photo-frame { width:100%; max-width:350px; aspect-ratio:3/4; overflow:hidden; border:1px solid var(--border); background:var(--card); position:relative; }
 .hero-img { width:100%; height:100%; object-fit:cover; display:block; }
-.dec-box { position:absolute; bottom:-1rem; right:-1rem; width:50%; height:35%; border:1px solid var(--border); z-index:-1; }
 
 /* PORTAFOLIO */
 #portafolio { background:var(--black); }
@@ -170,6 +165,27 @@ h1.name {
 .car-dot { width:5px; height:5px; border-radius:50%; background:var(--dim); transition:all .3s; cursor:pointer; }
 .car-dot.active { width:20px; border-radius:2px; background:var(--white); }
 .car-counter { margin-left:auto; font-size:.56rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); }
+
+/* ── BOTÓN VER PROYECTOS ── */
+.ver-proyectos-wrap {
+  display:flex; justify-content:center;
+  margin-top:3rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.btn-ver-proyectos {
+  font-size:.62rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--white); border:1px solid rgba(255,255,255,.18);
+  padding:1rem 3rem;
+  display:inline-flex; align-items:center; gap:.8rem;
+  transition:all .35s;
+}
+.btn-ver-proyectos:hover {
+  background:var(--white); color:var(--black);
+  border-color:var(--white);
+}
+.btn-ver-proyectos span { transition:transform .3s; }
+.btn-ver-proyectos:hover span { transform:translateX(4px); }
 
 /* SERVICIOS */
 #servicios { background:var(--dark); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
@@ -244,70 +260,29 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   .port-item { flex:0 0 calc(80% - .5px) !important; aspect-ratio:4/3 !important; }
 }
 @media(max-width:768px){
-  .sec { padding:5rem 1.6rem; }
+  body { cursor:auto; }
+  #cur, #curR { display:none; }
+  .sec { padding:5rem 1.2rem; }
+  header { padding:0 1.2rem; }
   .services-grid { grid-template-columns:1fr; }
   .svc-item:nth-child(odd),.svc-item:nth-child(even) { padding:2rem 0; border-right:none; }
   .frow { grid-template-columns:1fr; }
-  footer { padding:3rem 1.6rem 2rem; }
+  footer { padding:3rem 1.2rem 2rem; }
   .foot-top { flex-direction:column; gap:2.5rem; }
-  .hero-left { padding:6rem 1.6rem 4rem; }
-  .process-grid { grid-template-columns:1fr 1fr; }
-  .port-item { flex:0 0 calc(94% - .5px) !important; aspect-ratio:4/3 !important; }
-  .side-menu { padding:0 2rem; }
-}
-/* FIX MOBILE REAL */
-@media(max-width:768px){
-
-  /* HERO */
-  h1.name {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
-  }
-
-  .hero-tagline {
-    font-size: .95rem;
-  }
-
-  .hero-bio {
-    font-size: .8rem;
-    line-height: 1.8;
-  }
-
-  /* BOTONES */
-  .hero-btns {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .8rem;
-  }
-
-  /* MENU */
-  .side-menu a {
-    font-size: 2rem;
-  }
-
-  /* PORTAFOLIO */
-  .carousel-track {
-    gap: 0;
-  }
-
-  .port-item {
-    flex: 0 0 100% !important;
-  }
-
-  /* TITULOS */
-  .s-title {
-    font-size: clamp(2rem, 8vw, 2.8rem);
-  }
-
-  /* PROCESO */
-  .process-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* CONTACTO */
-  .contact-grid {
-    gap: 2rem;
-  }
-
+  .foot-bot { flex-direction:column; align-items:flex-start; gap:.8rem; }
+  .hero-left { padding:5rem 1.2rem 3rem; }
+  .process-grid { grid-template-columns:1fr; }
+  .p-item:not(:last-child)::after { display:none; }
+  .port-item { flex:0 0 100% !important; aspect-ratio:4/3 !important; }
+  h1.name { font-size:clamp(2.8rem,12vw,3.8rem); }
+  .hero-tagline { font-size:.95rem; }
+  .hero-bio { font-size:.8rem; line-height:1.8; }
+  .hero-btns { flex-direction:column; align-items:flex-start; gap:.8rem; }
+  .side-menu a { font-size:2rem; }
+  .s-title { font-size:clamp(2rem,8vw,2.8rem); }
+  .contact-grid { gap:2rem; }
+  .ver-proyectos-wrap { margin-top:2rem; padding-top:2rem; }
+  .btn-ver-proyectos { width:100%; justify-content:center; }
 }
 </style>
 </head>
@@ -315,6 +290,7 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
 
 <div id="cur"></div>
 <div id="curR"></div>
+<div class="menu-overlay" id="menuOverlay"></div>
 
 <header>
   <div></div>
@@ -322,20 +298,19 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
     <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
          onerror="this.outerHTML='<span style=\'font-family:Poppins,sans-serif;font-weight:900;font-size:1rem;letter-spacing:.18em;text-transform:uppercase;\'>SAORI.STUDIO</span>'">
   </div>
-  <div class="menu-btn" id="menuBtn"><span></span><span></span></div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
 </header>
 
-<div class="side-menu" id="sideMenu">
+<nav class="side-menu" id="sideMenu">
   <a href="#inicio">Inicio</a>
   <a href="proyectos.html">Proyectos</a>
   <a href="estudio.html">Studio</a>
-    <a href="servicios.html">Servicios</a>
+  <a href="servicios.html">Servicios</a>
   <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
   <a href="#contacto">Contacto</a>
-</div>
+</nav>
 
-
-
+<!-- ─── HERO ─── -->
 <section id="inicio">
   <div class="hero-left">
     <div class="hero-eyebrow">Diseñador Gráfico — México</div>
@@ -345,19 +320,11 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
     Diseñador gráfico/editorial, con experiencia en branding y motion graphic.
     Me especializo en diseño, maquetación y producción de libros,
     así como en el desarrollo de identidad visual.</p>
-    <div class="hero-btns">
-      <a  href="proyectos.html" class="btn-fill">Ver proyectos</a>
-      <a href="#contacto"   class="btn-line">Contacto</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="photo-frame">
-      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Foto" class="hero-img" onerror="this.style.display='none'">
-    </div>
-    <div class="dec-box"></div>
-  </div>
+    <div class="hero-btns"></div>
+
 </section>
 
+<!-- ─── PORTAFOLIO ─── -->
 <section id="portafolio">
   <div class="sec">
     <div class="s-head">
@@ -376,13 +343,13 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
           <div class="port-ov">
             <div class="ov-cat">Branding</div>
             <div class="ov-title">Nuevo Amanecer — 01</div>
-            <a href="base.html" class="ov-link">Ver proyecto →</a>
+            <a href="proyecto-nuevo-amanecer.html" class="ov-link">Ver proyecto →</a>
           </div>
         </div>
 
         <div class="port-item">
           <div class="pp">
-            <img src="GARABATOS\POTADA2.jpg" alt="Garabatos" onerror="this.style.display='none'">
+            <img src="GARABATOS/POTADA2.jpg" alt="Garabatos" onerror="this.style.display='none'">
             <div class="pp-ico">◻</div><div class="pp-lbl">GARABATOS</div>
           </div>
           <div class="port-ov">
@@ -443,6 +410,7 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
       </div>
     </div>
 
+    <!-- controles carrusel -->
     <div class="carousel-controls">
       <button class="car-btn" id="carPrev" aria-label="Anterior">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -453,9 +421,18 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
       <div class="car-dots" id="carDots"></div>
       <div class="car-counter" id="carCounter">01 / 06</div>
     </div>
+
+    <!-- ── BOTÓN VER TODOS LOS PROYECTOS ── -->
+    <div class="ver-proyectos-wrap">
+      <a href="proyectos.html" class="btn-ver-proyectos">
+        Ver todos los proyectos <span>→</span>
+      </a>
+    </div>
+
   </div>
 </section>
 
+<!-- ─── SERVICIOS ─── -->
 <section id="servicios">
   <div class="sec">
     <div class="s-head">
@@ -491,6 +468,7 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   </div>
 </section>
 
+<!-- ─── PROCESO ─── -->
 <section id="procesos">
   <div class="sec">
     <div class="s-head">
@@ -506,6 +484,7 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   </div>
 </section>
 
+<!-- ─── CONTACTO ─── -->
 <section id="contacto">
   <div class="sec">
     <div class="s-head">
@@ -534,6 +513,7 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   </div>
 </section>
 
+<!-- ─── FOOTER ─── -->
 <footer>
   <div class="foot-top">
     <div>
@@ -558,15 +538,23 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
 </footer>
 
 <script>
+/* ─── CURSOR ─── */
 const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+if(cur && curR){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+}
 
-const menuBtn=document.getElementById('menuBtn'),sideMenu=document.getElementById('sideMenu');
-menuBtn.addEventListener('click',()=>sideMenu.classList.toggle('active'));
-sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMenu.classList.remove('active')));
+/* ─── MENU ─── */
+const menuBtn=document.getElementById('menuBtn'),sideMenu=document.getElementById('sideMenu'),menuOverlay=document.getElementById('menuOverlay');
+const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');};
+const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');};
+menuBtn.addEventListener('click',()=>sideMenu.classList.contains('active')?closeMenu():openMenu());
+menuOverlay.addEventListener('click',closeMenu);
+sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 
+/* ─── CARRUSEL ─── */
 (function(){
   const track=document.getElementById('carTrack'),dotsEl=document.getElementById('carDots'),counter=document.getElementById('carCounter');
   const items=Array.from(track.querySelectorAll('.port-item')),total=items.length;
@@ -592,6 +580,7 @@ sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMen
   buildDots();goTo(0);
 })();
 
+/* ─── ACORDEÓN SERVICIOS ─── */
 document.querySelectorAll('.svc-item').forEach(item=>{
   item.addEventListener('click',()=>{
     const isOpen=item.classList.contains('active');
