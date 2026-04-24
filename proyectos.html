@@ -360,11 +360,22 @@ footer {
     align-items:center;
   }
 
-  .h-logo {
-    position:static;
-    transform:none;
-    text-align:center;
-  }
+.h-logo {
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+}
+
+.logo-img {
+  height:28px;        /* más fino y elegante */
+  width:auto;
+  object-fit:contain;
+  filter:brightness(1.1) contrast(1.1);
+}
 }
 @media(max-width:640px){
   .hero-filters {
