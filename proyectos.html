@@ -235,6 +235,78 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
   .side-menu { padding:0 2rem; }
   .side-menu a { font-size:2rem; }
 }
+@media(max-width:768px){
+
+  body {
+    cursor: auto; /* quita cursor raro en móvil */
+  }
+
+  #cur, #curR {
+    display:none;
+  }
+
+  .page-hero {
+    padding:4.5rem 1.4rem 3rem;
+  }
+
+  h1.page-title {
+    font-size:clamp(3.5rem, 14vw, 5rem);
+  }
+
+  .hero-meta {
+    flex-direction:column;
+    align-items:flex-start;
+    gap:1.2rem;
+  }
+
+  .projects-section {
+    padding:2rem 1.2rem 4rem;
+  }
+
+  .projects-grid {
+    grid-template-columns:1fr;
+    gap:12px; /* 🔥 aire entre cards */
+    background:none;
+  }
+
+  .proj-card {
+    border:1px solid var(--border);
+  }
+
+  .proj-card.wide {
+    grid-column:span 1;
+  }
+
+  .proj-thumb {
+    aspect-ratio:4/3;
+  }
+
+  .proj-info {
+    padding:1.2rem;
+  }
+
+  .proj-name {
+    font-size:.95rem;
+  }
+
+  footer {
+    padding:2.5rem 1.4rem 2rem;
+  }
+
+  .foot-top {
+    flex-direction:column;
+    gap:2rem;
+  }
+
+  .side-menu {
+    padding:0 2rem;
+  }
+
+  .side-menu a {
+    font-size:2rem;
+  }
+}
+  
 </style>
 </head>
 <body>
