@@ -306,7 +306,6 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
     font-size:2rem;
   }
 }
-  
 </style>
 </head>
 <body>
@@ -573,8 +572,9 @@ sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMen
       if(entry.isIntersecting){
         // delay escalonado por índice dentro del viewport
         const i = [...cards].indexOf(entry.target);
-        const col = i % 3;
-        entry.target.style.transitionDelay = (col * 0.08) + 's';
+        const isMobile = window.innerWidth <= 768;
+const col = isMobile ? 0 : i % 3;
+entry.target.style.transitionDelay = (col * 0.08) + 's';
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }
