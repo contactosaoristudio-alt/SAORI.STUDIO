@@ -352,7 +352,55 @@ footer {
     font-size:.42rem;
   }
 }
+@media(max-width:640px){
+  header {
+    height:56px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+  }
 
+  .h-logo {
+    position:static;
+    transform:none;
+    text-align:center;
+  }
+}
+@media(max-width:640px){
+  .hero-filters {
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    gap:.6rem;
+    padding-bottom:.3rem;
+  }
+
+  .hero-filters::-webkit-scrollbar {
+    display:none;
+  }
+
+  .filter-btn {
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+}
+@media(max-width:640px){
+  .side-menu {
+    width:100%;
+  }
+}@media(max-width:640px){
+  .hero-count strong {
+    font-size:1.6rem;
+  }
+
+  .hero-eyebrow {
+    font-size:.45rem;
+  }
+
+  .filter-btn {
+    font-size:.48rem;
+    padding:.4rem .9rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -734,4 +782,3 @@ entry.target.style.transitionDelay = ((idx % columns) * 0.09) + 's';        entr
 </script>
 </body>
 </html>
-
