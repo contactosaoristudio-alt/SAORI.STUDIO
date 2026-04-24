@@ -453,61 +453,61 @@ footer {
 .f-up { font-size:.52rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--dim); transition:color .3s; }
 .f-up:hover { color:var(--white); }
 
+/* ───────── FIX MOBILE ───────── */
+@media(max-width:768px){
 
-@media(max-width:640px){
-  header {
-    height:56px;
-  }
-
-  .h-logo {
-    position:static;
-    transform:none;
-    text-align:center;
-    flex:1;
+  /* HERO */
+  h1.hero-title{
+    font-size: clamp(2.4rem, 10vw, 3.2rem);
+    line-height: .95;
   }
 
-  .back-btn {
-    font-size:.45rem;
+  .hero-desc{
+    font-size: .85rem;
+    line-height: 1.8;
   }
 
-  .menu-btn {
-    width:20px;
-  }
-}
-@media(max-width:640px){
-  h1.page-title {
-    font-size:clamp(2.2rem,10vw,3.2rem);
-    line-height:1;
+  .hero-left{
+    padding: 2rem 1.2rem;
   }
 
-  .hero-bottom {
-    flex-direction:column;
-    align-items:flex-start;
-  }
-}
-@media(max-width:640px){
-  .page-hero,
-  .projects-section,
-  footer {
-    padding-left:1rem;
-    padding-right:1rem;
-  }
-}
-@media(max-width:640px){
-  .proj-info {
-    padding:.8rem;
+  /* TEXTOS GENERALES */
+  .big-quote{
+    font-size: clamp(1.2rem, 5vw, 2rem);
   }
 
-  .proj-name {
-    font-size:.75rem;
+  .filo-left h2{
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
   }
 
-  .proj-cat {
-    font-size:.42rem;
+  .mv-item h3{
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
   }
+
+  .meta-header h2{
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+
+  .cta-band h2{
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  /* PADDING GLOBAL */
+  section, .quote-band, .meta-section, .cta-band{
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+  }
+
+  /* TEXT WRAP */
+  h1, h2, h3, p{
+    word-wrap: break-word;
+  }
+
 }
 
-
+body{
+  -webkit-text-size-adjust: 100%;
+}
 </style>
 </head>
 <body>
@@ -780,8 +780,8 @@ sideMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMen
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if(entry.isIntersecting){
-const columns = window.innerWidth <= 640 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
-entry.target.style.transitionDelay = ((idx % columns) * 0.09) + 's';        entry.target.classList.add('visible');
+        entry.target.style.transitionDelay = (i * 0.05) + 's';
+        entry.target.classList.add('visible');
         obs.unobserve(entry.target);
       }
     });
