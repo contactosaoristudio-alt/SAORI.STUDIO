@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyectos — SAORI.STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #777777;
+  --font:   'Poppins', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:var(--font); overflow-x:hidden; cursor:none; }
+a { text-decoration:none; color:inherit; }
+
+::-webkit-scrollbar { width:2px; }
+::-webkit-scrollbar-track { background:var(--black); }
+::-webkit-scrollbar-thumb { background:var(--white); }
+
+#cur  { position:fixed; width:8px; height:8px; background:var(--white); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+#curR { position:fixed; width:32px; height:32px; border:1px solid rgba(255,255,255,.25); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+@keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ticker  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes slideIn { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:translateX(0)} }
+
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.016;
+}
+
+/* ─── HEADER ─── */
+header {
+  position:fixed; top:0; width:100%; height:70px; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+  background:rgba(8,8,8,.88); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.h-logo { position:absolute; left:50%; transform:translateX(-50%); }
+.logo { height:44px; }
+.back-btn {
+  font-size:.58rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.7rem; transition:color .3s;
+}
+.back-btn:hover { color:var(--white); }
+.back-btn svg { transition:transform .3s; }
+.back-btn:hover svg { transform:translateX(-4px); }
+.menu-btn { width:28px; height:18px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; }
+.menu-btn span { height:1.5px; background:var(--white); display:block; }
+
+/* ─── SIDE MENU ─── */
+.side-menu {
+  position:fixed; top:0; right:-100%; width:100%; height:100vh;
+  background:var(--black); display:flex; flex-direction:column;
+  justify-content:center; align-items:flex-start;
+  padding:0 5rem; gap:2rem;
+  transition:.55s cubic-bezier(.77,0,.175,1); z-index:499;
+  border-left:1px solid var(--border);
+}
+.side-menu a {
+  font-size:clamp(2.2rem,5vw,4rem); font-weight:800;
+  letter-spacing:-.02em; text-transform:uppercase;
+  color:rgba(255,255,255,.18); transition:color .3s;
+}
+.side-menu a:hover { color:var(--white); }
+.side-menu.active { right:0; }
+.side-menu.active a { animation:fadeUp .5s ease both; }
+.side-menu.active a:nth-child(1){animation-delay:.08s}
+.side-menu.active a:nth-child(2){animation-delay:.16s}
+.side-menu.active a:nth-child(3){animation-delay:.24s}
+.side-menu.active a:nth-child(4){animation-delay:.32s}
+.side-menu.active a:nth-child(5){animation-delay:.40s}
+
+/* ─── HERO TÍTULO ─── */
+.page-hero {
+  margin-top:70px;
+  padding:7rem 5rem 5rem;
+  border-bottom:1px solid var(--border);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  position:relative; overflow:hidden;
+}
+.hero-eyebrow {
+  font-size:.58rem; font-weight:700; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.9rem; margin-bottom:1.6rem;
+  opacity:0; animation:fadeUp .7s ease .2s forwards;
+}
+.hero-eyebrow::before { content:''; width:2rem; height:1px; background:var(--dim); display:block; }
+h1.page-title {
+  font-size:clamp(5rem,14vw,13rem); font-weight:900;
+  line-height:.86; letter-spacing:-.05em; text-transform:uppercase;
+  opacity:0; animation:fadeUp .9s ease .35s forwards;
+}
+.hero-meta {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-top:3rem;
+  opacity:0; animation:fadeUp .8s ease .55s forwards;
+}
+.hero-count {
+  font-size:.6rem; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--dim);
+}
+.hero-count strong { font-size:2.5rem; font-weight:900; color:var(--white); letter-spacing:-.04em; display:block; line-height:1; margin-bottom:.3rem; }
+.hero-filters { display:flex; gap:.6rem; flex-wrap:wrap; }
+.filter-btn {
+  font-size:.52rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--dim); border:1px solid var(--border); padding:.5rem 1.1rem;
+  background:transparent; cursor:pointer; font-family:var(--font);
+  transition:all .3s;
+}
+.filter-btn:hover, .filter-btn.active { color:var(--white); border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.04); }
+
+/* ─── GRID ─── */
+.projects-section { padding:4rem 5rem 8rem; }
+
+.projects-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1px;
+  background:var(--border);
+}
+
+/* Proyecto card */
+.proj-card {
+  background:var(--black);
+  position:relative; overflow:hidden;
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+.proj-card.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Variedad de tamaños en el grid */
+.proj-card.wide  { grid-column:span 2; }
+.proj-card.tall  { grid-row:span 1; }
+
+.proj-thumb {
+  width:100%; aspect-ratio:4/3;
+  object-fit:cover; display:block;
+  transition:transform .5s ease;
+  background:var(--card);
+}
+.proj-card.wide .proj-thumb { aspect-ratio:16/9; }
+
+.proj-card:hover .proj-thumb { transform:scale(1.04); }
+
+.proj-info {
+  padding:1.4rem 1.6rem 1.8rem;
+  border-top:1px solid var(--border);
+  display:flex; flex-direction:column; gap:.5rem;
+  background:var(--black);
+}
+.proj-num {
+  font-size:.5rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--dim);
+}
+.proj-name {
+  font-size:1rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  transition:color .3s;
+}
+.proj-card:hover .proj-name { color:var(--white); }
+.proj-cat {
+  font-size:.52rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--dim);
+}
+.proj-arrow {
+  position:absolute; top:1.2rem; right:1.4rem;
+  font-size:.6rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--dim); opacity:0; transform:translateX(-6px);
+  transition:opacity .3s, transform .3s;
+}
+.proj-card:hover .proj-arrow { opacity:1; transform:translateX(0); }
+
+/* hover overlay sutil */
+.proj-card::after {
+  content:'';
+  position:absolute; inset:0;
+  background:rgba(8,8,8,0);
+  transition:background .4s;
+  pointer-events:none;
+}
+.proj-card:hover::after { background:rgba(8,8,8,.08); }
+
+/* ─── TICKER ─── */
+.ticker {
+  background:var(--white); overflow:hidden; padding:.48rem 0;
+  white-space:nowrap; border-top:1px solid var(--border);
+}
+.t-track { display:inline-flex; animation:ticker 28s linear infinite; }
+.t-track span { font-size:.6rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--black); padding:0 2rem; }
+.t-track span.sep { color:rgba(0,0,0,.25); padding:0 .3rem; }
+
+/* ─── FOOTER ─── */
+footer { background:var(--black); border-top:1px solid var(--border); padding:3.5rem 5rem 2rem; }
+.foot-top { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.f-logo { font-size:2rem; font-weight:900; letter-spacing:-.03em; text-transform:uppercase; line-height:1; }
+.f-tagline { font-size:.65rem; font-weight:300; font-style:italic; color:var(--dim); margin-top:.4rem; }
+.soc-lbl { font-size:.55rem; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:1.2rem; }
+.soc-list { display:flex; flex-direction:column; gap:.65rem; }
+.soc { display:flex; align-items:center; gap:.9rem; font-size:.78rem; color:var(--dim); padding:.32rem 0; border-bottom:1px solid transparent; transition:all .3s; }
+.soc:hover { color:var(--white); border-bottom-color:var(--border); }
+.soc-ico { width:30px; height:30px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; flex-shrink:0; transition:border-color .3s; }
+.soc:hover .soc-ico { border-color:rgba(255,255,255,.3); }
+.soc-arr { margin-left:auto; opacity:0; transition:opacity .3s,transform .3s; }
+.soc:hover .soc-arr { opacity:1; transform:translateX(3px); }
+.foot-bot { display:flex; justify-content:space-between; align-items:center; }
+.f-copy { font-size:.58rem; font-weight:400; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); }
+.f-up { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); transition:color .3s; }
+.f-up:hover { color:var(--white); }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .projects-grid { grid-template-columns:repeat(2,1fr); }
+  .proj-card.wide { grid-column:span 2; }
+}
+@media(max-width:768px){
+  .page-hero { padding:5rem 1.6rem 3.5rem; }
+  h1.page-title { font-size:clamp(4rem,16vw,6rem); }
+  .hero-meta { flex-direction:column; align-items:flex-start; gap:1.5rem; }
+  .projects-section { padding:2.5rem 1.6rem 5rem; }
+  .projects-grid { grid-template-columns:1fr; }
+  .proj-card.wide { grid-column:span 1; }
+  .proj-card.wide .proj-thumb { aspect-ratio:4/3; }
+  footer { padding:3rem 1.6rem 2rem; }
+  .foot-top { flex-direction:column; gap:2.5rem; }
+  .side-menu { padding:0 2rem; }
+  .side-menu a { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <a href="index.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Inicio
+  </a>
+  <div class="h-logo">
+    <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
+         onerror="this.outerHTML='<span style=\'font-family:Poppins,sans-serif;font-weight:900;font-size:1rem;letter-spacing:.18em;text-transform:uppercase;\'>SAORI.STUDIO</span>'">
+  </div>
+  <div class="menu-btn" id="menuBtn"><span></span><span></span></div>
+</header>
+
+<!-- ─── SIDE MENU ─── -->
+<div class="side-menu" id="sideMenu">
+  <a href="index.html#inicio">Inicio</a>
+  <a href="proyectos.html">Proyectos</a>
+  <a href="index.html#servicios">Servicios</a>
+  <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
+  <a href="index.html#contacto">Contacto</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="page-hero">
+  <div class="hero-eyebrow">Saori Studio — Portafolio</div>
+  <h1 class="page-title">Proyectos</h1>
+  <div class="hero-meta">
+    <div class="hero-count">
+      <strong>12</strong>
+      Trabajos seleccionados
+    </div>
+    <div class="hero-filters">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="branding">Branding</button>
+      <button class="filter-btn" data-filter="editorial">Editorial</button>
+      <button class="filter-btn" data-filter="motion">Motion</button>
+      <button class="filter-btn" data-filter="fotografia">Fotografía</button>
+      <button class="filter-btn" data-filter="ilustracion">Ilustración</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GRID PROYECTOS ─── -->
+<section class="projects-section">
+  <div class="projects-grid" id="projGrid">
+
+    <!-- 01 — ancho grande -->
+    <a href="proyecto-nuevo-amanecer.html" class="proj-card wide" data-cat="branding">
+      <img src="NUEVO AMANEER/PORTADA.jpg" alt="Nuevo Amanecer" class="proj-thumb"
+           onerror="this.style.minHeight='220px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">01</span>
+        <span class="proj-name">Nuevo Amanecer</span>
+        <span class="proj-cat">Branding</span>
+      </div>
+    </a>
+
+    <!-- 02 -->
+    <a href="proyecto-garabatos.html" class="proj-card" data-cat="fotografia">
+      <img src="GARABATOS/POTADA2.jpg" alt="Garabatos" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">02</span>
+        <span class="proj-name">Garabatos</span>
+        <span class="proj-cat">Fotografía</span>
+      </div>
+    </a>
+
+    <!-- 03 -->
+    <a href="proyecto-drift.html" class="proj-card" data-cat="ilustracion">
+      <img src="DRIFT/PORTDA.jpg" alt="Drift" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">03</span>
+        <span class="proj-name">Drift</span>
+        <span class="proj-cat">Ilustración</span>
+      </div>
+    </a>
+
+    <!-- 04 -->
+    <a href="proyecto-saori-archive.html" class="proj-card" data-cat="motion">
+      <img src="SAORI ARCHIVE/SAOR. ARCHIVE.gif" alt="Saori Archive" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">04</span>
+        <span class="proj-name">Saori Archive</span>
+        <span class="proj-cat">Motion Graphics</span>
+      </div>
+    </a>
+
+    <!-- 05 — ancho grande -->
+    <a href="proyecto-05.html" class="proj-card wide" data-cat="editorial">
+      <img src="FOTOS HTML 1/Sn título-1.png" alt="Proyecto 05" class="proj-thumb"
+           onerror="this.style.minHeight='220px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">05</span>
+        <span class="proj-name">Libro Maquetado</span>
+        <span class="proj-cat">Editorial</span>
+      </div>
+    </a>
+
+    <!-- 06 -->
+    <a href="proyecto-06.html" class="proj-card" data-cat="editorial">
+      <img src="FOTOS HTML 1/Sin ttulo-1.png" alt="Proyecto 06" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">06</span>
+        <span class="proj-name">Campaña Impresa</span>
+        <span class="proj-cat">Impresión</span>
+      </div>
+    </a>
+
+    <!-- 07 -->
+    <a href="proyecto-07.html" class="proj-card" data-cat="branding">
+      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Proyecto 07" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">07</span>
+        <span class="proj-name">Proyecto 07</span>
+        <span class="proj-cat">Branding</span>
+      </div>
+    </a>
+
+    <!-- 08 — ancho grande -->
+    <a href="proyecto-08.html" class="proj-card wide" data-cat="motion">
+      <img src="" alt="Proyecto 08" class="proj-thumb"
+           onerror="this.style.minHeight='220px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">08</span>
+        <span class="proj-name">Proyecto 08</span>
+        <span class="proj-cat">Motion Graphics</span>
+      </div>
+    </a>
+
+    <!-- 09 -->
+    <a href="proyecto-09.html" class="proj-card" data-cat="fotografia">
+      <img src="" alt="Proyecto 09" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">09</span>
+        <span class="proj-name">Proyecto 09</span>
+        <span class="proj-cat">Fotografía</span>
+      </div>
+    </a>
+
+    <!-- 10 -->
+    <a href="proyecto-10.html" class="proj-card" data-cat="ilustracion">
+      <img src="" alt="Proyecto 10" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">10</span>
+        <span class="proj-name">Proyecto 10</span>
+        <span class="proj-cat">Ilustración</span>
+      </div>
+    </a>
+
+    <!-- 11 -->
+    <a href="proyecto-11.html" class="proj-card" data-cat="editorial">
+      <img src="" alt="Proyecto 11" class="proj-thumb"
+           onerror="this.style.minHeight='180px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">11</span>
+        <span class="proj-name">Proyecto 11</span>
+        <span class="proj-cat">Editorial</span>
+      </div>
+    </a>
+
+    <!-- 12 — ancho grande -->
+    <a href="proyecto-12.html" class="proj-card wide" data-cat="branding">
+      <img src="" alt="Proyecto 12" class="proj-thumb"
+           onerror="this.style.minHeight='220px'">
+      <span class="proj-arrow">Ver →</span>
+      <div class="proj-info">
+        <span class="proj-num">12</span>
+        <span class="proj-name">Proyecto 12</span>
+        <span class="proj-cat">Branding</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker">
+  <div class="t-track">
+    <span>SAORI STUDIO</span><span class="sep">✦</span>
+    <span>DISEÑO GRÁFICO</span><span class="sep">✦</span>
+    <span>BRANDING</span><span class="sep">✦</span>
+    <span>EDITORIAL</span><span class="sep">✦</span>
+    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
+    <span>FOTOGRAFÍA</span><span class="sep">✦</span>
+    <span>ILUSTRACIÓN</span><span class="sep">✦</span>
+    <span>SAORI STUDIO</span><span class="sep">✦</span>
+    <span>DISEÑO GRÁFICO</span><span class="sep">✦</span>
+    <span>BRANDING</span><span class="sep">✦</span>
+    <span>EDITORIAL</span><span class="sep">✦</span>
+    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
+    <span>FOTOGRAFÍA</span><span class="sep">✦</span>
+    <span>ILUSTRACIÓN</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="f-logo">ADRIAN MASCORRO LEOS</div>
+      <div class="f-tagline">Diseñador Gráfico Creativo — México</div>
+    </div>
+    <div>
+      <div class="soc-lbl">Redes & Contacto</div>
+      <div class="soc-list">
+        <a href="https://linkedin.com" target="_blank" class="soc"><div class="soc-ico">in</div><span>LinkedIn</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.youtube.com/@SAORISTUDIO-g2i" target="_blank" class="soc"><div class="soc-ico">▶</div><span>YouTube</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.instagram.com/sa0ri.studio/" target="_blank" class="soc"><div class="soc-ico">◎</div><span>Instagram</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.behance.net/saoristudio" target="_blank" class="soc"><div class="soc-ico">Bē</div><span>Behance</span><span class="soc-arr">↗</span></a>
+        <a href="mailto:contacto.saori.studio@gmail.com" class="soc"><div class="soc-ico">@</div><span>contacto.saori.studio@gmail.com</span><span class="soc-arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <div class="f-copy">© 2025 Saori Studio — Todos los derechos reservados</div>
+    <a href="#" class="f-up">↑ Volver arriba</a>
+  </div>
+</footer>
+
+<script>
+/* ─── CURSOR ─── */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+/* ─── MENU ─── */
+const menuBtn=document.getElementById('menuBtn'),sideMenu=document.getElementById('sideMenu');
+menuBtn.addEventListener('click',()=>sideMenu.classList.toggle('active'));
+sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMenu.classList.remove('active')));
+
+/* ─── SCROLL REVEAL — cards se deslizan al aparecer ─── */
+(function(){
+  const cards = document.querySelectorAll('.proj-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        // delay escalonado por índice dentro del viewport
+        const i = [...cards].indexOf(entry.target);
+        const col = i % 3;
+        entry.target.style.transitionDelay = (col * 0.08) + 's';
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin:'0px 0px -40px 0px' });
+  cards.forEach(c => observer.observe(c));
+})();
+
+/* ─── FILTROS ─── */
+(function(){
+  const btns  = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.proj-card');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const f = btn.dataset.filter;
+      cards.forEach(card => {
+        const match = f === 'all' || card.dataset.cat === f;
+        card.style.display = match ? '' : 'none';
+        // reset wide span si se oculta para no dejar huecos
+        if(!match) card.style.gridColumn = '';
+        else if(card.classList.contains('wide')) card.style.gridColumn = 'span 2';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

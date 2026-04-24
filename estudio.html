@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Estudio — SAORI.STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #777777;
+  --font:   'Poppins', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:var(--font); overflow-x:hidden; cursor:none; }
+a { text-decoration:none; color:inherit; }
+
+::-webkit-scrollbar { width:2px; }
+::-webkit-scrollbar-track { background:var(--black); }
+::-webkit-scrollbar-thumb { background:var(--white); }
+
+#cur  { position:fixed; width:8px; height:8px; background:var(--white); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+#curR { position:fixed; width:32px; height:32px; border:1px solid rgba(255,255,255,.25); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+@keyframes fadeUp  { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ticker  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes revealX { from{width:100%} to{width:0%} }
+@keyframes scaleIn { from{transform:scale(1.07);opacity:0} to{transform:scale(1);opacity:1} }
+
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.016;
+}
+
+/* ─── HEADER ─── */
+header {
+  position:fixed; top:0; width:100%; height:70px; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+  background:rgba(8,8,8,.88); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.h-logo { position:absolute; left:50%; transform:translateX(-50%); }
+.logo { height:44px; }
+.back-btn {
+  font-size:.58rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.7rem; transition:color .3s;
+}
+.back-btn:hover { color:var(--white); }
+.back-btn svg { transition:transform .3s; }
+.back-btn:hover svg { transform:translateX(-4px); }
+.menu-btn { width:28px; height:18px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; }
+.menu-btn span { height:1.5px; background:var(--white); display:block; }
+
+/* ─── SIDE MENU ─── */
+.side-menu {
+  position:fixed; top:0; right:-100%; width:100%; height:100vh;
+  background:var(--black); display:flex; flex-direction:column;
+  justify-content:center; align-items:flex-start;
+  padding:0 5rem; gap:2rem;
+  transition:.55s cubic-bezier(.77,0,.175,1); z-index:499;
+  border-left:1px solid var(--border);
+}
+.side-menu a {
+  font-size:clamp(2.2rem,5vw,4rem); font-weight:800;
+  letter-spacing:-.02em; text-transform:uppercase;
+  color:rgba(255,255,255,.18); transition:color .3s;
+}
+.side-menu a:hover { color:var(--white); }
+.side-menu.active { right:0; }
+.side-menu.active a { animation:fadeUp .5s ease both; }
+.side-menu.active a:nth-child(1){animation-delay:.08s}
+.side-menu.active a:nth-child(2){animation-delay:.16s}
+.side-menu.active a:nth-child(3){animation-delay:.24s}
+.side-menu.active a:nth-child(4){animation-delay:.32s}
+.side-menu.active a:nth-child(5){animation-delay:.40s}
+
+/* ─── HERO ─── */
+.page-hero {
+  margin-top:70px;
+  min-height:100vh;
+  display:grid; grid-template-columns:1.1fr .9fr;
+  position:relative; overflow:hidden;
+}
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:8rem 5rem 6rem;
+  border-right:1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size:.58rem; font-weight:700; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.9rem; margin-bottom:2rem;
+  opacity:0; animation:fadeUp .7s ease .2s forwards;
+}
+.hero-eyebrow::before { content:''; width:2rem; height:1px; background:var(--dim); display:block; }
+h1.hero-title {
+  font-size:clamp(4rem,9vw,8.5rem); font-weight:900;
+  line-height:.86; letter-spacing:-.04em; text-transform:uppercase;
+  opacity:0; animation:fadeUp .9s ease .35s forwards;
+}
+.hero-title em { font-style:italic; font-weight:200; display:block; letter-spacing:-.02em; }
+.hero-desc {
+  font-size:.9rem; font-weight:300; line-height:2.2; color:rgba(244,242,238,.65);
+  max-width:440px; margin-top:2.4rem;
+  opacity:0; animation:fadeUp .9s ease .55s forwards;
+}
+.hero-sign {
+  margin-top:3rem; display:flex; align-items:center; gap:1.4rem;
+  opacity:0; animation:fadeUp .9s ease .7s forwards;
+}
+.sign-avatar {
+  width:52px; height:52px; border:1px solid var(--border);
+  overflow:hidden; flex-shrink:0; background:var(--card);
+}
+.sign-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+.sign-name { font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.sign-role { font-size:.58rem; font-weight:300; font-style:italic; color:var(--dim); margin-top:.2rem; }
+
+.hero-right {
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0; position:relative; overflow:hidden; min-height:100vh;
+}
+.hero-photo {
+  width:100%; height:100%; object-fit:cover; display:block;
+  position:absolute; inset:0;
+  animation:scaleIn 1.2s ease .2s both;
+}
+.hero-photo-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 55%, rgba(8,8,8,.85) 100%);
+}
+.hero-photo-caption {
+  position:relative; z-index:2;
+  padding:2rem 2.5rem;
+  font-size:.52rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.28);
+}
+
+/* ─── SECCIÓN BASE ─── */
+.s-label {
+  font-size:.55rem; font-weight:700; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--dim); display:flex; align-items:center; gap:.9rem; margin-bottom:.9rem;
+}
+.s-label::before { content:''; display:block; width:1.6rem; height:1px; background:var(--dim); }
+
+/* scroll reveal */
+.reveal {
+  opacity:0; transform:translateY(36px);
+  transition:opacity .85s ease, transform .85s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-left  { opacity:0; transform:translateX(-36px); transition:opacity .85s ease,transform .85s ease; }
+.reveal-left.visible  { opacity:1; transform:translateX(0); }
+.reveal-right { opacity:0; transform:translateX(36px);  transition:opacity .85s ease,transform .85s ease; }
+.reveal-right.visible { opacity:1; transform:translateX(0); }
+
+/* ─── FRASE CENTRAL ─── */
+.quote-band {
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:5rem 5rem;
+  background:var(--dark);
+  overflow:hidden;
+}
+.big-quote {
+  font-size:clamp(1.6rem,4vw,3.8rem); font-weight:800;
+  letter-spacing:-.03em; text-transform:uppercase; line-height:1.05;
+  max-width:1000px;
+}
+.big-quote em { font-style:italic; font-weight:200; color:var(--dim); }
+.quote-attr {
+  margin-top:2rem; font-size:.58rem; font-weight:700; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--dim);
+}
+
+/* ─── FILOSOFÍA ─── */
+.filosofia-section {
+  padding:7rem 5rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start;
+  border-bottom:1px solid var(--border);
+}
+.filo-left h2 {
+  font-size:clamp(2.2rem,4vw,3.8rem); font-weight:900;
+  letter-spacing:-.03em; text-transform:uppercase; line-height:.9;
+  margin-top:1rem;
+}
+.filo-right {
+  padding-top:1.2rem;
+}
+.filo-right p {
+  font-size:.95rem; font-weight:300; color:rgba(244,242,238,.68);
+  line-height:2.15; margin-bottom:1.8rem;
+}
+.filo-right p:last-child { margin-bottom:0; }
+.filo-vals {
+  display:flex; flex-direction:column; gap:0;
+  border-top:1px solid var(--border);
+  margin-top:3rem;
+}
+.val-item {
+  display:flex; align-items:center; gap:2rem;
+  padding:1.3rem 0; border-bottom:1px solid var(--border);
+  cursor:default;
+  transition:background .25s;
+}
+.val-item:hover { background:rgba(255,255,255,.02); }
+.val-num { font-size:.5rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); width:28px; flex-shrink:0; }
+.val-name { font-size:.85rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; flex:1; }
+.val-desc { font-size:.75rem; font-weight:300; color:var(--dim); max-width:260px; text-align:right; }
+
+/* ─── FOTOS COLLAGE ─── */
+.fotos-section {
+  border-bottom:1px solid var(--border);
+}
+.fotos-header {
+  padding:4rem 5rem 2rem;
+  display:flex; justify-content:space-between; align-items:flex-end;
+}
+.fotos-header h3 {
+  font-size:clamp(1.5rem,3vw,2.4rem); font-weight:800;
+  letter-spacing:-.02em; text-transform:uppercase;
+}
+.fotos-count { font-size:.55rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--dim); }
+
+.fotos-collage {
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-template-rows:auto;
+  gap:1px; background:var(--border);
+  padding:0 5rem 5rem;
+}
+.foto-block { overflow:hidden; background:var(--card); position:relative; }
+.foto-block img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .55s ease;
+  min-height:180px;
+}
+.foto-block:hover img { transform:scale(1.05); }
+
+/* posiciones collage */
+.fb1 { grid-column:1/5;  grid-row:1; aspect-ratio:4/3; }
+.fb2 { grid-column:5/9;  grid-row:1; aspect-ratio:4/3; }
+.fb3 { grid-column:9/13; grid-row:1/3; }
+.fb4 { grid-column:1/7;  grid-row:2; aspect-ratio:16/9; }
+.fb5 { grid-column:7/9;  grid-row:2; aspect-ratio:1/1; }
+
+/* ─── VIDEO ─── */
+.video-section {
+  padding:6rem 5rem;
+  border-bottom:1px solid var(--border);
+  background:var(--dark);
+}
+.video-header { margin-bottom:3rem; }
+.video-header h2 {
+  font-size:clamp(1.8rem,3.5vw,3rem); font-weight:900;
+  letter-spacing:-.03em; text-transform:uppercase; margin-top:.8rem;
+}
+.video-wrap {
+  position:relative; width:100%; aspect-ratio:16/9;
+  background:var(--card); border:1px solid var(--border);
+  overflow:hidden;
+}
+.video-wrap video,
+.video-wrap iframe {
+  width:100%; height:100%; display:block; object-fit:cover; border:none;
+}
+/* placeholder cuando no hay video */
+.video-placeholder {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem;
+}
+.play-ico {
+  width:64px; height:64px; border:1px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem; cursor:pointer; transition:all .3s;
+}
+.play-ico:hover { border-color:var(--white); background:rgba(255,255,255,.05); }
+.video-lbl { font-size:.55rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--dim); }
+
+/* ─── MISIÓN / VISIÓN ─── */
+.mv-section {
+  display:grid; grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.mv-item {
+  padding:5.5rem 5rem;
+  position:relative; overflow:hidden;
+}
+.mv-item:first-child { border-right:1px solid var(--border); }
+.mv-num {
+  font-size:6rem; font-weight:900; letter-spacing:-.04em;
+  color:rgba(255,255,255,.04); position:absolute;
+  top:2rem; right:2rem; line-height:1;
+}
+.mv-item h3 {
+  font-size:clamp(1.6rem,3vw,2.5rem); font-weight:900;
+  letter-spacing:-.02em; text-transform:uppercase; margin-top:1rem; margin-bottom:1.8rem;
+}
+.mv-item p {
+  font-size:.9rem; font-weight:300; color:rgba(244,242,238,.65); line-height:2.1;
+}
+.mv-badge {
+  display:inline-flex; align-items:center; gap:.6rem;
+  margin-top:2.5rem; padding:.7rem 1.2rem;
+  border:1px solid var(--border);
+  font-size:.52rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--dim);
+  transition:all .3s;
+}
+.mv-badge:hover { border-color:rgba(255,255,255,.25); color:var(--white); }
+
+/* ─── META / ROADMAP ─── */
+.meta-section {
+  padding:7rem 5rem;
+  border-bottom:1px solid var(--border);
+  background:var(--dark);
+}
+.meta-header { margin-bottom:4rem; }
+.meta-header h2 {
+  font-size:clamp(2rem,4vw,3.5rem); font-weight:900;
+  letter-spacing:-.03em; text-transform:uppercase; margin-top:.8rem; line-height:.9;
+}
+.meta-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--border);
+}
+.meta-item {
+  background:var(--dark); padding:3rem 2.5rem;
+  position:relative; transition:background .3s;
+}
+.meta-item:hover { background:rgba(255,255,255,.025); }
+.meta-year {
+  font-size:.52rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--dim); margin-bottom:1rem;
+}
+.meta-title {
+  font-size:1.1rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.meta-text {
+  font-size:.82rem; font-weight:300; color:rgba(244,242,238,.55); line-height:1.95;
+}
+.meta-status {
+  display:inline-block; margin-top:1.5rem;
+  font-size:.48rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase;
+  padding:.35rem .8rem; border:1px solid var(--border);
+}
+.meta-status.done  { color:#6fcf97; border-color:rgba(111,207,151,.2); }
+.meta-status.now   { color:#f2c94c; border-color:rgba(242,201,76,.2); }
+.meta-status.soon  { color:var(--dim); }
+
+/* ─── TICKER ─── */
+.ticker {
+  background:var(--white); overflow:hidden; padding:.48rem 0; white-space:nowrap;
+}
+.t-track { display:inline-flex; animation:ticker 28s linear infinite; }
+.t-track span { font-size:.6rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--black); padding:0 2rem; }
+.t-track span.sep { color:rgba(0,0,0,.25); padding:0 .3rem; }
+
+/* ─── CTA FINAL ─── */
+.cta-band {
+  padding:8rem 5rem;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.cta-band h2 {
+  font-size:clamp(2.8rem,7vw,6.5rem); font-weight:900;
+  letter-spacing:-.04em; text-transform:uppercase; line-height:.88; margin-bottom:2.5rem;
+}
+.cta-band h2 em { font-style:italic; font-weight:200; }
+.cta-btns { display:flex; gap:1.2rem; align-items:center; }
+.btn-fill {
+  font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--black); background:var(--white); padding:1rem 2.4rem; transition:opacity .3s;
+}
+.btn-fill:hover { opacity:.82; }
+.btn-line {
+  font-size:.65rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--dim); border:1px solid var(--border); padding:1rem 2rem; transition:all .3s;
+}
+.btn-line:hover { color:var(--white); border-color:rgba(255,255,255,.3); }
+
+/* ─── FOOTER ─── */
+footer { background:var(--black); border-top:1px solid var(--border); padding:3.5rem 5rem 2rem; }
+.foot-top { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.f-logo { font-size:2rem; font-weight:900; letter-spacing:-.03em; text-transform:uppercase; line-height:1; }
+.f-tagline { font-size:.65rem; font-weight:300; font-style:italic; color:var(--dim); margin-top:.4rem; }
+.soc-lbl { font-size:.55rem; font-weight:700; letter-spacing:.3em; text-transform:uppercase; color:var(--dim); margin-bottom:1.2rem; }
+.soc-list { display:flex; flex-direction:column; gap:.65rem; }
+.soc { display:flex; align-items:center; gap:.9rem; font-size:.78rem; color:var(--dim); padding:.32rem 0; border-bottom:1px solid transparent; transition:all .3s; }
+.soc:hover { color:var(--white); border-bottom-color:var(--border); }
+.soc-ico { width:30px; height:30px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; flex-shrink:0; transition:border-color .3s; }
+.soc:hover .soc-ico { border-color:rgba(255,255,255,.3); }
+.soc-arr { margin-left:auto; opacity:0; transition:opacity .3s,transform .3s; }
+.soc:hover .soc-arr { opacity:1; transform:translateX(3px); }
+.foot-bot { display:flex; justify-content:space-between; align-items:center; }
+.f-copy { font-size:.58rem; font-weight:400; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); }
+.f-up { font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); transition:color .3s; }
+.f-up:hover { color:var(--white); }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .filosofia-section { grid-template-columns:1fr; gap:3rem; }
+  .meta-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px){
+  .page-hero { grid-template-columns:1fr; }
+  .hero-left { padding:5rem 1.6rem 4rem; }
+  .hero-right { display:none; }
+  .quote-band { padding:4rem 1.6rem; }
+  .filosofia-section { padding:5rem 1.6rem; grid-template-columns:1fr; gap:2.5rem; }
+  .val-desc { display:none; }
+  .fotos-header { padding:3rem 1.6rem 1.5rem; }
+  .fotos-collage { padding:0 1.6rem 3rem; grid-template-columns:repeat(6,1fr); }
+  .fb1 { grid-column:1/4; }
+  .fb2 { grid-column:4/7; }
+  .fb3 { grid-column:1/7; grid-row:2; aspect-ratio:16/9; }
+  .fb4 { grid-column:1/7; grid-row:3; aspect-ratio:16/9; }
+  .fb5 { display:none; }
+  .video-section { padding:4rem 1.6rem; }
+  .mv-section { grid-template-columns:1fr; }
+  .mv-item:first-child { border-right:none; border-bottom:1px solid var(--border); }
+  .mv-item { padding:4rem 1.6rem; }
+  .meta-section { padding:5rem 1.6rem; }
+  .meta-grid { grid-template-columns:1fr; }
+  .cta-band { padding:5rem 1.6rem; }
+  .cta-btns { flex-direction:column; }
+  footer { padding:3rem 1.6rem 2rem; }
+  .foot-top { flex-direction:column; gap:2.5rem; }
+  .side-menu { padding:0 2rem; }
+  .side-menu a { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <a href="index.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Inicio
+  </a>
+  <div class="h-logo">
+    <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
+         onerror="this.outerHTML='<span style=\'font-family:Poppins,sans-serif;font-weight:900;font-size:1rem;letter-spacing:.18em;text-transform:uppercase;\'>SAORI.STUDIO</span>'">
+  </div>
+  <div class="menu-btn" id="menuBtn"><span></span><span></span></div>
+</header>
+
+<!-- ─── SIDE MENU ─── -->
+<div class="side-menu" id="sideMenu">
+  <a href="index.html#inicio">Inicio</a>
+  <a href="proyectos.html">Proyectos</a>
+  <a href="index.html#servicios">Servicios</a>
+  <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
+  <a href="index.html#contacto">Contacto</a>
+</div>
+
+<!-- ════════════════════════════════
+     HERO — PRESENTACIÓN
+════════════════════════════════ -->
+<section class="page-hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Quienes somos</div>
+    <h1 class="hero-title">
+      SAORI<br>
+      <em>.STUDIO</em>
+    </h1>
+    <p class="hero-desc">
+      SAORI.STUDIO entiende el diseño como un proceso único que no sigue estándares universales, sino que responde a cada contexto específico. Inspirado en la técnica del tejido saori, cada proyecto se construye a partir de decisiones y condiciones particulares. El estudio prioriza la resolución de problemas reales, donde la estética es resultado del contexto y no una fórmula preestablecida.
+    </p>
+    <div class="hero-sign">
+      <div class="sign-avatar">
+        <!-- REEMPLAZA con tu foto de perfil -->
+        <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Adrián Mascorro"
+             onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="sign-name">Adrián Mascorro Leos</div>
+        <div class="sign-role">Diseñador Gráfico / Director Creativo</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <!-- REEMPLAZA con tu foto principal -->
+    <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Adrián Mascorro" class="hero-photo"
+         onerror="this.style.display='none'">
+    <div class="hero-photo-overlay"></div>
+    <div class="hero-photo-caption">@SAORI.STUDIO — México, 2025</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FRASE CENTRAL
+════════════════════════════════ -->
+<div class="quote-band reveal">
+  <p class="big-quote">
+    "VIVIR, EXISTIR <br>
+    <em>Y DISEÑAR"</em>
+  </p>
+  <!-- EDITA: esta es tu frase, cámbiala por la que te represente -->
+  <div class="quote-attr">— Adrián Mascorro, fundador de Saori Studio</div>
+</div>
+
+<!-- ════════════════════════════════
+     FILOSOFÍA
+════════════════════════════════ -->
+<section class="filosofia-section">
+  <div class="filo-left reveal-left">
+    <div class="s-label">Filosofía</div>
+    <h2>Lo que<br>me mueve</h2>
+  </div>
+  <div class="filo-right reveal-right">
+    <!-- EDITA: escribe aquí tu filosofía personal -->
+    <p>
+     Lo que me mueve es la idea de vivir, existir y diseñar. Entiendo el diseño como una extensión de la vida misma, donde cada experiencia, contexto y decisión influye en lo que se crea.
+
+Diseñar no es seguir reglas fijas, sino responder a lo que cada proyecto necesita en su propio momento y entorno. Es un proceso que nace de observar, entender y transformar lo que nos rodea.
+
+Para mí, el diseño es una forma de existencia: una manera de dar forma a ideas, emociones y soluciones que no buscan perfección universal, sino sentido dentro de su propio contexto.
+    </p>
+    <p>
+     
+    </p>
+
+    <div class="filo-vals">
+      <div class="val-item reveal">
+        <span class="val-num">01</span>
+        <span class="val-name">VIVIR</span>
+        <span class="val-desc">Observar, experimentar y conectar con el contexto. Todo nace de la experiencia real.</span>
+      </div>
+      <div class="val-item reveal">
+        <span class="val-num">02</span>
+        <span class="val-name">EXISTIR</span>
+        <span class="val-desc">Entender el problema, las personas y el entorno. Darle sentido a lo que se va a construir.</span>
+      </div>
+      <div class="val-item reveal">
+        <span class="val-num">03</span>
+        <span class="val-name">DISEÑAR</span>
+        <span class="val-desc">Transformar lo entendido en soluciones visuales que responden a necesidades reales.</span>
+      </div>
+      <div class="val-item reveal">
+        <span class="val-num">04</span>
+        <span class="val-name">Evolucionar</span>
+        <span class="val-desc">Evaluar, ajustar y mejorar. El diseño no termina, se adapta y crece con el tiempo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOTOS — COLLAGE
+════════════════════════════════ -->
+<section class="fotos-section">
+  <div class="fotos-header reveal">
+    <div>
+      <div class="s-label">Estudio</div>
+      <h3>El espacio<br>donde ocurre</h3>
+    </div>
+    <span class="fotos-count">5 imágenes</span>
+  </div>
+  <div class="fotos-collage reveal">
+    <!-- REEMPLAZA cada src con tus fotos del estudio / behind the scenes -->
+    <div class="foto-block fb1">
+      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Estudio 01"
+           onerror="this.style.background='var(--card)'">
+    </div>
+    <div class="foto-block fb2">
+      <img src="NUEVO AMANEER/PORTADA.jpg" alt="Estudio 02"
+           onerror="this.style.background='var(--card)'">
+    </div>
+    <div class="foto-block fb3">
+      <img src="GARABATOS/POTADA2.jpg" alt="Estudio 03"
+           onerror="this.style.background='var(--card)'">
+    </div>
+    <div class="foto-block fb4">
+      <img src="DRIFT/PORTDA.jpg" alt="Estudio 04"
+           onerror="this.style.background='var(--card)'">
+    </div>
+    <div class="foto-block fb5">
+      <img src="FOTOS HTML 1/Sn título-1.png" alt="Estudio 05"
+           onerror="this.style.background='var(--card)'">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     VIDEO
+════════════════════════════════ -->
+<section class="video-section">
+  <div class="video-header reveal">
+    <div class="s-label">Showreel</div>
+    <h2>En movimiento</h2>
+  </div>
+  <div class="video-wrap reveal">
+    <!--
+      OPCIÓN A — VIDEO LOCAL:
+      <video src="TU_VIDEO.mp4" controls poster="POSTER.jpg"></video>
+
+      OPCIÓN B — YOUTUBE (reemplaza VIDEO_ID):
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1"
+              allowfullscreen allow="autoplay; encrypted-media"></iframe>
+
+      OPCIÓN C — VIMEO (reemplaza VIDEO_ID):
+      <iframe src="https://player.vimeo.com/video/VIDEO_ID"
+              allowfullscreen allow="autoplay"></iframe>
+    -->
+
+    <!-- Placeholder hasta que pegues tu video -->
+    <div class="video-placeholder">
+      <div class="play-ico">▶</div>
+      <span class="video-lbl">Pega aquí tu video o iframe de YouTube / Vimeo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     MISIÓN / VISIÓN
+════════════════════════════════ -->
+<section class="mv-section">
+  <div class="mv-item reveal-left">
+    <div class="mv-num">M</div>
+    <div class="s-label">Misión</div>
+    <h3>Por qué<br>existe el estudio</h3>
+    <!-- EDITA: tu misión -->
+    <p>
+      SAORI.STUDIO existe para replantear la forma en que se entiende el diseño. Nace de la necesidad de crear soluciones que no respondan a fórmulas universales, sino a contextos reales, humanos y específicos.
+
+El estudio busca convertir el diseño en un proceso consciente, donde cada proyecto tenga sentido propio y se construya desde la observación, la experiencia y la intención.
+
+Existe para dar valor al proceso tanto como al resultado, entendiendo el diseño como una herramienta para vivir, existir y transformar lo que nos rodea.
+    </p>
+    <div class="mv-badge">
+      ✦ &nbsp; Diseño con propósito
+    </div>
+  </div>
+  <div class="mv-item reveal-right">
+    <div class="mv-num">V</div>
+    <div class="s-label">Visión</div>
+    <h3>A dónde<br>vamos</h3>
+    <!-- EDITA: tu visión -->
+    <p>
+      Buscamos evolucionar como estudio, desarrollando un lenguaje propio que conecte lo humano con lo visual, lo funcional con lo emocional.
+
+Vamos hacia un lugar donde diseñar sea una forma de vivir y existir, creando trabajos que tengan sentido, identidad y propósito real.
+    </p>
+    <div class="mv-badge">
+      ✦ &nbsp; Estudio de referencia en MX
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     META / ROADMAP
+════════════════════════════════ -->
+<section class="meta-section">
+  <div class="meta-header reveal">
+    <div class="s-label">Metas</div>
+    <h2>A dónde<br>quiero llevar<br>esto</h2>
+  </div>
+  <div class="meta-grid">
+
+    <div class="meta-item reveal">
+      <div class="meta-year">2026 – 2027</div>
+      <div class="meta-title">Construir las bases</div>
+      <p class="meta-text">Desarrollar el estudio con una identidad clara, procesos definidos y un portafolio consistente que represente su visión de diseño.</p>
+      <span class="meta-status done"> </span>
+    </div>
+
+    <div class="meta-item reveal">
+      <div class="meta-year">2027 – 2032</div>
+      <div class="meta-title">Expandirlo a nivel internacional</div>
+      <!-- EDITA: tu meta actual -->
+      <p class="meta-text">Lograr que el trabajo trascienda lo local, conectando con proyectos, colaboraciones y oportunidades en distintos países.</p>
+      <span class="meta-status now"> </span>
+    </div>
+
+    <div class="meta-item reveal">
+      <div class="meta-year">2033</div>
+      <div class="meta-title">SAORI DESIGN</div>
+      <!-- EDITA: tu meta futura -->
+      <p class="meta-text">Consolidar una etapa más avanzada del estudio enfocada en el diseño industrial, integrando funcionalidad, concepto y desarrollo de sistemas de diseño.</p>
+      <span class="meta-status soon"></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker">
+  <div class="t-track">
+    <span>SAORI STUDIO</span><span class="sep">✦</span>
+    <span>VIVIR</span><span class="sep">✦</span>
+    <span>EXISTIR</span><span class="sep">✦</span>
+    <span>DISEÑAR</span><span class="sep">✦</span>
+    <span>BRANDING</span><span class="sep">✦</span>
+    <span>EDITORIAL</span><span class="sep">✦</span>
+    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
+    <span>MÉXICO</span><span class="sep">✦</span>
+    <span>SAORI STUDIO</span><span class="sep">✦</span>
+    <span>VIVIR</span><span class="sep">✦</span>
+    <span>EXISTIR</span><span class="sep">✦</span>
+    <span>DISEÑAR</span><span class="sep">✦</span>
+    <span>BRANDING</span><span class="sep">✦</span>
+    <span>EDITORIAL</span><span class="sep">✦</span>
+    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
+    <span>MÉXICO</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ─── CTA FINAL ─── -->
+<section class="cta-band reveal">
+  <h2>¿Tienes un<br><em>proyecto</em><br>en mente?</h2>
+  <div class="cta-btns">
+    <a href="index.html#contacto" class="btn-fill">Hablemos →</a>
+    <a href="proyectos.html" class="btn-line">Ver proyectos</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="f-logo">ADRIAN MASCORRO LEOS</div>
+      <div class="f-tagline">Diseñador Gráfico Creativo — México</div>
+    </div>
+    <div>
+      <div class="soc-lbl">Redes & Contacto</div>
+      <div class="soc-list">
+        <a href="https://linkedin.com" target="_blank" class="soc"><div class="soc-ico">in</div><span>LinkedIn</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.youtube.com/@SAORISTUDIO-g2i" target="_blank" class="soc"><div class="soc-ico">▶</div><span>YouTube</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.instagram.com/sa0ri.studio/" target="_blank" class="soc"><div class="soc-ico">◎</div><span>Instagram</span><span class="soc-arr">↗</span></a>
+        <a href="https://www.behance.net/saoristudio" target="_blank" class="soc"><div class="soc-ico">Bē</div><span>Behance</span><span class="soc-arr">↗</span></a>
+        <a href="mailto:contacto.saori.studio@gmail.com" class="soc"><div class="soc-ico">@</div><span>contacto.saori.studio@gmail.com</span><span class="soc-arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <div class="f-copy">© 2025 Saori Studio — Todos los derechos reservados</div>
+    <a href="#" class="f-up">↑ Volver arriba</a>
+  </div>
+</footer>
+
+<script>
+/* ─── CURSOR ─── */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+/* ─── MENU ─── */
+const menuBtn=document.getElementById('menuBtn'),sideMenu=document.getElementById('sideMenu');
+menuBtn.addEventListener('click',()=>sideMenu.classList.toggle('active'));
+sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sideMenu.classList.remove('active')));
+
+/* ─── SCROLL REVEAL ─── */
+(function(){
+  const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if(entry.isIntersecting){
+        entry.target.style.transitionDelay = (i * 0.04) + 's';
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
+  els.forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>
