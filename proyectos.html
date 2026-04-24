@@ -306,6 +306,13 @@ footer { background:var(--black); border-top:1px solid var(--border); padding:3.
     font-size:2rem;
   }
 }
+.projects-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1px;
+  background:var(--border);
+  grid-auto-flow:dense; /* 🔥 esto arregla huecos */
+}
 </style>
 </head>
 <body>
@@ -604,6 +611,9 @@ entry.target.style.transitionDelay = (col * 0.08) + 's';
     });
   });
 })();
+const isMobile = window.innerWidth <= 768;
+const col = isMobile ? 0 : i % 3;
 </script>
 </body>
 </html>
+
