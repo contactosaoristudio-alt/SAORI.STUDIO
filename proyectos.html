@@ -298,6 +298,61 @@ footer {
 .f-copy { font-size:.52rem; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); }
 .f-up   { font-size:.52rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--dim); transition:color .3s; }
 .f-up:hover { color:var(--white); }
+
+
+@media(max-width:640px){
+  header {
+    height:56px;
+  }
+
+  .h-logo {
+    position:static;
+    transform:none;
+    text-align:center;
+    flex:1;
+  }
+
+  .back-btn {
+    font-size:.45rem;
+  }
+
+  .menu-btn {
+    width:20px;
+  }
+}
+@media(max-width:640px){
+  h1.page-title {
+    font-size:clamp(2.2rem,10vw,3.2rem);
+    line-height:1;
+  }
+
+  .hero-bottom {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+@media(max-width:640px){
+  .page-hero,
+  .projects-section,
+  footer {
+    padding-left:1rem;
+    padding-right:1rem;
+  }
+}
+@media(max-width:640px){
+  .proj-info {
+    padding:.8rem;
+  }
+
+  .proj-name {
+    font-size:.75rem;
+  }
+
+  .proj-cat {
+    font-size:.42rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -640,8 +695,8 @@ sideMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMen
     entries.forEach(entry => {
       if(entry.isIntersecting){
         const idx = [...cards].indexOf(entry.target);
-        entry.target.style.transitionDelay = ((idx % 3) * 0.09) + 's';
-        entry.target.classList.add('visible');
+const columns = window.innerWidth <= 640 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+entry.target.style.transitionDelay = ((idx % columns) * 0.09) + 's';        entry.target.classList.add('visible');
         obs.unobserve(entry.target);
       }
     });
@@ -679,3 +734,4 @@ sideMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMen
 </script>
 </body>
 </html>
+
