@@ -12,7 +12,7 @@
   --card:   #171717;
   --border: rgba(255,255,255,0.08);
   --white:  #F4F2EE;
-  --dim:    #666666;
+  --dim:    #888888;
   --font:   'Montserrat', sans-serif;
 }
 
@@ -24,7 +24,7 @@ a{text-decoration:none;color:inherit;}
 
 ::-webkit-scrollbar{width:2px;}
 ::-webkit-scrollbar-track{background:var(--black);}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);}
 
 #cur{position:fixed;width:7px;height:7px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
 #curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s;}
@@ -38,8 +38,7 @@ body::before{
   opacity:.018;
 }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 /* ─── HEADER ─── */
 header{
@@ -49,7 +48,7 @@ header{
   background:rgba(8,8,8,.88);backdrop-filter:blur(24px);
   border-bottom:1px solid var(--border);
 }
-.h-logo{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
+.h-logo{position:absolute;left:50%;transform:translateX(-50%);}
 .logo{height:40px;object-fit:contain;}
 .logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
 .back-btn{
@@ -99,120 +98,115 @@ header{
   font-size:.44rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);
 }
 
-/* ─── PAGE HERO ─── */
-.page-hero{
-  margin-top:68px;
-  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,5vw,5rem) clamp(2.5rem,4vh,4rem);
-  border-bottom:1px solid var(--border);
-}
-.hero-eyebrow{
-  font-size:.44rem;font-weight:700;letter-spacing:.45em;text-transform:uppercase;
-  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:1.6rem;
-  opacity:0;animation:fadeUp .7s ease .2s forwards;
-}
-.hero-eyebrow::before{content:'';width:2rem;height:1px;background:var(--dim);display:block;}
-
-h1.page-title{
-  font-size:clamp(2.6rem,10vw,12rem);font-weight:900;
-  line-height:.88;letter-spacing:-.03em;text-transform:uppercase;
-  opacity:0;animation:fadeUp .9s ease .32s forwards;
-  word-break:break-word;
-}
-.hero-meta{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  margin-top:2.5rem;flex-wrap:wrap;gap:1.5rem;
-  opacity:0;animation:fadeUp .8s ease .5s forwards;
-}
-.hero-count{
-  font-size:.44rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);
-}
-.hero-count strong{
-  font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;color:var(--white);
-  letter-spacing:-.04em;display:block;line-height:1;margin-bottom:.3rem;
-}
-
-/* Filtros — scroll horizontal en móvil */
-.hero-filters{
-  display:flex;gap:.5rem;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  padding-bottom:2px; /* evita que se corte el borde inferior */
-  scrollbar-width:none;
-  max-width:100%;
-}
-.hero-filters::-webkit-scrollbar{display:none;}
-.filter-btn{
-  font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--dim);border:1px solid var(--border);
-  padding:.5rem 1rem;
-  background:transparent;cursor:pointer;font-family:var(--font);
-  transition:all .3s;
-  white-space:nowrap;
-  flex-shrink:0;
-}
-.filter-btn:hover,.filter-btn.active{color:var(--white);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04);}
-
-/* ─── GRID ─── */
-.projects-section{
-  padding:clamp(1.5rem,3vh,3rem) clamp(1.4rem,5vw,5rem) clamp(4rem,7vh,7rem);
-}
+/* ════════════════════════════════
+   GRID — solo imágenes
+════════════════════════════════ */
 .projects-grid{
+  margin-top:68px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  background:var(--border);
+  gap:clamp(1rem,2.5vw,2rem);
+  background:var(--black);
+  padding:clamp(1rem,2.5vw,2rem);
 }
 
+/* ── CARD ── */
 .proj-card{
-  background:var(--black);
-  position:relative;overflow:hidden;
-  opacity:0;transform:translateY(40px);
-  transition:opacity .8s ease,transform .8s ease;
+  position:relative;
+  overflow:hidden;
   display:block;
+  background:var(--card);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .7s ease, transform .7s ease;
 }
 .proj-card.visible{opacity:1;transform:translateY(0);}
 .proj-card.wide{grid-column:span 2;}
 
+/* Imagen */
 .proj-thumb{
-  width:100%;aspect-ratio:4/3;
-  object-fit:cover;display:block;
-  transition:transform .55s ease;
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  display:block;
+  transition:transform .6s cubic-bezier(.25,.46,.45,.94);
   background:var(--card);
 }
 .proj-card.wide .proj-thumb{aspect-ratio:16/9;}
-.proj-card:hover .proj-thumb{transform:scale(1.04);}
+.proj-card:hover .proj-thumb{transform:scale(1.05);}
 
-.proj-info{
-  padding:1.2rem 1.4rem 1.6rem;
-  border-top:1px solid var(--border);
-  display:flex;flex-direction:column;gap:.4rem;
-  background:var(--black);
+/* Overlay — siempre visible en la parte inferior */
+.proj-ov{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(8,8,8,.92) 0%,
+    rgba(8,8,8,.5)  35%,
+    rgba(8,8,8,.0)  70%
+  );
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:1.8rem 2rem;
+  transition:background .4s ease;
 }
-.proj-num{font-size:.42rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
-.proj-name{font-size:.9rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:color .3s;}
-.proj-card:hover .proj-name{color:var(--white);}
-.proj-cat{font-size:.44rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
+.proj-card:hover .proj-ov{
+  background:linear-gradient(
+    to top,
+    rgba(8,8,8,.97) 0%,
+    rgba(8,8,8,.7)  50%,
+    rgba(8,8,8,.15) 100%
+  );
+}
+
+/* Número */
+.proj-num{
+  font-size:.4rem;font-weight:700;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+  display:block;margin-bottom:.5rem;
+}
+
+/* Título del proyecto */
+.proj-name{
+  font-size:clamp(.9rem,2vw,1.3rem);
+  font-weight:900;letter-spacing:-.01em;
+  text-transform:uppercase;line-height:.95;
+  color:var(--white);display:block;
+}
+
+/* Categoría SAORI — aparece en hover */
+.proj-cat{
+  font-size:.42rem;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  display:block;margin-top:.6rem;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.proj-card:hover .proj-cat{opacity:1;transform:translateY(0);}
+
+/* Flecha */
 .proj-arrow{
-  position:absolute;top:1rem;right:1.2rem;
-  font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--dim);opacity:0;transform:translateX(-6px);
-  transition:opacity .3s,transform .3s;
+  position:absolute;top:1.2rem;right:1.4rem;
+  font-size:.5rem;font-weight:700;letter-spacing:.18em;
+  color:rgba(255,255,255,.5);
+  opacity:0;transform:translate(-4px,-4px);
+  transition:opacity .3s, transform .3s;
 }
-.proj-card:hover .proj-arrow{opacity:1;transform:translateX(0);}
-
-/* ─── TICKER ─── */
-.ticker{
-  background:var(--white);overflow:hidden;padding:.5rem 0;
-  white-space:nowrap;border-top:1px solid var(--border);
-}
-.t-track{display:inline-flex;animation:ticker 30s linear infinite;}
-.t-track span{font-size:.54rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--black);padding:0 2rem;}
-.t-track span.sep{color:rgba(0,0,0,.22);padding:0 .3rem;}
+.proj-card:hover .proj-arrow{opacity:1;transform:translate(0,0);}
 
 /* ─── FOOTER ─── */
-footer{background:var(--black);border-top:1px solid var(--border);padding:4rem clamp(1.4rem,5vw,5rem) 2.5rem;}
-.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+footer{
+  background:var(--black);border-top:1px solid var(--border);
+  padding:4rem clamp(1.4rem,5vw,5rem) 2.5rem;
+}
+.foot-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:2.5rem;
+  padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;
+}
 .f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
 .f-tagline{font-size:.56rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.4rem;}
 .soc-lbl{font-size:.44rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:1.2rem;}
@@ -238,45 +232,20 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 
 @media(max-width:768px){
   header{padding:0 1.4rem;}
-
-  /* Hero */
-  .page-hero{padding:3.5rem 1.4rem 2.5rem;}
-  h1.page-title{font-size:clamp(2.4rem,9.5vw,4rem);letter-spacing:-.02em;line-height:.9;}
-  .hero-meta{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:1.2rem;
-    margin-top:2rem;
-  }
-  .hero-count strong{font-size:clamp(1.6rem,8vw,2.4rem);}
-
-  /* Filtros scroll horizontal */
-  .hero-filters{
-    width:calc(100% + 2.8rem);  /* sangra hasta el borde */
-    margin-left:-1.4rem;
-    padding-left:1.4rem;
-    padding-right:1.4rem;
-  }
-
-  /* Grid — 1 columna, sin wide */
-  .projects-section{padding:1.5rem 1.4rem 4rem;}
-  .projects-grid{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;gap:.8rem;padding:.8rem;}
   .proj-card.wide{grid-column:span 1;}
   .proj-card.wide .proj-thumb{aspect-ratio:4/3;}
 
-  /* Nombres de proyecto más pequeños */
-  .proj-name{font-size:.82rem;}
+  /* En móvil el overlay siempre visible — sin hover */
+  .proj-cat{opacity:1;transform:translateY(0);}
+  .proj-arrow{opacity:1;transform:translate(0,0);}
 
-  /* Footer */
+  .proj-name{font-size:clamp(.9rem,4vw,1.2rem);}
+  .proj-ov{padding:1.4rem 1.4rem;}
+
   footer{padding:3rem 1.4rem 2rem;}
   .foot-top{flex-direction:column;gap:2rem;}
   .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
-}
-
-@media(max-width:480px){
-  h1.page-title{font-size:clamp(2rem,9vw,3rem);letter-spacing:-.02em;}
-  .filter-btn{font-size:.38rem;padding:.45rem .85rem;}
-  .proj-name{font-size:.78rem;}
 }
 </style>
 </head>
@@ -286,6 +255,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 <div id="curR"></div>
 <div class="menu-overlay" id="menuOverlay"></div>
 
+<!-- HEADER -->
 <header>
   <a href="index.html" class="back-btn">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -310,170 +280,132 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
   <div class="menu-footer">SAORI.STUDIO © 2025</div>
 </nav>
 
-<section class="page-hero">
-  <div class="hero-eyebrow">Saori Studio — Portafolio</div>
-  <h1 class="page-title">Proyectos</h1>
-  <div class="hero-meta">
-    <div class="hero-count">
-      <strong>12</strong>
-      Trabajos seleccionados
+<!-- GRID — solo imágenes -->
+<div class="projects-grid" id="projGrid">
+
+  <a href="proyecto-nuevo-amanecer.html" class="proj-card wide">
+    <img src="NUEVO AMANEER/PORTADA.jpg" alt="Nuevo Amanecer" class="proj-thumb" onerror="this.style.minHeight='300px'">
+    <div class="proj-ov">
+      <span class="proj-num">01</span>
+      <span class="proj-name">Nuevo Amanecer</span>
+      <span class="proj-cat">SAORI. Naming & Visual</span>
     </div>
-    <div class="hero-filters">
-      <button class="filter-btn active" data-filter="all">Todos</button>
-      <button class="filter-btn" data-filter="branding">Branding</button>
-      <button class="filter-btn" data-filter="editorial">Editorial</button>
-      <button class="filter-btn" data-filter="motion">Motion</button>
-      <button class="filter-btn" data-filter="fotografia">Fotografía</button>
-      <button class="filter-btn" data-filter="ilustracion">Ilustración</button>
+    <span class="proj-arrow">↗</span>
+  </a>
+
+  <a href="proyecto-garabatos.html" class="proj-card">
+    <img src="GARABATOS/POTADA2.jpg" alt="Garabatos" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">02</span>
+      <span class="proj-name">Garabatos</span>
+      <span class="proj-cat">SAORI. Experience</span>
     </div>
-  </div>
-</section>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-<section class="projects-section">
-  <div class="projects-grid" id="projGrid">
+  <a href="proyecto-drift.html" class="proj-card">
+    <img src="DRIFT/PORTDA.jpg" alt="Drift" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">03</span>
+      <span class="proj-name">Drift</span>
+      <span class="proj-cat">SAORI. Editorial</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-nuevo-amanecer.html" class="proj-card wide" data-cat="branding">
-      <img src="NUEVO AMANEER/PORTADA.jpg" alt="Nuevo Amanecer" class="proj-thumb" onerror="this.style.minHeight='220px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">01</span>
-        <span class="proj-name">Nuevo Amanecer</span>
-        <span class="proj-cat">Branding</span>
-      </div>
-    </a>
+  <a href="proyecto-saori-archive.html" class="proj-card">
+    <img src="SAORI ARCHIVE/SAOR. ARCHIVE.gif" alt="Saori Archive" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">04</span>
+      <span class="proj-name">Saori Archive</span>
+      <span class="proj-cat">SAORI. Visual</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-garabatos.html" class="proj-card" data-cat="fotografia">
-      <img src="GARABATOS/POTADA2.jpg" alt="Garabatos" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">02</span>
-        <span class="proj-name">Garabatos</span>
-        <span class="proj-cat">Fotografía</span>
-      </div>
-    </a>
+  <a href="proyecto-05.html" class="proj-card wide">
+    <img src="FOTOS HTML 1/Sn título-1.png" alt="Libro Maquetado" class="proj-thumb" onerror="this.style.minHeight='300px'">
+    <div class="proj-ov">
+      <span class="proj-num">05</span>
+      <span class="proj-name">Libro Maquetado</span>
+      <span class="proj-cat">SAORI. Editorial</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-drift.html" class="proj-card" data-cat="ilustracion">
-      <img src="DRIFT/PORTDA.jpg" alt="Drift" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">03</span>
-        <span class="proj-name">Drift</span>
-        <span class="proj-cat">Ilustración</span>
-      </div>
-    </a>
+  <a href="proyecto-06.html" class="proj-card">
+    <img src="FOTOS HTML 1/Sin ttulo-1.png" alt="Campaña Impresa" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">06</span>
+      <span class="proj-name">Campaña Impresa</span>
+      <span class="proj-cat">SAORI. Visual</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-saori-archive.html" class="proj-card" data-cat="motion">
-      <img src="SAORI ARCHIVE/SAOR. ARCHIVE.gif" alt="Saori Archive" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">04</span>
-        <span class="proj-name">Saori Archive</span>
-        <span class="proj-cat">Motion Graphics</span>
-      </div>
-    </a>
+  <a href="proyecto-07.html" class="proj-card">
+    <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Proyecto 07" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">07</span>
+      <span class="proj-name">Proyecto 07</span>
+      <span class="proj-cat">SAORI. Naming & Voice</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-05.html" class="proj-card wide" data-cat="editorial">
-      <img src="FOTOS HTML 1/Sn título-1.png" alt="Proyecto 05" class="proj-thumb" onerror="this.style.minHeight='220px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">05</span>
-        <span class="proj-name">Libro Maquetado</span>
-        <span class="proj-cat">Editorial</span>
-      </div>
-    </a>
+  <a href="proyecto-08.html" class="proj-card wide">
+    <img src="" alt="Proyecto 08" class="proj-thumb" onerror="this.style.minHeight='300px'">
+    <div class="proj-ov">
+      <span class="proj-num">08</span>
+      <span class="proj-name">Proyecto 08</span>
+      <span class="proj-cat">SAORI. Visual</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-06.html" class="proj-card" data-cat="editorial">
-      <img src="FOTOS HTML 1/Sin ttulo-1.png" alt="Proyecto 06" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">06</span>
-        <span class="proj-name">Campaña Impresa</span>
-        <span class="proj-cat">Impresión</span>
-      </div>
-    </a>
+  <a href="proyecto-09.html" class="proj-card">
+    <img src="" alt="Proyecto 09" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">09</span>
+      <span class="proj-name">Proyecto 09</span>
+      <span class="proj-cat">SAORI. Experience</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-07.html" class="proj-card" data-cat="branding">
-      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Proyecto 07" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">07</span>
-        <span class="proj-name">Proyecto 07</span>
-        <span class="proj-cat">Branding</span>
-      </div>
-    </a>
+  <a href="proyecto-10.html" class="proj-card">
+    <img src="" alt="Proyecto 10" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">10</span>
+      <span class="proj-name">Proyecto 10</span>
+      <span class="proj-cat">SAORI. Editorial</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-08.html" class="proj-card wide" data-cat="motion">
-      <img src="" alt="Proyecto 08" class="proj-thumb" onerror="this.style.minHeight='220px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">08</span>
-        <span class="proj-name">Proyecto 08</span>
-        <span class="proj-cat">Motion Graphics</span>
-      </div>
-    </a>
+  <a href="proyecto-11.html" class="proj-card">
+    <img src="" alt="Proyecto 11" class="proj-thumb" onerror="this.style.minHeight='260px'">
+    <div class="proj-ov">
+      <span class="proj-num">11</span>
+      <span class="proj-name">Proyecto 11</span>
+      <span class="proj-cat">SAORI. Editorial</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-09.html" class="proj-card" data-cat="fotografia">
-      <img src="" alt="Proyecto 09" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">09</span>
-        <span class="proj-name">Proyecto 09</span>
-        <span class="proj-cat">Fotografía</span>
-      </div>
-    </a>
+  <a href="proyecto-12.html" class="proj-card wide">
+    <img src="" alt="Proyecto 12" class="proj-thumb" onerror="this.style.minHeight='300px'">
+    <div class="proj-ov">
+      <span class="proj-num">12</span>
+      <span class="proj-name">Proyecto 12</span>
+      <span class="proj-cat">SAORI. Naming & Visual</span>
+    </div>
+    <span class="proj-arrow">↗</span>
+  </a>
 
-    <a href="proyecto-10.html" class="proj-card" data-cat="ilustracion">
-      <img src="" alt="Proyecto 10" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">10</span>
-        <span class="proj-name">Proyecto 10</span>
-        <span class="proj-cat">Ilustración</span>
-      </div>
-    </a>
-
-    <a href="proyecto-11.html" class="proj-card" data-cat="editorial">
-      <img src="" alt="Proyecto 11" class="proj-thumb" onerror="this.style.minHeight='180px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">11</span>
-        <span class="proj-name">Proyecto 11</span>
-        <span class="proj-cat">Editorial</span>
-      </div>
-    </a>
-
-    <a href="proyecto-12.html" class="proj-card wide" data-cat="branding">
-      <img src="" alt="Proyecto 12" class="proj-thumb" onerror="this.style.minHeight='220px'">
-      <span class="proj-arrow">Ver →</span>
-      <div class="proj-info">
-        <span class="proj-num">12</span>
-        <span class="proj-name">Proyecto 12</span>
-        <span class="proj-cat">Branding</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<div class="ticker">
-  <div class="t-track">
-    <span>SAORI STUDIO</span><span class="sep">✦</span>
-    <span>DISEÑO GRÁFICO</span><span class="sep">✦</span>
-    <span>BRANDING</span><span class="sep">✦</span>
-    <span>EDITORIAL</span><span class="sep">✦</span>
-    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
-    <span>FOTOGRAFÍA</span><span class="sep">✦</span>
-    <span>ILUSTRACIÓN</span><span class="sep">✦</span>
-    <span>SAORI STUDIO</span><span class="sep">✦</span>
-    <span>DISEÑO GRÁFICO</span><span class="sep">✦</span>
-    <span>BRANDING</span><span class="sep">✦</span>
-    <span>EDITORIAL</span><span class="sep">✦</span>
-    <span>MOTION GRAPHIC</span><span class="sep">✦</span>
-    <span>FOTOGRAFÍA</span><span class="sep">✦</span>
-    <span>ILUSTRACIÓN</span><span class="sep">✦</span>
-  </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <div class="foot-top">
     <div>
@@ -525,42 +457,15 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
-        const cols = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
+        const cols=window.innerWidth<=768?1:window.innerWidth<=1100?2:3;
         const i=[...cards].indexOf(entry.target);
-        entry.target.style.transitionDelay=(i % cols * 0.08)+'s';
+        entry.target.style.transitionDelay=(i%cols*0.1)+'s';
         entry.target.classList.add('visible');
         obs.unobserve(entry.target);
       }
     });
-  },{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+  },{threshold:0.06,rootMargin:'0px 0px -20px 0px'});
   cards.forEach(c=>obs.observe(c));
-})();
-
-/* ── FILTROS ── */
-(function(){
-  const btns=document.querySelectorAll('.filter-btn');
-  const cards=document.querySelectorAll('.proj-card');
-  const isMobile=()=>window.innerWidth<=768;
-  btns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      btns.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const f=btn.dataset.filter;
-      cards.forEach(card=>{
-        const match=f==='all'||card.dataset.cat===f;
-        card.style.display=match?'':'none';
-        // En móvil no usar span 2
-        if(match && card.classList.contains('wide')){
-          card.style.gridColumn=isMobile()?'span 1':'span 2';
-        }
-      });
-    });
-  });
-  // Ajuste de wide al resize
-  window.addEventListener('resize',()=>{
-    const active=document.querySelector('.filter-btn.active');
-    if(active) active.click();
-  });
 })();
 </script>
 </body>
