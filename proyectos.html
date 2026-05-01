@@ -29,7 +29,6 @@ a{text-decoration:none;color:inherit;}
 #cur{position:fixed;width:7px;height:7px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
 #curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s;}
 @media(max-width:768px){#cur,#curR{display:none;}}
-
 body:has(a:hover) #cur{transform:translate(-50%,-50%) scale(0);}
 body:has(a:hover) #curR{width:52px;height:52px;border-color:rgba(255,255,255,.45);}
 
@@ -53,7 +52,6 @@ header{
 .h-logo{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
 .logo{height:40px;object-fit:contain;}
 .logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
-
 .back-btn{
   font-size:.48rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
   color:var(--dim);display:flex;align-items:center;gap:.6rem;transition:color .3s;
@@ -61,8 +59,7 @@ header{
 .back-btn:hover{color:var(--white);}
 .back-btn svg{transition:transform .3s;}
 .back-btn:hover svg{transform:translateX(-4px);}
-
-.menu-btn{width:26px;height:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:none;border:none;}
+.menu-btn{width:26px;height:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:none;border:none;padding:0;}
 .menu-btn span{height:1px;background:var(--white);display:block;}
 
 /* ─── SIDE MENU ─── */
@@ -105,7 +102,7 @@ header{
 /* ─── PAGE HERO ─── */
 .page-hero{
   margin-top:68px;
-  padding:clamp(5rem,9vh,8rem) clamp(1.2rem,5vw,5rem) clamp(3rem,5vh,4.5rem);
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,5vw,5rem) clamp(2.5rem,4vh,4rem);
   border-bottom:1px solid var(--border);
 }
 .hero-eyebrow{
@@ -115,40 +112,51 @@ header{
 }
 .hero-eyebrow::before{content:'';width:2rem;height:1px;background:var(--dim);display:block;}
 
-/* JERARQUÍA — Título principal */
 h1.page-title{
-  font-size:clamp(5rem,13vw,12rem);font-weight:900;
-  line-height:.86;letter-spacing:-.04em;text-transform:uppercase;
+  font-size:clamp(2.6rem,10vw,12rem);font-weight:900;
+  line-height:.88;letter-spacing:-.03em;text-transform:uppercase;
   opacity:0;animation:fadeUp .9s ease .32s forwards;
+  word-break:break-word;
 }
 .hero-meta{
   display:flex;align-items:flex-end;justify-content:space-between;
-  margin-top:3rem;flex-wrap:wrap;gap:1.5rem;
+  margin-top:2.5rem;flex-wrap:wrap;gap:1.5rem;
   opacity:0;animation:fadeUp .8s ease .5s forwards;
 }
-
-/* JERARQUÍA — Contador */
 .hero-count{
   font-size:.44rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);
 }
 .hero-count strong{
-  font-size:clamp(2rem,4vw,3.2rem);font-weight:900;color:var(--white);
+  font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;color:var(--white);
   letter-spacing:-.04em;display:block;line-height:1;margin-bottom:.3rem;
 }
 
-/* JERARQUÍA — Filtros */
-.hero-filters{display:flex;gap:.5rem;flex-wrap:wrap;}
+/* Filtros — scroll horizontal en móvil */
+.hero-filters{
+  display:flex;gap:.5rem;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:2px; /* evita que se corte el borde inferior */
+  scrollbar-width:none;
+  max-width:100%;
+}
+.hero-filters::-webkit-scrollbar{display:none;}
 .filter-btn{
   font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--dim);border:1px solid var(--border);padding:.5rem 1rem;
+  color:var(--dim);border:1px solid var(--border);
+  padding:.5rem 1rem;
   background:transparent;cursor:pointer;font-family:var(--font);
   transition:all .3s;
+  white-space:nowrap;
+  flex-shrink:0;
 }
 .filter-btn:hover,.filter-btn.active{color:var(--white);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04);}
 
 /* ─── GRID ─── */
-.projects-section{padding:clamp(2rem,4vh,4rem) clamp(1.2rem,5vw,5rem) clamp(5rem,8vh,8rem);}
-
+.projects-section{
+  padding:clamp(1.5rem,3vh,3rem) clamp(1.4rem,5vw,5rem) clamp(4rem,7vh,7rem);
+}
 .projects-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -156,12 +164,12 @@ h1.page-title{
   background:var(--border);
 }
 
-/* JERARQUÍA — Card de proyecto */
 .proj-card{
   background:var(--black);
   position:relative;overflow:hidden;
   opacity:0;transform:translateY(40px);
   transition:opacity .8s ease,transform .8s ease;
+  display:block;
 }
 .proj-card.visible{opacity:1;transform:translateY(0);}
 .proj-card.wide{grid-column:span 2;}
@@ -176,24 +184,17 @@ h1.page-title{
 .proj-card:hover .proj-thumb{transform:scale(1.04);}
 
 .proj-info{
-  padding:1.4rem 1.6rem 1.8rem;
+  padding:1.2rem 1.4rem 1.6rem;
   border-top:1px solid var(--border);
   display:flex;flex-direction:column;gap:.4rem;
   background:var(--black);
 }
-
-/* JERARQUÍA — Número del proyecto */
 .proj-num{font-size:.42rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
-
-/* JERARQUÍA — Nombre del proyecto */
-.proj-name{font-size:.95rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:color .3s;}
+.proj-name{font-size:.9rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:color .3s;}
 .proj-card:hover .proj-name{color:var(--white);}
-
-/* JERARQUÍA — Categoría */
 .proj-cat{font-size:.44rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
-
 .proj-arrow{
-  position:absolute;top:1.2rem;right:1.4rem;
+  position:absolute;top:1rem;right:1.2rem;
   font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
   color:var(--dim);opacity:0;transform:translateX(-6px);
   transition:opacity .3s,transform .3s;
@@ -210,7 +211,7 @@ h1.page-title{
 .t-track span.sep{color:rgba(0,0,0,.22);padding:0 .3rem;}
 
 /* ─── FOOTER ─── */
-footer{background:var(--black);border-top:1px solid var(--border);padding:4rem clamp(1.2rem,5vw,5rem) 2.5rem;}
+footer{background:var(--black);border-top:1px solid var(--border);padding:4rem clamp(1.4rem,5vw,5rem) 2.5rem;}
 .foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
 .f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
 .f-tagline{font-size:.56rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.4rem;}
@@ -227,22 +228,55 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 .f-up{font-size:.48rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .3s;}
 .f-up:hover{color:var(--white);}
 
-/* ─── RESPONSIVE ─── */
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
 @media(max-width:1100px){
   .projects-grid{grid-template-columns:repeat(2,1fr);}
   .proj-card.wide{grid-column:span 2;}
 }
+
 @media(max-width:768px){
   header{padding:0 1.4rem;}
-  .page-hero{padding:5rem 1.4rem 3.5rem;}
-  h1.page-title{font-size:clamp(4rem,16vw,6rem);}
-  .hero-meta{flex-direction:column;align-items:flex-start;}
-  .projects-section{padding:2.5rem 1.4rem 5rem;}
+
+  /* Hero */
+  .page-hero{padding:3.5rem 1.4rem 2.5rem;}
+  h1.page-title{font-size:clamp(2.4rem,9.5vw,4rem);letter-spacing:-.02em;line-height:.9;}
+  .hero-meta{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:1.2rem;
+    margin-top:2rem;
+  }
+  .hero-count strong{font-size:clamp(1.6rem,8vw,2.4rem);}
+
+  /* Filtros scroll horizontal */
+  .hero-filters{
+    width:calc(100% + 2.8rem);  /* sangra hasta el borde */
+    margin-left:-1.4rem;
+    padding-left:1.4rem;
+    padding-right:1.4rem;
+  }
+
+  /* Grid — 1 columna, sin wide */
+  .projects-section{padding:1.5rem 1.4rem 4rem;}
   .projects-grid{grid-template-columns:1fr;}
   .proj-card.wide{grid-column:span 1;}
   .proj-card.wide .proj-thumb{aspect-ratio:4/3;}
+
+  /* Nombres de proyecto más pequeños */
+  .proj-name{font-size:.82rem;}
+
+  /* Footer */
   footer{padding:3rem 1.4rem 2rem;}
   .foot-top{flex-direction:column;gap:2rem;}
+  .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
+}
+
+@media(max-width:480px){
+  h1.page-title{font-size:clamp(2rem,9vw,3rem);letter-spacing:-.02em;}
+  .filter-btn{font-size:.38rem;padding:.45rem .85rem;}
+  .proj-name{font-size:.78rem;}
 }
 </style>
 </head>
@@ -271,7 +305,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
   <a href="index.html#inicio">Inicio</a>
   <a href="proyectos.html">Proyectos</a>
   <a href="estudio.html">Studio</a>
-  <a href="servicios.html">Servicios</a>
   <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
   <a href="index.html#contacto">Contacto</a>
   <div class="menu-footer">SAORI.STUDIO © 2025</div>
@@ -465,6 +498,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 </footer>
 
 <script>
+/* ── CURSOR ── */
 const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
 if(cur&&curR){
@@ -472,36 +506,41 @@ if(cur&&curR){
   (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
 }
 
+/* ── MENU ── */
 const menuBtn=document.getElementById('menuBtn');
 const menuClose=document.getElementById('menuClose');
 const sideMenu=document.getElementById('sideMenu');
 const menuOverlay=document.getElementById('menuOverlay');
-const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');};
-const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');};
+const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow='hidden';};
+const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow='';};
 menuBtn.addEventListener('click',()=>sideMenu.classList.contains('active')?closeMenu():openMenu());
 menuClose.addEventListener('click',closeMenu);
 menuOverlay.addEventListener('click',closeMenu);
 sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
+/* ── SCROLL REVEAL ── */
 (function(){
   const cards=document.querySelectorAll('.proj-card');
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
+        const cols = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
         const i=[...cards].indexOf(entry.target);
-        entry.target.style.transitionDelay=(i%3*0.08)+'s';
+        entry.target.style.transitionDelay=(i % cols * 0.08)+'s';
         entry.target.classList.add('visible');
         obs.unobserve(entry.target);
       }
     });
-  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  },{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
   cards.forEach(c=>obs.observe(c));
 })();
 
+/* ── FILTROS ── */
 (function(){
   const btns=document.querySelectorAll('.filter-btn');
   const cards=document.querySelectorAll('.proj-card');
+  const isMobile=()=>window.innerWidth<=768;
   btns.forEach(btn=>{
     btn.addEventListener('click',()=>{
       btns.forEach(b=>b.classList.remove('active'));
@@ -510,9 +549,17 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
       cards.forEach(card=>{
         const match=f==='all'||card.dataset.cat===f;
         card.style.display=match?'':'none';
-        if(card.classList.contains('wide'))card.style.gridColumn=match?'span 2':'';
+        // En móvil no usar span 2
+        if(match && card.classList.contains('wide')){
+          card.style.gridColumn=isMobile()?'span 1':'span 2';
+        }
       });
     });
+  });
+  // Ajuste de wide al resize
+  window.addEventListener('resize',()=>{
+    const active=document.querySelector('.filter-btn.active');
+    if(active) active.click();
   });
 })();
 </script>
