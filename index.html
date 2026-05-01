@@ -512,38 +512,77 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
 /* ════════════════════════════════
    RESPONSIVE
 ════════════════════════════════ */
-@media(max-width:1200px){.foot-top{grid-template-columns:1fr 1fr;gap:3rem;}}
+@media(max-width:1200px){
+  .foot-top{grid-template-columns:1fr 1fr;gap:3rem;}
+}
+
 @media(max-width:1024px){
   .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
   .process-grid{grid-template-columns:1fr 1fr;}
   .p-item:nth-child(2){border-right:none;}
   .p-item:nth-child(1),.p-item:nth-child(2){border-bottom:1px solid var(--border);}
   .port-item,.port-item.featured{flex:0 0 calc(80% - .5px)!important;aspect-ratio:4/3!important;}
+  /* Hero tablet */
+  .hero-saori,.hero-line-2{font-size:clamp(2.2rem,6.5vw,6rem);}
 }
+
 @media(max-width:768px){
   body{cursor:auto;}
   #cur,#curR{display:none;}
-  .sec{padding:5rem 1.4rem;}
+
+  /* Secciones */
+  .sec{padding:4rem 1.4rem;}
   header{padding:0 1.4rem;}
-  .presentation-wrap{padding:4rem 1.4rem 5rem;}
-  .pres-stats{gap:2.5rem;}
-  .services-grid{grid-template-columns:1fr;}
-  .svc-item:nth-child(odd),.svc-item:nth-child(even){padding:2rem 0;border-right:none;}
+
+  /* Hero — fuente más pequeña para que quepan en una línea */
+  .hero-title-wrap{padding:0 1rem;}
+  .hero-saori,.hero-line-2{
+    font-size:clamp(1.6rem,8.5vw,3.2rem);
+    letter-spacing:-.03em;
+  }
+
+  /* Presentación */
+  .presentation-wrap{padding:3.5rem 1.4rem 4rem;}
+  .pres-stats{gap:2rem;}
+  .pres-title{font-size:clamp(2rem,9vw,3rem);}
+
+  /* Portafolio */
+  .port-item,.port-item.featured{flex:0 0 100%!important;aspect-ratio:4/3!important;}
+
+  /* Proceso */
   .process-grid{grid-template-columns:1fr;}
   .p-item:not(:last-child){border-right:none;border-bottom:1px solid var(--border);}
+
+  /* Servicios */
+  .services-grid{grid-template-columns:1fr;}
+  .svc-item:nth-child(odd),.svc-item:nth-child(even){padding:2rem 0;border-right:none;}
+
+  /* Títulos generales */
+  .s-title{font-size:clamp(1.9rem,8vw,2.6rem);}
+
+  /* Statement banner */
+  .statement-content h2{font-size:clamp(2rem,9vw,4rem);}
+
+  /* Contacto */
+  .contact-grid{grid-template-columns:1fr;gap:2rem;}
   .frow{grid-template-columns:1fr;}
+
+  /* Footer */
   footer{padding:3rem 1.4rem 2rem;}
   .foot-top{grid-template-columns:1fr;gap:2.5rem;}
   .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
-  .port-item,.port-item.featured{flex:0 0 100%!important;aspect-ratio:4/3!important;}
-  .s-title{font-size:clamp(1.9rem,8vw,2.6rem);}
+
+  /* Menú lateral */
   .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
-  .hero-center-text{pointer-events:none;}
-  .hero-title-wrap .line-static{font-size:clamp(3rem,13vw,5rem);}
-  .hero-cycle-row{height:clamp(3rem,13vw,5rem);}
-  .hero-cycle-word{font-size:clamp(3rem,13vw,5rem);}
-  .pres-title{font-size:clamp(2rem,9vw,3rem);}
-  .statement-content h2{font-size:clamp(2.5rem,10vw,5rem);}
+}
+
+@media(max-width:480px){
+  /* Móvil pequeño (iPhone SE, etc.) */
+  .hero-saori,.hero-line-2{
+    font-size:clamp(1.4rem,7.5vw,2.4rem);
+  }
+  .statement-content h2{font-size:clamp(1.8rem,8vw,3rem);}
+  .sec{padding:3.5rem 1.2rem;}
 }
 </style>
 </head>
