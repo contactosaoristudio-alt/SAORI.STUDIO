@@ -458,7 +458,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
 
         <div class="port-item featured">
           <div class="pp">
-            <img src="NUEVO AMANEER/PORTADA.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
+            <img src="NUEVO AMANECER\PORTADA.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
             <div class="pp-ico">◻</div><div class="pp-lbl">NUEVO AMANECER</div>
           </div>
           <div class="port-ov">
@@ -587,7 +587,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
       <div class="f-tagline">Diseñador Gráfico Creativo — México</div>
     </div>
     <div>
-     
+      
       </nav>
     </div>
     <div>
@@ -629,25 +629,20 @@ menuOverlay.addEventListener('click',closeMenu);
 sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
-/* ── HERO WORD CYCLE ── */
+/* ── HERO TITLE FADE IN ── */
 (function(){
-  const el=document.getElementById('heroWord');
-  if(!el) return;
-  const words=['STUDIO','BRAND','EXPERIENCE','DESIGN','EDITORIAL'];
-  let i=0;
-  el.style.opacity='1';
-  el.style.transition='none';
-  function cycle(){
-    el.style.transition='opacity 0.35s ease';
-    el.style.opacity='0';
-    setTimeout(function(){
-      i=(i+1)%words.length;
-      el.textContent=words[i];
-      el.style.transition='opacity 0.35s ease';
-      el.style.opacity='1';
-    },380);
-  }
-  setInterval(cycle,2400);
+  const saori = document.querySelector('.hero-saori');
+  const studio = document.getElementById('heroWord');
+  if(!saori || !studio) return;
+  saori.style.opacity = '0';
+  studio.style.opacity = '0';
+  studio.textContent = 'STUDIO';
+  setTimeout(function(){
+    saori.style.transition = 'opacity 1s ease';
+    studio.style.transition = 'opacity 1s ease';
+    saori.style.opacity = '1';
+    studio.style.opacity = '1';
+  }, 3000);
 })();
 
 /* ── CARRUSEL ── */
