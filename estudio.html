@@ -49,7 +49,7 @@ header{
   background:rgba(8,8,8,.88);backdrop-filter:blur(24px);
   border-bottom:1px solid var(--border);
 }
-.h-logo{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
+.h-logo{position:absolute;left:50%;transform:translateX(-50%);}
 .logo{height:40px;object-fit:contain;}
 .logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
 .back-btn{
@@ -99,11 +99,9 @@ header{
   font-size:.44rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);
 }
 
-/* ─── SCROLL REVEAL ─── */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.visible,.reveal-left.visible,.reveal-right.visible{opacity:1;transform:none;}
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:none;}
 
 /* ─── LABEL ─── */
 .s-label{
@@ -112,153 +110,205 @@ header{
 }
 .s-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
 
-/* ─── PAGE HERO — sin foto, solo texto centrado ─── */
+/* ════════════════════════════════
+   HERO
+════════════════════════════════ */
 .page-hero{
   margin-top:68px;
-  min-height:70svh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:clamp(3.5rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
+  min-height:80svh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
   border-bottom:1px solid var(--border);
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(4rem,8vh,8rem) clamp(1.4rem,6vw,6rem);
+  border-right:1px solid var(--border);
 }
 .hero-eyebrow{
   font-size:.44rem;font-weight:700;letter-spacing:.45em;text-transform:uppercase;
-  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:1.8rem;
-  opacity:0;animation:fadeUp .7s ease .2s forwards;
+  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;
+  opacity:0;animation:fadeUp .7s ease .15s forwards;
 }
-.hero-eyebrow::before{content:'';width:2rem;height:1px;background:var(--dim);display:block;}
-
+.hero-eyebrow::before{content:'';width:1.8rem;height:1px;background:var(--dim);display:block;}
 h1.hero-title{
-  font-size:clamp(3.2rem,9vw,9rem);
-  font-weight:900;
-  line-height:.88;
-  letter-spacing:-.04em;
-  text-transform:uppercase;
-  max-width:800px;
-  opacity:0;
-  animation:fadeUp .85s ease .32s forwards;
+  font-size:clamp(3rem,7.5vw,8rem);
+  font-weight:900;line-height:.88;
+  letter-spacing:-.04em;text-transform:uppercase;
+  opacity:0;animation:fadeUp .85s ease .28s forwards;
 }
-.hero-title em{font-style:italic;font-weight:200;display:block;}
-
+.hero-title em{font-style:italic;font-weight:200;}
 .hero-desc{
-  font-size:clamp(.8rem,1.6vw,.95rem);
-  font-weight:300;
-  line-height:2.2;
-  color:rgba(244,242,238,.6);
-  max-width:560px;
-  margin-top:2.2rem;
-  opacity:0;
-  animation:fadeUp .85s ease .5s forwards;
+  font-size:clamp(.8rem,1.4vw,.92rem);font-weight:300;
+  line-height:2.2;color:rgba(244,242,238,.55);
+  max-width:480px;margin-top:2rem;
+  opacity:0;animation:fadeUp .85s ease .44s forwards;
 }
 .hero-sign{
-  margin-top:2.5rem;
-  display:flex;
-  align-items:center;
-  gap:1.2rem;
-  opacity:0;
-  animation:fadeUp .85s ease .65s forwards;
+  margin-top:2.5rem;display:flex;align-items:center;gap:1.2rem;
+  opacity:0;animation:fadeUp .85s ease .58s forwards;
+  padding-top:2rem;border-top:1px solid var(--border);
 }
 .sign-avatar{
-  width:48px;height:48px;
-  border:1px solid var(--border);
-  overflow:hidden;flex-shrink:0;
-  background:var(--card);border-radius:50%;
+  width:44px;height:44px;border:1px solid var(--border);
+  overflow:hidden;flex-shrink:0;background:var(--card);border-radius:50%;
 }
 .sign-avatar img{width:100%;height:100%;object-fit:cover;}
-.sign-name{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
-.sign-role{font-size:.54rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.15rem;}
+.sign-name{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.sign-role{font-size:.5rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.12rem;}
 
-/* ─── QUOTE BAND ─── */
-.quote-band{
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:clamp(3rem,7vh,5.5rem) clamp(1.4rem,6vw,6rem);
-  background:var(--dark);
+/* Lado derecho — stats */
+.hero-right{
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:clamp(3rem,6vh,6rem) clamp(1.4rem,5vw,5rem);
+  position:relative;overflow:hidden;
 }
-.big-quote{
-  font-size:clamp(1.4rem,3.8vw,3.5rem);font-weight:800;
-  letter-spacing:-.03em;text-transform:uppercase;line-height:1.05;
-  max-width:900px;
+.hero-deco-num{
+  font-size:clamp(10rem,26vw,28rem);
+  font-weight:900;letter-spacing:-.06em;
+  color:rgba(255,255,255,.03);
+  line-height:1;
+  position:absolute;bottom:-3rem;right:-2rem;
+  pointer-events:none;user-select:none;
 }
-.big-quote em{font-style:italic;font-weight:200;color:var(--dim);}
-.quote-attr{
-  margin-top:1.8rem;font-size:.48rem;font-weight:600;
-  letter-spacing:.28em;text-transform:uppercase;color:var(--dim);
+.hero-stats{
+  display:flex;flex-direction:column;gap:2.5rem;
+  position:relative;z-index:1;
+}
+.h-stat-num{
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:900;letter-spacing:-.04em;
+  line-height:1;color:var(--white);display:block;
+}
+.h-stat-lbl{
+  font-size:.42rem;font-weight:700;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--dim);
+  margin-top:.3rem;display:block;
 }
 
-/* ─── FILOSOFÍA ─── */
-.filosofia-section{
-  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
-  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;
-  border-bottom:1px solid var(--border);
+/* ════════════════════════════════
+   FILOSOFÍA
+════════════════════════════════ */
+.filo-section{border-bottom:1px solid var(--border);}
+.filo-header{
+  padding:clamp(3.5rem,7vh,6rem) clamp(1.4rem,6vw,6rem) 0;
 }
-.filo-left h2{
-  font-size:clamp(2rem,4vw,3.5rem);font-weight:900;
-  letter-spacing:-.03em;text-transform:uppercase;line-height:.92;
-  margin-top:.8rem;
+.filo-header h2{
+  font-size:clamp(2rem,4.5vw,4rem);font-weight:900;
+  letter-spacing:-.035em;text-transform:uppercase;
+  line-height:.9;margin-top:.8rem;max-width:700px;
 }
-.filo-right p{
-  font-size:.86rem;font-weight:300;
-  color:rgba(244,242,238,.65);line-height:2.2;margin-bottom:1.6rem;
+.filo-header p{
+  font-size:clamp(.8rem,1.4vw,.9rem);font-weight:300;
+  color:rgba(244,242,238,.52);line-height:2.1;
+  max-width:520px;margin-top:1.4rem;
 }
-.filo-right p:last-of-type{margin-bottom:0;}
-.filo-vals{border-top:1px solid var(--border);margin-top:2.5rem;}
-.val-item{
-  display:grid;grid-template-columns:2.5rem 1fr auto;
-  align-items:center;gap:1.2rem;
-  padding:1.2rem 0;border-bottom:1px solid var(--border);
+.filo-pillars{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  margin-top:clamp(3rem,6vh,5rem);
 }
-.val-num{font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
-.val-name{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
-.val-desc{font-size:.66rem;font-weight:300;color:var(--dim);max-width:220px;text-align:right;line-height:1.6;}
+.pillar{
+  background:var(--black);
+  padding:clamp(2rem,4vh,3.5rem) clamp(1.2rem,2.5vw,2.5rem);
+  transition:background .3s;
+}
+.pillar:hover{background:var(--card);}
+.pillar-num{
+  font-size:.42rem;font-weight:700;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim);
+  display:block;margin-bottom:1.2rem;
+}
+.pillar-name{
+  font-size:clamp(.9rem,1.8vw,1.1rem);font-weight:900;
+  letter-spacing:-.01em;text-transform:uppercase;
+  display:block;margin-bottom:.8rem;
+}
+.pillar-desc{
+  font-size:.72rem;font-weight:300;
+  color:rgba(244,242,238,.48);line-height:1.9;
+}
 
-/* ─── MISIÓN / VISIÓN ─── */
-.mv-section{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);}
-.mv-item{padding:clamp(3rem,6vh,5.5rem) clamp(1.4rem,5vw,5rem);}
-.mv-item:first-child{border-right:1px solid var(--border);}
-.mv-letter{font-size:clamp(3rem,5vw,4.5rem);font-weight:900;letter-spacing:-.04em;color:rgba(255,255,255,.06);line-height:1;margin-bottom:.5rem;}
-.mv-item h3{font-size:clamp(1.4rem,2.5vw,2.2rem);font-weight:900;letter-spacing:-.02em;text-transform:uppercase;margin-top:.8rem;margin-bottom:1.5rem;}
-.mv-item p{font-size:.84rem;font-weight:300;color:rgba(244,242,238,.62);line-height:2.1;}
-.mv-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  margin-top:2rem;padding:.6rem 1.1rem;
-  border:1px solid var(--border);
-  font-size:.44rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
-  transition:all .3s;
-}
-.mv-badge:hover{border-color:rgba(255,255,255,.25);color:var(--white);}
-
-/* ─── METAS ─── */
+/* ════════════════════════════════
+   METAS
+════════════════════════════════ */
 .meta-section{
-  padding:clamp(4rem,7vh,7rem) clamp(1.4rem,6vw,6rem);
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
   border-bottom:1px solid var(--border);
   background:var(--dark);
 }
-.meta-header{margin-bottom:3.5rem;}
-.meta-header h2{font-size:clamp(1.8rem,3.8vw,3.2rem);font-weight:900;letter-spacing:-.03em;text-transform:uppercase;margin-top:.7rem;line-height:.92;}
-.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-.meta-item{background:var(--dark);padding:clamp(1.8rem,4vh,3rem) clamp(1.2rem,2.5vw,2.5rem);transition:background .3s;}
-.meta-item:hover{background:rgba(255,255,255,.02);}
-.meta-year{font-size:.44rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:.9rem;}
-.meta-title{font-size:.9rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.7rem;}
-.meta-text{font-size:.76rem;font-weight:300;color:rgba(244,242,238,.52);line-height:1.9;}
-.meta-dot{width:8px;height:8px;border-radius:50%;margin-top:1.4rem;display:inline-block;}
-.meta-dot.done{background:#6fcf97;box-shadow:0 0 8px rgba(111,207,151,.3);}
-.meta-dot.now{background:#f2c94c;box-shadow:0 0 8px rgba(242,201,76,.3);}
+.meta-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:end;margin-bottom:3.5rem;
+}
+.meta-header h2{
+  font-size:clamp(2rem,4vw,3.5rem);font-weight:900;
+  letter-spacing:-.035em;text-transform:uppercase;
+  line-height:.9;margin-top:.7rem;
+}
+.meta-header p{
+  font-size:clamp(.78rem,1.3vw,.88rem);font-weight:300;
+  color:rgba(244,242,238,.5);line-height:2.1;
+}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+}
+.meta-item{
+  background:var(--dark);
+  padding:clamp(2rem,4vh,3rem) clamp(1.2rem,2.5vw,2.5rem);
+  transition:background .3s;display:flex;flex-direction:column;
+}
+.meta-item:hover{background:rgba(255,255,255,.025);}
+.meta-year{
+  font-size:.42rem;font-weight:700;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:1rem;
+}
+.meta-title{
+  font-size:clamp(.82rem,1.5vw,.95rem);font-weight:800;
+  letter-spacing:.02em;text-transform:uppercase;margin-bottom:.7rem;
+}
+.meta-text{
+  font-size:.74rem;font-weight:300;
+  color:rgba(244,242,238,.48);line-height:1.9;flex:1;
+}
+.meta-dot{
+  width:7px;height:7px;border-radius:50%;
+  margin-top:1.8rem;display:inline-block;
+}
+.meta-dot.done{background:#6fcf97;box-shadow:0 0 8px rgba(111,207,151,.35);}
+.meta-dot.now{background:#f2c94c;box-shadow:0 0 8px rgba(242,201,76,.35);}
 .meta-dot.soon{background:var(--dim);}
 
-/* ─── CTA ─── */
+/* ════════════════════════════════
+   CTA
+════════════════════════════════ */
 .cta-band{
-  padding:clamp(5rem,10vh,9rem) clamp(1.4rem,6vw,6rem);
-  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:clamp(6rem,12vh,10rem) clamp(1.4rem,6vw,6rem);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
   border-bottom:1px solid var(--border);
 }
-.cta-band h2{font-size:clamp(2.5rem,7vw,6rem);font-weight:900;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-bottom:2.2rem;}
+.cta-band h2{
+  font-size:clamp(2.5rem,6vw,5.5rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;
+}
 .cta-band h2 em{font-style:italic;font-weight:200;}
-.cta-btns{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:center;}
-.btn-fill{font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--white);padding:.9rem 2.2rem;transition:opacity .3s;}
+.cta-right{display:flex;flex-direction:column;gap:1.8rem;}
+.cta-right p{
+  font-size:clamp(.8rem,1.4vw,.9rem);font-weight:300;
+  color:rgba(244,242,238,.5);line-height:2.1;max-width:420px;
+}
+.cta-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-fill{
+  font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--black);background:var(--white);padding:.9rem 2.2rem;transition:opacity .3s;
+}
 .btn-fill:hover{opacity:.8;}
-.btn-line{font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);border:1px solid var(--border);padding:.9rem 1.8rem;transition:all .3s;}
+.btn-line{
+  font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);padding:.9rem 1.8rem;transition:all .3s;
+}
 .btn-line:hover{color:var(--white);border-color:rgba(255,255,255,.3);}
 
 /* ─── FOOTER ─── */
@@ -283,43 +333,35 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
    RESPONSIVE
 ════════════════════════════════ */
 @media(max-width:1024px){
-  .filosofia-section{grid-template-columns:1fr;gap:2.5rem;}
+  .filo-pillars{grid-template-columns:repeat(2,1fr);}
   .meta-grid{grid-template-columns:1fr 1fr;}
+  .meta-header{grid-template-columns:1fr;gap:1.5rem;}
+  .cta-band{grid-template-columns:1fr;gap:2.5rem;}
 }
 
 @media(max-width:768px){
   header{padding:0 1.4rem;}
 
   /* Hero */
-  .page-hero{padding:2.5rem 1.4rem 3.5rem;min-height:auto;}
-  h1.hero-title{font-size:clamp(2.6rem,11vw,4rem);line-height:.9;}
-  .hero-desc{font-size:.84rem;margin-top:1.6rem;}
-  .hero-eyebrow{margin-bottom:1.2rem;}
-
-  /* Quote */
-  .quote-band{padding:2.5rem 1.4rem;}
-  .big-quote{font-size:clamp(1.2rem,5.5vw,2rem);}
+  .page-hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:3rem 1.4rem 3.5rem;border-right:none;border-bottom:1px solid var(--border);}
+  h1.hero-title{font-size:clamp(2.6rem,11vw,4rem);}
+  .hero-desc{font-size:.82rem;}
+  .hero-right{display:none;}
 
   /* Filosofía */
-  .filosofia-section{padding:3rem 1.4rem;gap:2rem;}
-  .filo-left h2{font-size:clamp(1.8rem,7vw,2.4rem);}
-  .val-item{grid-template-columns:2rem 1fr;}
-  .val-desc{display:none;}
-
-  /* Misión / Visión */
-  .mv-section{grid-template-columns:1fr;}
-  .mv-item:first-child{border-right:none;border-bottom:1px solid var(--border);}
-  .mv-item{padding:2.5rem 1.4rem;}
-  .mv-item h3{font-size:clamp(1.2rem,6vw,1.8rem);}
+  .filo-header{padding:3rem 1.4rem 0;}
+  .filo-header h2{font-size:clamp(1.8rem,8vw,2.6rem);}
+  .filo-pillars{grid-template-columns:1fr 1fr;}
 
   /* Metas */
   .meta-section{padding:3rem 1.4rem;}
   .meta-grid{grid-template-columns:1fr;}
-  .meta-header h2{font-size:clamp(1.6rem,7vw,2.2rem);}
+  .meta-header h2{font-size:clamp(1.8rem,7vw,2.4rem);}
 
   /* CTA */
   .cta-band{padding:4rem 1.4rem;}
-  .cta-band h2{font-size:clamp(2rem,9vw,3rem);}
+  .cta-band h2{font-size:clamp(2.2rem,9vw,3.2rem);}
 
   /* Footer */
   footer{padding:3rem 1.4rem 2rem;}
@@ -329,9 +371,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 
 @media(max-width:480px){
   h1.hero-title{font-size:clamp(2.2rem,10vw,3rem);}
-  .hero-desc{font-size:.8rem;}
-  .big-quote{font-size:clamp(1.1rem,5vw,1.6rem);}
-  .cta-band h2{font-size:clamp(1.8rem,9vw,2.6rem);}
+  .filo-pillars{grid-template-columns:1fr;}
+  .cta-band h2{font-size:clamp(2rem,9vw,2.8rem);}
 }
 </style>
 </head>
@@ -365,117 +406,118 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
   <div class="menu-footer">SAORI.STUDIO © 2025</div>
 </nav>
 
-<!-- HERO — solo texto, sin foto -->
+<!-- ════ HERO ════ -->
 <section class="page-hero">
-  <div class="hero-eyebrow">Quiénes somos</div>
-  <h1 class="hero-title">SAORI<br><em>.STUDIO</em></h1>
-  <p class="hero-desc">
-    SAORI.STUDIO entiende el diseño como un proceso único que no sigue estándares universales, sino que responde a cada contexto específico. Inspirado en la técnica del tejido saori, cada proyecto se construye a partir de decisiones y condiciones particulares.
-  </p>
-  <div class="hero-sign">
-    <div class="sign-avatar">
-      <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Adrián Mascorro" onerror="this.style.display='none'">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Estudio — México, 2025</div>
+    <h1 class="hero-title">SAORI<br><em>.STUDIO</em></h1>
+    <p class="hero-desc">
+      Estudio de dirección creativa especializado en branding, diseño editorial y experiencias de marca. Cada proyecto es un proceso único construido desde la observación, la intención y el detalle.
+    </p>
+    <div class="hero-sign">
+      <div class="sign-avatar">
+        <img src="FOTOS HTML 1/paguina prin 1.jpg" alt="Adrián Mascorro" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="sign-name">Adrián Mascorro Leos</div>
+        <div class="sign-role">Diseñador Gráfico / Director Creativo</div>
+      </div>
     </div>
-    <div>
-      <div class="sign-name">Adrián Mascorro Leos</div>
-      <div class="sign-role">Diseñador Gráfico / Director Creativo</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-deco-num">S</div>
+    <div class="hero-stats reveal">
+      <div>
+        <span class="h-stat-num">+30</span>
+        <span class="h-stat-lbl">Proyectos realizados</span>
+      </div>
+      <div>
+        <span class="h-stat-num">3</span>
+        <span class="h-stat-lbl">Disciplinas de diseño</span>
+      </div>
+      <div>
+        <span class="h-stat-num">MX</span>
+        <span class="h-stat-lbl">Con visión global</span>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="quote-band reveal">
-  <p class="big-quote">"VIVIR, EXISTIR<br><em>Y DISEÑAR"</em></p>
-  <div class="quote-attr">— Adrián Mascorro, fundador de Saori Studio</div>
-</div>
-
-<section class="filosofia-section">
-  <div class="filo-left reveal-left">
+<!-- ════ FILOSOFÍA ════ -->
+<section class="filo-section">
+  <div class="filo-header reveal">
     <div class="s-label">Filosofía</div>
-    <h2>Lo que<br>me mueve</h2>
+    <h2>Vivir, existir<br><em style="font-style:italic;font-weight:200;">y diseñar.</em></h2>
+    <p>El diseño no sigue fórmulas. Responde al contexto, a las personas y al momento. Cada proyecto se construye desde cero, con propósito y carácter propio.</p>
   </div>
-  <div class="filo-right reveal-right">
-    <p>Lo que me mueve es la idea de vivir, existir y diseñar. Entiendo el diseño como una extensión de la vida misma, donde cada experiencia, contexto y decisión influye en lo que se crea.</p>
-    <p>Diseñar no es seguir reglas fijas, sino responder a lo que cada proyecto necesita en su propio momento y entorno. Es un proceso que nace de observar, entender y transformar lo que nos rodea.</p>
-    <p>Para mí, el diseño es una forma de existencia: una manera de dar forma a ideas, emociones y soluciones que no buscan perfección universal, sino sentido dentro de su propio contexto.</p>
-    <div class="filo-vals">
-      <div class="val-item reveal">
-        <span class="val-num">01</span>
-        <span class="val-name">VIVIR</span>
-        <span class="val-desc">Observar, experimentar y conectar con el contexto. Todo nace de la experiencia real.</span>
-      </div>
-      <div class="val-item reveal">
-        <span class="val-num">02</span>
-        <span class="val-name">EXISTIR</span>
-        <span class="val-desc">Entender el problema, las personas y el entorno. Darle sentido a lo que se va a construir.</span>
-      </div>
-      <div class="val-item reveal">
-        <span class="val-num">03</span>
-        <span class="val-name">DISEÑAR</span>
-        <span class="val-desc">Transformar lo entendido en soluciones visuales que responden a necesidades reales.</span>
-      </div>
-      <div class="val-item reveal">
-        <span class="val-num">04</span>
-        <span class="val-name">EVOLUCIONAR</span>
-        <span class="val-desc">Evaluar, ajustar y mejorar. El diseño no termina, se adapta y crece con el tiempo.</span>
-      </div>
+  <div class="filo-pillars">
+    <div class="pillar reveal">
+      <span class="pillar-num">01</span>
+      <span class="pillar-name">Observar</span>
+      <p class="pillar-desc">Escuchar antes de crear. Entender el contexto, la audiencia y el problema real.</p>
+    </div>
+    <div class="pillar reveal">
+      <span class="pillar-num">02</span>
+      <span class="pillar-name">Conceptualizar</span>
+      <p class="pillar-desc">Traducir lo entendido en una dirección creativa clara, única y con propósito.</p>
+    </div>
+    <div class="pillar reveal">
+      <span class="pillar-num">03</span>
+      <span class="pillar-name">Ejecutar</span>
+      <p class="pillar-desc">Diseñar con rigor y atención al detalle. Cada decisión visual tiene una razón.</p>
+    </div>
+    <div class="pillar reveal">
+      <span class="pillar-num">04</span>
+      <span class="pillar-name">Evolucionar</span>
+      <p class="pillar-desc">El trabajo no termina en la entrega. Se refina, se aprende y se mejora.</p>
     </div>
   </div>
 </section>
 
-<section class="mv-section">
-  <div class="mv-item reveal-left">
-    <div class="mv-letter">M</div>
-    <div class="s-label">Misión</div>
-    <h3>Por qué<br>existe el estudio</h3>
-    <p>SAORI.STUDIO existe para replantear la forma en que se entiende el diseño. Nace de la necesidad de crear soluciones que no respondan a fórmulas universales, sino a contextos reales, humanos y específicos.</p>
-    <p style="margin-top:1rem;">El estudio busca convertir el diseño en un proceso consciente, donde cada proyecto tenga sentido propio y se construya desde la observación, la experiencia y la intención.</p>
-    <div class="mv-badge">✦ &nbsp; Diseño con propósito</div>
-  </div>
-  <div class="mv-item reveal-right">
-    <div class="mv-letter">V</div>
-    <div class="s-label">Visión</div>
-    <h3>A dónde<br>vamos</h3>
-    <p>Buscamos evolucionar como estudio, desarrollando un lenguaje propio que conecte lo humano con lo visual, lo funcional con lo emocional.</p>
-    <p style="margin-top:1rem;">Vamos hacia un lugar donde diseñar sea una forma de vivir y existir, creando trabajos que tengan sentido, identidad y propósito real.</p>
-    <div class="mv-badge">✦ &nbsp; Estudio de referencia en MX</div>
-  </div>
-</section>
-
+<!-- ════ METAS ════ -->
 <section class="meta-section">
   <div class="meta-header reveal">
-    <div class="s-label">Metas</div>
-    <h2>A dónde<br>quiero llevar<br>esto</h2>
+    <div>
+      <div class="s-label">Metas</div>
+      <h2>A dónde<br>va el estudio</h2>
+    </div>
+    <p>Una hoja de ruta clara hacia dónde quiero llevar SAORI.STUDIO. Ambición con dirección.</p>
   </div>
   <div class="meta-grid">
     <div class="meta-item reveal">
-      <div class="meta-year">2026 – 2027</div>
-      <div class="meta-title">Construir las bases</div>
-      <p class="meta-text">Desarrollar el estudio con una identidad clara, procesos definidos y un portafolio consistente que represente su visión de diseño.</p>
+      <div class="meta-year">2025 – 2026</div>
+      <div class="meta-title">Consolidar la identidad</div>
+      <p class="meta-text">Establecer el estudio con un portafolio sólido, procesos definidos y una voz creativa reconocible.</p>
       <span class="meta-dot done"></span>
     </div>
     <div class="meta-item reveal">
-      <div class="meta-year">2027 – 2032</div>
-      <div class="meta-title">Expandir a nivel internacional</div>
-      <p class="meta-text">Lograr que el trabajo trascienda lo local, conectando con proyectos, colaboraciones y oportunidades en distintos países.</p>
+      <div class="meta-year">2027 – 2030</div>
+      <div class="meta-title">Escalar internacionalmente</div>
+      <p class="meta-text">Conectar con clientes y proyectos fuera de México. Diseño sin fronteras geográficas.</p>
       <span class="meta-dot now"></span>
     </div>
     <div class="meta-item reveal">
-      <div class="meta-year">2033</div>
-      <div class="meta-title">SAORI DESIGN</div>
-      <p class="meta-text">Consolidar una etapa más avanzada del estudio enfocada en el diseño industrial, integrando funcionalidad, concepto y desarrollo de sistemas de diseño.</p>
+      <div class="meta-year">2031+</div>
+      <div class="meta-title">SAORI Design</div>
+      <p class="meta-text">Evolucionar hacia el diseño industrial y sistemas de diseño. La siguiente etapa del estudio.</p>
       <span class="meta-dot soon"></span>
     </div>
   </div>
 </section>
 
+<!-- ════ CTA ════ -->
 <section class="cta-band reveal">
   <h2>¿Tienes un<br><em>proyecto</em><br>en mente?</h2>
-  <div class="cta-btns">
-    <a href="index.html#contacto" class="btn-fill">Hablemos →</a>
-    <a href="proyectos.html" class="btn-line">Ver proyectos</a>
+  <div class="cta-right">
+    <p>Cuéntame qué necesitas. Trabajo con marcas, estudios y personas que quieren diseño con intención.</p>
+    <div class="cta-btns">
+      <a href="index.html#contacto" class="btn-fill">Hablemos →</a>
+      <a href="proyectos.html" class="btn-line">Ver proyectos</a>
+    </div>
   </div>
 </section>
 
+<!-- ════ FOOTER ════ -->
 <footer>
   <div class="foot-top">
     <div>
@@ -523,16 +565,16 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
 /* ── SCROLL REVEAL ── */
 (function(){
-  const els=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+  const els=document.querySelectorAll('.reveal');
   const obs=new IntersectionObserver(entries=>{
     entries.forEach((e,i)=>{
       if(e.isIntersecting){
-        e.target.style.transitionDelay=(i*0.05)+'s';
+        e.target.style.transitionDelay=(i*0.06)+'s';
         e.target.classList.add('visible');
         obs.unobserve(e.target);
       }
     });
-  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  },{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
   els.forEach(el=>obs.observe(el));
 })();
 </script>
