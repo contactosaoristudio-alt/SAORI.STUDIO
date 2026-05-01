@@ -40,6 +40,15 @@ body::before{
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
 
+/* ── WORD CYCLING ANIMATION ── */
+@keyframes wordIn{
+  0%  {opacity:0;transform:translateY(30px) skewY(4deg);}
+  15% {opacity:1;transform:translateY(0) skewY(0deg);}
+  75% {opacity:1;transform:translateY(0) skewY(0deg);}
+  90% {opacity:0;transform:translateY(-24px) skewY(-3deg);}
+  100%{opacity:0;transform:translateY(-24px) skewY(-3deg);}
+}
+
 /* ════════════════════════════════
    HEADER
 ════════════════════════════════ */
@@ -90,7 +99,6 @@ header{
 .side-menu.active a:nth-child(3){animation-delay:.20s}
 .side-menu.active a:nth-child(4){animation-delay:.27s}
 .side-menu.active a:nth-child(5){animation-delay:.34s}
-.side-menu.active a:nth-child(6){animation-delay:.41s}
 .menu-close{
   position:absolute;top:28px;right:28px;
   width:40px;height:40px;border:1px solid var(--border);
@@ -137,21 +145,60 @@ header{
   background:linear-gradient(to bottom, rgba(8,8,8,.2) 0%, rgba(8,8,8,.6) 100%);
   z-index:1;
 }
+
+/* ── HERO TEXT WITH WORD CYCLE ── */
 .hero-center-text{
   position:absolute;inset:0;z-index:2;
   display:flex;align-items:center;justify-content:center;
-  opacity:0;
-  animation:fadeIn 1.6s ease 2s forwards;
   pointer-events:none;
 }
-.hero-center-text h1{
-  font-size:clamp(3.5rem,11vw,11rem);
+/* El wrapper define el tamaño base de SAORI., el span ciclante va pegado */
+.hero-title-wrap{
+  display:inline-flex;
+  align-items:baseline;
+  padding:0 2rem;
+  /* overflow hidden para que la palabra no salte fuera al animar */
+}
+.hero-saori{
+  font-size:clamp(2.6rem,8vw,9rem);
   font-weight:900;
   letter-spacing:-.04em;
   text-transform:uppercase;
-  line-height:.85;
-  text-align:center;
-  color:var(--white);
+  line-height:1;
+  color:#F4F2EE;
+  white-space:nowrap;
+  /* NUNCA se mueve — no tiene ninguna transition ni animation */
+}
+/* Espacio entre SAORI. y la palabra */
+.hero-saori::after{
+  content:'\00A0';  /* non-breaking space */
+}
+.hero-line-2{
+  font-size:clamp(2.6rem,8vw,9rem);
+  font-weight:200;
+  font-style:italic;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+  line-height:1;
+  color:rgba(244,242,238,.78);
+  white-space:nowrap;
+  display:inline-block;
+  /* Reserva el ancho de la palabra más larga (EXPERIENCE) para que SAORI. nunca se mueva */
+  min-width:1.05em; /* se expande con el contenido pero nunca colapsa */
+  transition:opacity 0.35s ease, transform 0.35s ease;
+}
+.hero-line-2.fade-out{
+  opacity:0;
+  transform:translateY(-14px);
+}
+.hero-line-2.fade-in{
+  opacity:0;
+  transform:translateY(14px);
+  transition:none;
+}
+.hero-line-2.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* ════════════════════════════════
@@ -334,45 +381,65 @@ header{
 .p-desc{font-size:.74rem;font-weight:300;color:var(--dim);line-height:1.9;}
 
 /* ════════════════════════════════
-   NOISE BANNER — pantalla interactiva
+   STATEMENT BANNER — imagen estática
 ════════════════════════════════ */
-#noise-banner{
-  position:relative;width:100%;height:90vh;
-  overflow:hidden;background:var(--black);
-  display:flex;align-items:center;justify-content:center;
+#statement-banner{
+  position:relative;
+  width:100%;
+  height:90vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-#noise-canvas{
-  position:absolute;inset:0;width:100%;height:100%;
+/* Imagen de fondo — cubre todo el contenedor */
+.statement-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
   display:block;
+  transition:opacity .4s;
 }
-.noise-blur-layer{
-  position:absolute;inset:0;
-  backdrop-filter:blur(0px);
-  transition:backdrop-filter .6s ease;
+/* Overlay oscuro para que el texto se lea bien */
+.statement-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(8,8,8,.42) 0%,
+    rgba(8,8,8,.72) 100%
+  );
   z-index:1;
 }
-.noise-content{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+.statement-content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   gap:1.4rem;
   text-align:center;
   padding:2rem;
   opacity:0;
-  transition:opacity .8s ease;
+  transition:opacity 1s ease;
 }
-.noise-content.visible{opacity:1;}
-.noise-content h2{
+.statement-content.visible{opacity:1;}
+.statement-content h2{
   font-size:clamp(2.8rem,8vw,8rem);
   font-weight:900;
   letter-spacing:-.04em;
   text-transform:uppercase;
   line-height:.88;
   color:var(--white);
-  mix-blend-mode:exclusion;
 }
-.noise-content p{
-  font-size:.86rem;font-weight:300;
-  color:rgba(244,242,238,.7);
+.statement-content p{
+  font-size:.86rem;
+  font-weight:300;
+  color:rgba(244,242,238,.65);
   letter-spacing:.04em;
   max-width:460px;
   line-height:2.1;
@@ -471,8 +538,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   .port-item,.port-item.featured{flex:0 0 100%!important;aspect-ratio:4/3!important;}
   .s-title{font-size:clamp(1.9rem,8vw,2.6rem);}
   .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
-  .hero-center-text h1{font-size:clamp(3rem,13vw,5rem);}
+  .hero-center-text{pointer-events:none;}
+  .hero-title-wrap .line-static{font-size:clamp(3rem,13vw,5rem);}
+  .hero-cycle-row{height:clamp(3rem,13vw,5rem);}
+  .hero-cycle-word{font-size:clamp(3rem,13vw,5rem);}
   .pres-title{font-size:clamp(2rem,9vw,3rem);}
+  .statement-content h2{font-size:clamp(2.5rem,10vw,5rem);}
 }
 </style>
 </head>
@@ -494,46 +565,42 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   </button>
 </header>
 
-<!-- ════ SIDE MENU ════ -->
+<!-- ════ SIDE MENU — sin Servicios ════ -->
 <nav class="side-menu" id="sideMenu">
   <button class="menu-close" id="menuClose" aria-label="Cerrar">✕</button>
   <a href="#inicio">Inicio</a>
   <a href="proyectos.html">Proyectos</a>
   <a href="estudio.html">Studio</a>
-  <a href="servicios.html">Servicios</a>
   <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
   <a href="#contacto">Contacto</a>
   <div class="menu-footer">SAORI.STUDIO © 2025</div>
 </nav>
 
-<!-- ════ HERO — VIDEO ════ -->
+<!-- ════ HERO — VIDEO + WORD CYCLE ════ -->
 <section id="inicio">
   <video class="hero-video" autoplay muted loop playsinline
          src="GARABATOS\ANIMACION redes.mp4"
          poster="GARABATOS\ANIMACION redes.mp4">
   </video>
   <div class="hero-video-overlay"></div>
+
   <div class="hero-center-text">
-    <h1>SAORI<br>STUDIO</h1>
+    <div class="hero-title-wrap">
+      <span class="hero-saori">SAORI.</span><span class="hero-line-2 visible" id="heroWord">STUDIO</span>
+    </div>
   </div>
 </section>
 
 <!-- ════ PRESENTACIÓN CENTRADA ════ -->
 <section id="hero-desc">
   <div class="presentation-wrap">
-
     <div class="pres-eyebrow"></div>
-
     <h2 class="pres-title">
       Vivir, existir<br><em>y diseñar</em>
     </h2>
-
     <div class="pres-body">
       <p>n</p>
     </div>
-
-   
-
   </div>
 </section>
 
@@ -671,11 +738,15 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   </div>
 </section>
 
-<!-- ════ NOISE BANNER INTERACTIVO ════ -->
-<section id="noise-banner">
-  <canvas id="noise-canvas"></canvas>
-  <div class="noise-blur-layer" id="noiseBlur"></div>
-  <div class="noise-content" id="noiseContent">
+<!-- ════ STATEMENT BANNER — video de fondo ════ -->
+<section id="statement-banner">
+  <video
+    class="statement-img"
+    src="GARABATOS/ANIMACION redes.mp4"
+    autoplay muted loop playsinline
+  ></video>
+  <div class="statement-overlay"></div>
+  <div class="statement-content" id="statementContent">
     <h2>DISEÑO<br>QUE VIVE.</h2>
     <p>Identidad visual, editorial y motion.<br>Desde el concepto hasta la entrega final.</p>
   </div>
@@ -695,12 +766,14 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
         <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Ubicación</div><div class="ci-val">Monterrey, México</div></div></div>
         <div class="ci"><div class="ci-ico">⏱</div><div><div class="ci-lbl">Respuesta</div><div class="ci-val">Menos de 24 horas</div></div></div>
         <div class="ci"><div class="ci-ico">◎</div><div><div class="ci-lbl">Instagram</div><div class="ci-val">@sa0ri.studio</div></div></div>
+        <a href="tel:+521234567890" class="ci" style="text-decoration:none;"><div class="ci-ico">☏</div><div><div class="ci-lbl">Teléfono</div><div class="ci-val">+52 (123) 456-7890</div></div></a>
       </div>
       <form class="cform" action="https://formspree.io/f/xdayppwq" method="POST">
         <div class="frow">
           <div class="ffield"><label class="flbl">Nombre</label><input type="text" name="nombre" class="finp" placeholder="Tu nombre" required></div>
           <div class="ffield"><label class="flbl">Email</label><input type="email" name="email" class="finp" placeholder="tu@email.com" required></div>
         </div>
+        <div class="ffield"><label class="flbl">Teléfono</label><input type="tel" name="telefono" class="finp" placeholder="+52 (___) ___-____"></div>
         <div class="ffield"><label class="flbl">Servicio</label><input type="text" name="servicio" class="finp" placeholder="¿Qué necesitas?"></div>
         <div class="ffield"><label class="flbl">Mensaje</label><textarea name="message" class="ftxt" placeholder="Cuéntame sobre tu proyecto..." required></textarea></div>
         <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio">
@@ -724,7 +797,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
         <a href="#inicio">Inicio</a>
         <a href="proyectos.html">Proyectos</a>
         <a href="estudio.html">Studio</a>
-        <a href="servicios.html">Servicios</a>
         <a href="#contacto">Contacto</a>
       </nav>
     </div>
@@ -767,6 +839,35 @@ menuOverlay.addEventListener('click',closeMenu);
 sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
+/* ── HERO WORD CYCLE ── */
+(function(){
+  const el = document.getElementById('heroWord');
+  if(!el) return;
+  const words = ['STUDIO','BRAND','EXPERIENCE','DESIGN','EDITORIAL'];
+  let i = 0;
+
+  // Mostrar primera palabra
+  el.style.opacity = '1';
+  el.style.transition = 'none';
+
+  function cycle(){
+    // 1. Fade out solo con opacity
+    el.style.transition = 'opacity 0.35s ease';
+    el.style.opacity = '0';
+
+    setTimeout(function(){
+      // 2. Cambiar texto mientras es invisible
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      // 3. Fade in
+      el.style.transition = 'opacity 0.35s ease';
+      el.style.opacity = '1';
+    }, 380);
+  }
+
+  setInterval(cycle, 2400);
+})();
+
 /* ── CARRUSEL ── */
 (function(){
   const outer=document.getElementById('carOuter');
@@ -799,59 +900,19 @@ document.querySelectorAll('.svc-item').forEach(item=>{
   });
 });
 
-/* ── NOISE BANNER ── */
+/* ── STATEMENT BANNER — aparece en 1 segundo al entrar en viewport ── */
 (function(){
-  const canvas=document.getElementById('noise-canvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const blurLayer=document.getElementById('noiseBlur');
-  const content=document.getElementById('noiseContent');
-  const banner=document.getElementById('noise-banner');
-  let BLUR_MAX=18, frame=0;
-  let mouseX=0.5, mouseY=0.5;
-  let targetBlur=0, currentBlur=0;
-  let contentVisible=false;
-  function resize(){canvas.width=banner.offsetWidth;canvas.height=banner.offsetHeight;}
-  resize();
-  window.addEventListener('resize',resize);
-  function noise(x,y,t){
-    const s=Math.sin(x*1.4+t)*Math.cos(y*1.2-t*.7)+Math.sin(x*0.7-t*.5)*Math.sin(y*1.8+t*.3)+Math.sin((x+y)*.9+t*.6);
-    return (s/3+1)/2;
-  }
-  function draw(){
-    frame+=0.35;
-    const W=canvas.width, H=canvas.height;
-    const imgData=ctx.createImageData(W,H);
-    const d=imgData.data;
-    const step=2;
-    for(let y=0;y<H;y+=step){
-      for(let x=0;x<W;x+=step){
-        const nx=x/W*3.2, ny=y/H*3.2;
-        const n=noise(nx+mouseX*.6,ny+mouseY*.6,frame*0.012);
-        const dx=(x/W-.5)*2, dy=(y/H-.5)*2;
-        const vig=Math.max(0,1-(dx*dx+dy*dy)*0.75);
-        const val=Math.floor(n*vig*235);
-        for(let sy=0;sy<step&&y+sy<H;sy++){
-          for(let sx=0;sx<step&&x+sx<W;sx++){
-            const ii=((y+sy)*W+(x+sx))*4;
-            d[ii]=d[ii+1]=d[ii+2]=val; d[ii+3]=255;
-          }
-        }
+  const content = document.getElementById('statementContent');
+  if(!content) return;
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        setTimeout(()=> content.classList.add('visible'), 1000);
+        obs.unobserve(e.target);
       }
-    }
-    ctx.putImageData(imgData,0,0);
-    targetBlur=BLUR_MAX*(1-mouseY*0.55);
-    currentBlur+=(targetBlur-currentBlur)*0.06;
-    blurLayer.style.backdropFilter=`blur(${currentBlur.toFixed(1)}px)`;
-    requestAnimationFrame(draw);
-  }
-  draw();
-  banner.addEventListener('mousemove',e=>{const r=banner.getBoundingClientRect();mouseX=(e.clientX-r.left)/r.width;mouseY=(e.clientY-r.top)/r.height;});
-  banner.addEventListener('mouseleave',()=>{mouseX=0.5;mouseY=0.5;});
-  const obs2=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting&&!contentVisible){contentVisible=true;setTimeout(()=>content.classList.add('visible'),400);}});
-  },{threshold:.3});
-  obs2.observe(banner);
+    });
+  },{threshold:.25});
+  obs.observe(document.getElementById('statement-banner'));
 })();
 
 /* ── FADE IN elementos ── */
