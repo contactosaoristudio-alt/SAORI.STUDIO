@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuevo Amanecer — SAORI.STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #666666;
+  --font:   'Montserrat', sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:var(--font);overflow-x:hidden;cursor:none;}
+@media(max-width:768px){body{cursor:auto;}}
+a{text-decoration:none;color:inherit;}
+
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);}
+
+#cur{position:fixed;width:7px;height:7px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
+#curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s;}
+@media(max-width:768px){#cur,#curR{display:none;}}
+body:has(a:hover) #cur{transform:translate(-50%,-50%) scale(0);}
+body:has(a:hover) #curR{width:52px;height:52px;border-color:rgba(255,255,255,.45);}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.018;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(1.06);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes scrollPulse{0%,100%{opacity:.2}50%{opacity:.7}}
+
+/* ─── HEADER ─── */
+header{
+  position:fixed;top:0;width:100%;height:68px;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 44px;
+  background:rgba(8,8,8,.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.h-logo{position:absolute;left:50%;transform:translateX(-50%);}
+.logo{height:40px;object-fit:contain;}
+.logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
+.back-btn{
+  font-size:.48rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.6rem;transition:color .3s;
+}
+.back-btn:hover{color:var(--white);}
+.back-btn svg{transition:transform .3s;}
+.back-btn:hover svg{transform:translateX(-4px);}
+.menu-btn{width:26px;height:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:none;border:none;padding:0;}
+.menu-btn span{height:1px;background:var(--white);display:block;}
+
+/* ─── SIDE MENU ─── */
+.menu-overlay{display:none;position:fixed;inset:0;z-index:599;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);}
+.menu-overlay.active{display:block;}
+.side-menu{
+  position:fixed;top:0;right:-100%;width:min(520px,100%);height:100vh;
+  background:var(--dark);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:0 clamp(2rem,7vw,5.5rem);gap:1.6rem;
+  transition:.55s cubic-bezier(.77,0,.175,1);z-index:600;
+  border-left:1px solid var(--border);
+}
+.side-menu a{font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:800;letter-spacing:-.01em;text-transform:uppercase;color:rgba(255,255,255,.18);transition:color .3s;display:block;}
+.side-menu a:hover{color:var(--white);}
+.side-menu.active{right:0;}
+.side-menu.active a{animation:fadeUp .45s ease both;}
+.side-menu.active a:nth-child(1){animation-delay:.06s}
+.side-menu.active a:nth-child(2){animation-delay:.13s}
+.side-menu.active a:nth-child(3){animation-delay:.20s}
+.side-menu.active a:nth-child(4){animation-delay:.27s}
+.side-menu.active a:nth-child(5){animation-delay:.34s}
+.menu-close{position:absolute;top:28px;right:28px;width:40px;height:40px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--dim);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:border-color .3s,color .3s;}
+.menu-close:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+.menu-footer{position:absolute;bottom:3rem;left:clamp(2rem,7vw,5.5rem);font-size:.44rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);}
+
+/* ════════════════════════════════
+   HERO — pantalla completa
+════════════════════════════════ */
+.project-hero{
+  margin-top:68px;
+  position:relative;
+  height:calc(100vh - 68px);
+  overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+.project-hero-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;animation:scaleIn 1.2s ease forwards;
+}
+.project-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(8,8,8,.1) 20%,rgba(8,8,8,.5) 60%,rgba(8,8,8,.97) 100%);
+}
+.project-hero-content{
+  position:relative;z-index:2;
+  padding:0 clamp(1.4rem,6vw,6rem) clamp(3rem,5vh,5rem);
+  width:100%;
+  opacity:0;animation:fadeUp 1s ease .4s forwards;
+}
+.proj-eyebrow{
+  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:1.4rem;
+}
+.proj-eyebrow::before{content:'';width:2rem;height:1px;background:var(--dim);display:block;}
+h1.proj-title{
+  font-size:clamp(3.5rem,9vw,10rem);font-weight:900;
+  line-height:.86;letter-spacing:-.04em;text-transform:uppercase;
+}
+.proj-scroll-hint{
+  margin-top:2rem;
+  font-size:.46rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);display:flex;align-items:center;gap:.8rem;
+}
+.proj-scroll-hint::after{
+  content:'';display:block;width:1px;height:2.5rem;
+  background:rgba(255,255,255,.18);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+
+/* ════════════════════════════════
+   INFO STRIP
+════════════════════════════════ */
+.info-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid var(--border);
+}
+.info-cell{
+  padding:clamp(1.5rem,3vh,2.5rem) clamp(1.4rem,3vw,3rem);
+  border-right:1px solid var(--border);
+}
+.info-cell:last-child{border-right:none;}
+.info-lbl{font-size:.42rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem;}
+.info-val{font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+
+/* ════════════════════════════════
+   SAORI CATEGORY SECTION
+════════════════════════════════ */
+.saori-cat-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border);
+  background:var(--dark);
+}
+.saori-cat-left{
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.saori-cat-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;
+}
+.saori-cat-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+.saori-cat-name{
+  font-size:clamp(2.5rem,6vw,6rem);
+  font-weight:900;letter-spacing:-.04em;text-transform:uppercase;
+  line-height:.88;
+}
+.saori-cat-name span{
+  font-weight:200;font-style:italic;
+  color:rgba(244,242,238,.45);
+  display:block;font-size:clamp(1.5rem,3.5vw,3.5rem);
+  margin-bottom:.3rem;
+}
+.saori-cat-right{
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
+  display:flex;flex-direction:column;justify-content:center;gap:2.5rem;
+}
+.saori-cat-desc{
+  font-size:clamp(.82rem,1.5vw,.92rem);font-weight:300;
+  color:rgba(244,242,238,.55);line-height:2.2;max-width:480px;
+}
+.saori-tags{display:flex;flex-wrap:wrap;gap:.6rem;}
+.saori-tag{
+  font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);padding:.5rem 1rem;
+  transition:all .3s;
+}
+.saori-tag:hover{color:var(--white);border-color:rgba(255,255,255,.25);}
+
+/* ════════════════════════════════
+   GALERÍA
+════════════════════════════════ */
+.fotos-section{
+  padding:clamp(3rem,5vh,5rem) clamp(1.4rem,5vw,5rem) clamp(5rem,8vh,8rem);
+}
+.fotos-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.38em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:3.5rem;
+}
+.fotos-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+.fotos-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,2vw,2rem);}
+
+.foto-item{
+  overflow:hidden;background:var(--card);
+  opacity:0;transform:translateY(50px);
+  transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
+}
+.foto-item:nth-child(even){transform:translateY(-50px);}
+.foto-item.visible{opacity:1;transform:translateY(0);}
+.foto-inner{overflow:hidden;position:relative;}
+.foto-inner img{
+  width:100%;height:clamp(240px,35vw,480px);
+  object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+.foto-item:hover img{transform:scale(1.05);}
+.foto-num{
+  position:absolute;bottom:.8rem;right:1rem;
+  font-size:.4rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+  opacity:0;transition:opacity .3s;
+}
+.foto-item:hover .foto-num{opacity:1;}
+
+/* ════════════════════════════════
+   SIGUIENTE PROYECTO — transición fullscreen
+════════════════════════════════ */
+.next-project{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+  display:flex;align-items:flex-end;
+  cursor:pointer;
+}
+.next-project-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  transition:transform 1.2s cubic-bezier(.22,1,.36,1);
+}
+.next-project:hover .next-project-img{transform:scale(1);}
+.next-project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(8,8,8,.2) 20%,rgba(8,8,8,.6) 60%,rgba(8,8,8,.95) 100%);
+  transition:background .6s ease;
+}
+.next-project:hover .next-project-overlay{
+  background:linear-gradient(to bottom,rgba(8,8,8,.3) 20%,rgba(8,8,8,.7) 60%,rgba(8,8,8,.98) 100%);
+}
+.next-project-content{
+  position:relative;z-index:2;
+  padding:0 clamp(1.4rem,6vw,6rem) clamp(4rem,7vh,7rem);
+  width:100%;
+}
+.next-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:1.4rem;
+}
+.next-label::before{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
+.next-title{
+  font-size:clamp(3.5rem,9vw,10rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.86;
+  color:var(--white);
+  transform:translateY(20px);
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+.next-project:hover .next-title{transform:translateY(0);}
+.next-cat{
+  font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-top:1rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.next-arrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--white);margin-top:1.8rem;
+  opacity:0;transform:translateX(-8px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.next-project:hover .next-arrow{opacity:1;transform:translateX(0);}
+
+/* ─── FOOTER ─── */
+footer{background:var(--black);border-top:1px solid var(--border);padding:4rem clamp(1.4rem,5vw,5rem) 2.5rem;}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
+.f-tagline{font-size:.56rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.4rem;}
+.soc-lbl{font-size:.44rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:1.2rem;}
+.soc-list{display:flex;flex-direction:column;gap:.55rem;}
+.soc{display:flex;align-items:center;gap:.9rem;font-size:.72rem;color:var(--dim);padding:.28rem 0;border-bottom:1px solid transparent;transition:all .3s;}
+.soc:hover{color:var(--white);border-bottom-color:var(--border);}
+.soc-ico{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;transition:border-color .3s;}
+.soc:hover .soc-ico{border-color:rgba(255,255,255,.3);}
+.soc-arr{margin-left:auto;opacity:0;transition:opacity .3s,transform .3s;}
+.soc:hover .soc-arr{opacity:1;transform:translateX(3px);}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-copy{font-size:.48rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+.f-up{font-size:.48rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .3s;}
+.f-up:hover{color:var(--white);}
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media(max-width:1024px){
+  .info-strip{grid-template-columns:1fr 1fr;}
+  .info-cell:nth-child(2){border-right:none;}
+  .info-cell:nth-child(3){border-top:1px solid var(--border);}
+  .info-cell:nth-child(4){border-top:1px solid var(--border);border-right:none;}
+  .saori-cat-section{grid-template-columns:1fr;}
+  .saori-cat-left{border-right:none;border-bottom:1px solid var(--border);}
+}
+@media(max-width:768px){
+  header{padding:0 1.4rem;}
+  .project-hero-content{padding:0 1.4rem 3.5rem;}
+  h1.proj-title{font-size:clamp(2.8rem,11vw,5rem);}
+  .info-cell{padding:1.4rem;}
+  .saori-cat-left,.saori-cat-right{padding:3rem 1.4rem;}
+  .fotos-section{padding:3rem 1.4rem 5rem;}
+  .fotos-grid{grid-template-columns:1fr;gap:.8rem;}
+  .foto-item:nth-child(even){transform:translateY(50px);}
+  .foto-inner img{height:clamp(220px,55vw,360px);}
+  .next-project-content{padding:0 1.4rem 4rem;}
+  .next-title{font-size:clamp(2.8rem,11vw,5rem);}
+  footer{padding:3rem 1.4rem 2rem;}
+  .foot-top{flex-direction:column;gap:2rem;}
+  .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- HEADER -->
+<header>
+  <a href="proyectos.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Proyectos
+  </a>
+  <div class="h-logo">
+    <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
+         onerror="this.outerHTML='<span class=\'logo-text\'>SAORI.STUDIO</span>'">
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
+</header>
+
+<nav class="side-menu" id="sideMenu">
+  <button class="menu-close" id="menuClose" aria-label="Cerrar">✕</button>
+  <a href="index.html#inicio">Inicio</a>
+  <a href="proyectos.html">Proyectos</a>
+  <a href="estudio.html">Studio</a>
+  <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
+  <a href="index.html#contacto">Contacto</a>
+  <div class="menu-footer">SAORI.STUDIO © 2025</div>
+</nav>
+
+<!-- HERO -->
+<section class="project-hero">
+  <img src="NUEVO AMANEER/PORTADA.jpg" alt="Nuevo Amanecer" class="project-hero-img"
+       onerror="this.style.background='var(--card)';this.style.opacity='.3';">
+  <div class="project-hero-overlay"></div>
+  <div class="project-hero-content">
+    <div class="proj-eyebrow">SAORI. Naming & Visual — 2025</div>
+    <h1 class="proj-title">Nuevo<br>Amanecer</h1>
+    <div class="proj-scroll-hint">Desplázate para ver</div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-cell"><div class="info-lbl">Categoría</div><div class="info-val">Branding</div></div>
+  <div class="info-cell"><div class="info-lbl">Año</div><div class="info-val">2025</div></div>
+  <div class="info-cell"><div class="info-lbl">Ubicación</div><div class="info-val">México</div></div>
+  <div class="info-cell"><div class="info-lbl">Cliente</div><div class="info-val">Proyecto Personal</div></div>
+</div>
+
+<!-- SAORI CATEGORY -->
+<section class="saori-cat-section">
+  <div class="saori-cat-left">
+    <div class="saori-cat-label">Disciplina</div>
+    <div class="saori-cat-name">
+      <span>SAORI.</span>
+      Naming<br>& Visual
+    </div>
+  </div>
+  <div class="saori-cat-right">
+    <p class="saori-cat-desc">
+      Nuevo Amanecer es un proyecto de identidad visual que busca transmitir renovación, fuerza y comienzos. La dirección de arte parte de la tensión entre lo orgánico y lo estructurado, generando un sistema coherente capaz de adaptarse a múltiples soportes.
+    </p>
+    <p class="saori-cat-desc" style="margin-top:0;">
+      El desarrollo abarca desde la conceptualización del logotipo hasta la definición de la paleta cromática, el sistema tipográfico y las aplicaciones en materiales de comunicación.
+    </p>
+    <div class="saori-tags">
+      <span class="saori-tag">Logotipo</span>
+      <span class="saori-tag">Tipografía</span>
+      <span class="saori-tag">Paleta</span>
+      <span class="saori-tag">Sistema Gráfico</span>
+      <span class="saori-tag">Aplicaciones</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="fotos-section">
+  <div class="fotos-label">Galería del proyecto</div>
+  <div class="fotos-grid">
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="GARABATOS/PORTADA.jpg" alt="01" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">01</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="" alt="02" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">02</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_03.jpg" alt="03" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">03</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_04.jpg" alt="04" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">04</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_05.jpg" alt="05" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">05</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_06.jpg" alt="06" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">06</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_07.jpg" alt="07" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">07</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_08.jpg" alt="08" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">08</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_09.jpg" alt="09" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">09</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_10.jpg" alt="10" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">10</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_11.jpg" alt="11" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">11</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="NUEVO AMANEER/FOTO_12.jpg" alt="12" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <span class="foto-num">12</span>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- SIGUIENTE PROYECTO — transición por scroll -->
+<div id="next-trigger" style="height:2px;background:transparent;"></div>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+if(cur&&curR){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+}
+
+/* ── MENU ── */
+const menuBtn=document.getElementById('menuBtn');
+const menuClose=document.getElementById('menuClose');
+const sideMenu=document.getElementById('sideMenu');
+const menuOverlay=document.getElementById('menuOverlay');
+const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow='hidden';};
+const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow='';};
+menuBtn.addEventListener('click',()=>sideMenu.classList.contains('active')?closeMenu():openMenu());
+menuClose.addEventListener('click',closeMenu);
+menuOverlay.addEventListener('click',closeMenu);
+sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
+
+/* ── FOTOS REVEAL ── */
+(function(){
+  const items=document.querySelectorAll('.foto-item');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        setTimeout(()=>entry.target.classList.add('visible'),80);
+        obs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(el=>obs.observe(el));
+})();
+
+/* ── SCROLL TO NEXT PROJECT ── */
+(function(){
+  const next = 'proyecto-garabatos.html';
+  let triggered = false;
+
+  window.addEventListener('scroll', function(){
+    if(triggered) return;
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.body.scrollHeight;
+    // Cuando llega al fondo
+    if(scrolled >= total - 2){
+      triggered = true;
+      // Fade out suave y navega
+      document.body.style.transition = 'opacity 0.4s ease';
+      document.body.style.opacity = '0';
+      setTimeout(()=>{ window.location.href = next; }, 420);
+    }
+  });
+})();
+</script>
+</body>
+</html>
