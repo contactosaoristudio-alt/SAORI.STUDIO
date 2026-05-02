@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuevo Proyecto — SAORI.STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,100;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #666666;
+  --font:   'DM Sans', sans-serif;
+
+  /* ── Jerarquía tipográfica ──────────────────
+     XL  — Títulos de paso:   900, -0.04em, uppercase
+     LG  — Títulos sidebar:   800, -0.03em, uppercase
+     MD  — Nombres de card:   700,  0,      uppercase
+     SM  — Labels / eyebrow:  600,  0.28em, uppercase, dim
+     XS  — Micro labels:      500,  0.22em, uppercase, dim
+     BODY— Descripciones:     300,  0.01em, normal case
+  ────────────────────────────────────────────── */
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;height:100%;}
+body{
+  background:var(--black);color:var(--white);
+  font-family:var(--font);overflow-x:hidden;
+  min-height:100vh;cursor:none;
+}
+@media(max-width:768px){body{cursor:auto;}}
+a{text-decoration:none;color:inherit;}
+
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);}
+
+#cur{position:fixed;width:7px;height:7px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
+#curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s;}
+@media(max-width:768px){#cur,#curR{display:none;}}
+body:has(a:hover) #cur{transform:translate(-50%,-50%) scale(0);}
+body:has(a:hover) #curR{width:52px;height:52px;border-color:rgba(255,255,255,.45);}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.018;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleUp{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ════════════════════════════════
+   HEADER
+════════════════════════════════ */
+header{
+  position:fixed;top:0;width:100%;height:68px;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 44px;
+  background:rgba(8,8,8,.92);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.h-logo{position:absolute;left:50%;transform:translateX(-50%);}
+.logo{height:38px;object-fit:contain;}
+.logo-text{
+  /* XS */
+  font-size:.8rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+}
+.back-btn{
+  /* XS */
+  font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.6rem;transition:color .3s;
+}
+.back-btn:hover{color:var(--white);}
+.back-btn svg{transition:transform .3s;}
+.back-btn:hover svg{transform:translateX(-3px);}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{
+  position:fixed;top:68px;left:0;width:100%;height:1px;
+  background:var(--border);z-index:499;
+}
+.progress-fill{
+  height:100%;background:var(--white);
+  transition:width .6s cubic-bezier(.22,1,.36,1);width:0%;
+}
+
+/* ════════════════════════════════
+   LAYOUT — centrado
+════════════════════════════════ */
+.form-shell{
+  min-height:100vh;padding-top:68px;
+  display:flex;justify-content:center;
+  position:relative;z-index:1;
+}
+.form-sidebar{display:none;}
+
+/* XS — eyebrow del sidebar */
+.sidebar-step-label{
+  font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;
+}
+.sidebar-step-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+
+/* LG — título del sidebar */
+.sidebar-title{
+  font-size:clamp(2rem,3.8vw,3.4rem);
+  font-weight:900;letter-spacing:-.02em;
+  line-height:.92;
+}
+.sidebar-title em{
+  font-style:normal;font-weight:900;
+  display:block;
+}
+
+/* BODY — descripción sidebar */
+.sidebar-desc{
+  font-size:1rem;font-weight:300;
+  color:rgba(244,242,238,.42);line-height:2;
+  margin-top:1.6rem;max-width:300px;
+}
+
+/* Steps nav */
+.steps-nav{display:flex;flex-direction:column;gap:0;}
+.step-item{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.9rem 0;border-bottom:1px solid var(--border);
+  transition:opacity .3s;opacity:.3;
+}
+.step-item.active{opacity:1;}
+.step-item.done{opacity:.5;}
+.step-num{
+  width:24px;height:24px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  /* XS */
+  font-size:.72rem;font-weight:700;letter-spacing:.05em;
+  flex-shrink:0;transition:background .3s,border-color .3s;
+}
+.step-item.active .step-num{background:var(--white);color:var(--black);border-color:var(--white);}
+.step-item.done .step-num{border-color:rgba(255,255,255,.25);}
+/* SM */
+.step-name{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+.step-check{margin-left:auto;font-size:.65rem;opacity:0;transition:opacity .3s;}
+.step-item.done .step-check{opacity:1;}
+
+/* XS — footer sidebar */
+.sidebar-bottom{
+  font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.18);
+}
+
+/* ════════════════════════════════
+   STEP PANELS
+════════════════════════════════ */
+.form-main{
+  width:100%;max-width:680px;
+  display:flex;flex-direction:column;
+}
+
+.step-panel{
+  display:none;
+  min-height:calc(100vh - 68px);
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,4vw,3rem);
+  flex-direction:column;justify-content:center;
+  animation:scaleUp .4s ease both;
+}
+.step-panel.active{display:flex;}
+.success-panel{
+  display:none;
+  min-height:calc(100vh - 68px);
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,4vw,3rem);
+  flex-direction:column;justify-content:center;
+  animation:fadeUp .6s ease both;
+}
+.success-panel.active{display:flex;}
+
+/* XS — eyebrow del paso */
+.step-q{
+  font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:1.8rem;
+}
+.step-q::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+
+/* XL — título del paso */
+.step-heading{
+  font-size:clamp(2.2rem,5vw,4.2rem);
+  font-weight:900;letter-spacing:-.02em;
+  line-height:.9;
+  margin-bottom:3rem;
+  color:#ffffff;
+}
+.step-heading em{
+  font-style:normal;font-weight:900;
+  color:#ffffff;
+}
+
+/* ── CARDS DE TIPO ── */
+.tipo-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);margin-bottom:3rem;
+}
+.tipo-card{
+  background:var(--black);padding:2rem 2.2rem;
+  cursor:pointer;position:relative;
+  transition:background .25s;border:2px solid transparent;
+  display:flex;flex-direction:column;gap:.7rem;
+}
+.tipo-card:hover{background:var(--card);}
+.tipo-card.selected{background:var(--card);border-color:var(--white);}
+
+/* XS — número de card */
+.tipo-card-num{
+  font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  color:var(--dim);
+}
+/* MD — nombre de card */
+.tipo-card-name{
+  font-size:clamp(.88rem,1.6vw,1.05rem);font-weight:800;
+  letter-spacing:-.01em;line-height:1.1;
+  color:#ffffff;
+}
+/* BODY — descripción de card */
+.tipo-card-desc{
+  font-size:.95rem;font-weight:400;
+  color:rgba(255,255,255,.58);line-height:1.8;
+}
+.tipo-card-check{
+  position:absolute;top:.9rem;right:1rem;
+  width:18px;height:18px;border:1px solid var(--border);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.5rem;opacity:0;transition:opacity .25s,background .25s;
+}
+.tipo-card.selected .tipo-card-check{
+  opacity:1;background:var(--white);color:var(--black);border-color:var(--white);
+}
+
+/* ── INPUTS ── */
+.fields{display:flex;flex-direction:column;gap:1.6rem;max-width:540px;margin-bottom:2.5rem;}
+.field{display:flex;flex-direction:column;gap:.5rem;}
+
+/* SM — label de campo */
+.flbl{
+  font-size:.75rem;font-weight:600;letter-spacing:.14em;
+  color:rgba(255,255,255,.7);
+}
+/* BODY — input */
+.finp,.ftxt{
+  background:transparent;
+  border:none;border-bottom:1px solid rgba(255,255,255,.15);
+  color:#ffffff;padding:.85rem 0;
+  font-family:var(--font);font-size:1rem;font-weight:400;
+  outline:none;transition:border-color .3s;
+  resize:none;width:100%;
+}
+.finp:focus,.ftxt:focus{border-bottom-color:rgba(255,255,255,.6);}
+.finp::placeholder,.ftxt::placeholder{color:rgba(255,255,255,.28);font-weight:300;}
+.ftxt{min-height:96px;}
+
+/* ── PRESUPUESTO ── */
+/* SM — label presupuesto */
+.budget-section-label{
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;
+  color:var(--dim);
+  margin-bottom:1rem;display:block;
+}
+.budget-opts{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem;}
+.budget-opt{
+  /* XS */
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);
+  padding:.55rem 1.1rem;cursor:pointer;
+  transition:all .25s;background:transparent;font-family:var(--font);
+}
+.budget-opt:hover{color:var(--white);border-color:rgba(255,255,255,.22);}
+.budget-opt.selected{color:var(--black);background:var(--white);border-color:var(--white);}
+
+/* ── RESUMEN ── */
+.resumen{
+  display:flex;flex-direction:column;gap:0;
+  max-width:540px;margin-bottom:2.5rem;
+  border:1px solid var(--border);
+}
+.res-row{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--border);}
+.res-row:last-child{border-bottom:none;}
+/* XS — label del resumen */
+.res-lbl{
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);padding:1rem 1.2rem;
+  border-right:1px solid var(--border);display:flex;align-items:flex-start;
+}
+/* BODY — valor del resumen */
+.res-val{
+  font-size:.9rem;font-weight:400;
+  padding:1rem 1.2rem;color:#ffffff;
+  display:flex;align-items:flex-start;
+  word-break:break-word;
+}
+
+/* ── BOTONES ── */
+.step-actions{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;}
+/* SM — botón primario */
+.btn-next{
+  font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--white);color:var(--black);
+  border:none;padding:.9rem 2.6rem;
+  cursor:pointer;font-family:var(--font);
+  transition:opacity .3s;display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-next:hover{opacity:.82;}
+.btn-next:disabled{opacity:.28;cursor:not-allowed;}
+/* XS — botón secundario */
+.btn-back{
+  font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);background:none;border:none;
+  cursor:pointer;font-family:var(--font);transition:color .3s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-back:hover{color:var(--white);}
+.btn-back svg{transition:transform .3s;}
+.btn-back:hover svg{transform:translateX(-3px);}
+
+/* ════════════════════════════════
+   ÉXITO
+════════════════════════════════ */
+/* Decorativo */
+.success-deco{
+  font-size:clamp(4rem,12vw,11rem);font-weight:900;
+  letter-spacing:-.06em;color:rgba(255,255,255,.04);
+  line-height:1;margin-bottom:-1.5rem;
+  text-transform:uppercase;
+}
+/* LG — título éxito */
+.success-title{
+  font-size:clamp(2.2rem,6vw,5rem);font-weight:900;
+  letter-spacing:-.02em;line-height:.92;
+  margin-bottom:1.6rem;
+}
+.success-title em{font-style:normal;font-weight:900;}
+/* BODY — descripción éxito */
+.success-desc{
+  font-size:.95rem;font-weight:300;
+  color:rgba(244,242,238,.45);line-height:2.1;
+  max-width:420px;margin-bottom:3rem;
+}
+/* XS — link volver */
+.success-back{
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);display:inline-flex;align-items:center;gap:.6rem;transition:color .3s;
+}
+.success-back:hover{color:var(--white);}
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media(max-width:768px){
+  header{padding:0 1.4rem;}
+  .step-panel,.success-panel{min-height:auto;padding:3.5rem 1.4rem;}
+  .tipo-grid{grid-template-columns:1fr;}
+  .step-heading{font-size:clamp(1.8rem,9vw,2.8rem);}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="back-btn">
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Volver
+  </a>
+  <div class="h-logo">
+    <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
+         onerror="this.outerHTML='<span class=\'logo-text\'>SAORI.STUDIO</span>'">
+  </div>
+  <div style="width:60px;"></div>
+</header>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="form-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="form-sidebar">
+    <div>
+      <div class="sidebar-step-label" id="sidebarStepLabel">Paso 1 de 4</div>
+      <h2 class="sidebar-title" id="sidebarTitle">Nuevo<br><em>proyecto</em></h2>
+      <p class="sidebar-desc" id="sidebarDesc">Cuéntame sobre lo que necesitas. Toma menos de 2 minutos.</p>
+    </div>
+
+    <nav class="steps-nav">
+      <div class="step-item active" id="nav-1">
+        <div class="step-num">01</div>
+        <div class="step-name">Tipo</div>
+        <div class="step-check">✓</div>
+      </div>
+      <div class="step-item" id="nav-2">
+        <div class="step-num">02</div>
+        <div class="step-name">Detalles</div>
+        <div class="step-check">✓</div>
+      </div>
+      <div class="step-item" id="nav-3">
+        <div class="step-num">03</div>
+        <div class="step-name">Contacto</div>
+        <div class="step-check">✓</div>
+      </div>
+      <div class="step-item" id="nav-4">
+        <div class="step-num">04</div>
+        <div class="step-name">Confirmar</div>
+        <div class="step-check">✓</div>
+      </div>
+    </nav>
+
+    <div class="sidebar-bottom">SAORI.STUDIO © 2025</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="form-main">
+
+    <!-- PASO 1 -->
+    <div class="step-panel active" id="step-1">
+      <div class="step-q">Paso 01 — Tipo de proyecto</div>
+      <h3 class="step-heading">¿Qué tipo de<br><em>proyecto</em> necesitas?</h3>
+      <div class="tipo-grid">
+        <div class="tipo-card" data-val="Branding / Identidad">
+          <div class="tipo-card-num">01</div>
+          <div class="tipo-card-name">Branding / Identidad</div>
+          <div class="tipo-card-desc">Logotipo, sistema visual, naming y guía de marca.</div>
+          <div class="tipo-card-check">✓</div>
+        </div>
+        <div class="tipo-card" data-val="Editorial / Publicación">
+          <div class="tipo-card-num">02</div>
+          <div class="tipo-card-name">Editorial / Publicación</div>
+          <div class="tipo-card-desc">Libros, revistas, catálogos y piezas impresas.</div>
+          <div class="tipo-card-check">✓</div>
+        </div>
+        <div class="tipo-card" data-val="Experiencia de marca">
+          <div class="tipo-card-num">03</div>
+          <div class="tipo-card-name">Experiencia de marca</div>
+          <div class="tipo-card-desc">Campañas, motion, redes sociales y materiales digitales.</div>
+          <div class="tipo-card-check">✓</div>
+        </div>
+        <div class="tipo-card" data-val="Otro">
+          <div class="tipo-card-num">04</div>
+          <div class="tipo-card-name">Otro</div>
+          <div class="tipo-card-desc">Cuéntame qué tienes en mente.</div>
+          <div class="tipo-card-check">✓</div>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="next1" disabled>Continuar →</button>
+      </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="step-panel" id="step-2">
+      <div class="step-q">Paso 02 — Detalles del proyecto</div>
+      <h3 class="step-heading">Cuéntame<br><em>más</em></h3>
+      <div class="fields">
+        <div class="field">
+          <label class="flbl">Nombre del proyecto</label>
+          <input type="text" class="finp" id="f-nombre-proyecto" placeholder="¿Cómo se llama o cómo lo imaginas?">
+        </div>
+        <div class="field">
+          <label class="flbl">Descripción breve</label>
+          <textarea class="ftxt" id="f-descripcion" placeholder="¿De qué trata? ¿A quién va dirigido? ¿Qué quieres transmitir?"></textarea>
+        </div>
+        <div class="field">
+          <label class="flbl">¿Tienes fecha límite?</label>
+          <input type="text" class="finp" id="f-fecha" placeholder="Ej. Finales de agosto, sin fecha definida...">
+        </div>
+      </div>
+      <span class="budget-section-label">Presupuesto aproximado</span>
+      <div class="budget-opts">
+        <button class="budget-opt" data-val="Menos de $5,000 MXN">Menos de $5k</button>
+        <button class="budget-opt" data-val="$5,000 – $15,000 MXN">$5k – $15k</button>
+        <button class="budget-opt" data-val="$15,000 – $30,000 MXN">$15k – $30k</button>
+        <button class="budget-opt" data-val="Más de $30,000 MXN">+$30k</button>
+        <button class="budget-opt" data-val="Por definir">Por definir</button>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" id="back2">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Atrás
+        </button>
+        <button class="btn-next" id="next2">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="step-panel" id="step-3">
+      <div class="step-q">Paso 03 — Tus datos</div>
+      <h3 class="step-heading">¿Cómo te<br><em>contacto?</em></h3>
+      <div class="fields">
+        <div class="field">
+          <label class="flbl">Nombre completo</label>
+          <input type="text" class="finp" id="f-nombre" placeholder="Tu nombre">
+        </div>
+        <div class="field">
+          <label class="flbl">Correo electrónico</label>
+          <input type="email" class="finp" id="f-email" placeholder="tu@email.com">
+        </div>
+        <div class="field">
+          <label class="flbl">Teléfono <span style="color:var(--dim);font-weight:300;letter-spacing:0;text-transform:none;">(opcional)</span></label>
+          <input type="tel" class="finp" id="f-telefono" placeholder="+52 (___) ___-____">
+        </div>
+        <div class="field">
+          <label class="flbl">Instagram o web <span style="color:var(--dim);font-weight:300;letter-spacing:0;text-transform:none;">(opcional)</span></label>
+          <input type="text" class="finp" id="f-instagram" placeholder="@tuusuario o www.tuweb.com">
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" id="back3">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Atrás
+        </button>
+        <button class="btn-next" id="next3" disabled>Continuar →</button>
+      </div>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="step-panel" id="step-4">
+      <div class="step-q">Paso 04 — Confirmación</div>
+      <h3 class="step-heading">¿Todo<br><em>correcto?</em></h3>
+      <div class="resumen">
+        <div class="res-row"><div class="res-lbl">Tipo</div><div class="res-val" id="res-tipo">—</div></div>
+        <div class="res-row"><div class="res-lbl">Proyecto</div><div class="res-val" id="res-proyecto">—</div></div>
+        <div class="res-row"><div class="res-lbl">Descripción</div><div class="res-val" id="res-desc">—</div></div>
+        <div class="res-row"><div class="res-lbl">Fecha</div><div class="res-val" id="res-fecha">—</div></div>
+        <div class="res-row"><div class="res-lbl">Presupuesto</div><div class="res-val" id="res-budget">—</div></div>
+        <div class="res-row"><div class="res-lbl">Nombre</div><div class="res-val" id="res-nombre">—</div></div>
+        <div class="res-row"><div class="res-lbl">Correo</div><div class="res-val" id="res-email">—</div></div>
+        <div class="res-row"><div class="res-lbl">Teléfono</div><div class="res-val" id="res-tel">—</div></div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" id="back4">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Editar
+        </button>
+        <button class="btn-next" id="btnEnviar">Enviar proyecto →</button>
+      </div>
+    </div>
+
+    <!-- ÉXITO -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-deco">OK</div>
+      <h3 class="success-title">Mensaje<br><em>enviado.</em></h3>
+      <p class="success-desc">Recibí tu solicitud. Te escribo en menos de 24 horas para hablar sobre tu proyecto.</p>
+      <a href="index.html" class="success-back">← Volver al inicio</a>
+    </div>
+
+  </main>
+</div>
+
+<!-- FORM OCULTO FORMSPREE -->
+<form id="hiddenForm" action="https://formspree.io/f/xdayppwq" method="POST" style="display:none;">
+  <input type="hidden" name="_subject" id="hSubject">
+  <input type="hidden" name="tipo"         id="hTipo">
+  <input type="hidden" name="proyecto"     id="hProyecto">
+  <input type="hidden" name="descripcion"  id="hDescripcion">
+  <input type="hidden" name="fecha"        id="hFecha">
+  <input type="hidden" name="presupuesto"  id="hPresupuesto">
+  <input type="hidden" name="nombre"       id="hNombre">
+  <input type="hidden" name="email"        id="hEmail">
+  <input type="hidden" name="telefono"     id="hTelefono">
+  <input type="hidden" name="instagram"    id="hInstagram">
+  <input type="hidden" name="_captcha"     value="false">
+</form>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+if(cur&&curR){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+}
+
+/* ── STATE ── */
+const state={step:1,tipo:'',nombreProyecto:'',descripcion:'',fecha:'',presupuesto:'',nombre:'',email:'',telefono:'',instagram:''};
+const TOTAL=4;
+
+const TITLES=[['Nuevo','proyecto'],['Los','detalles'],['Tus','datos'],['Casi','listo']];
+const DESCS=[
+  'Cuéntame sobre lo que necesitas. Toma menos de 2 minutos.',
+  'Mientras más detalle me des, mejor puedo ayudarte.',
+  'Para poder contactarte y hablar sobre el proyecto.',
+  'Revisa que todo esté correcto antes de enviar.'
+];
+
+function updateUI(){
+  const s=state.step;
+  const done=s>TOTAL;
+  document.getElementById('progressFill').style.width=done?'100%':((s/TOTAL)*100)+'%';
+  if(!done){
+    document.getElementById('sidebarStepLabel').textContent=`Paso ${s} de ${TOTAL}`;
+    const[l1,l2]=TITLES[s-1];
+    document.getElementById('sidebarTitle').innerHTML=`${l1}<br><em>${l2}</em>`;
+    document.getElementById('sidebarDesc').textContent=DESCS[s-1];
+  }
+  for(let i=1;i<=TOTAL;i++){
+    const el=document.getElementById('nav-'+i);
+    el.classList.remove('active','done');
+    if(i===s)el.classList.add('active');
+    else if(i<s)el.classList.add('done');
+  }
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('successPanel').classList.remove('active');
+  if(done){document.getElementById('successPanel').classList.add('active');}
+  else{document.getElementById('step-'+s).classList.add('active');}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── PASO 1 ── */
+document.querySelectorAll('.tipo-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.querySelectorAll('.tipo-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.tipo=card.dataset.val;
+    document.getElementById('next1').disabled=false;
+  });
+});
+document.getElementById('next1').addEventListener('click',()=>{state.step=2;updateUI();});
+
+/* ── PASO 2 ── */
+document.querySelectorAll('.budget-opt').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.budget-opt').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.presupuesto=btn.dataset.val;
+  });
+});
+document.getElementById('back2').addEventListener('click',()=>{state.step=1;updateUI();});
+document.getElementById('next2').addEventListener('click',()=>{
+  state.nombreProyecto=document.getElementById('f-nombre-proyecto').value;
+  state.descripcion=document.getElementById('f-descripcion').value;
+  state.fecha=document.getElementById('f-fecha').value;
+  state.step=3;updateUI();
+});
+
+/* ── PASO 3 ── */
+const emailInp=document.getElementById('f-email');
+const nombreInp=document.getElementById('f-nombre');
+function checkStep3(){document.getElementById('next3').disabled=!(emailInp.value.includes('@')&&nombreInp.value.trim());}
+emailInp.addEventListener('input',checkStep3);
+nombreInp.addEventListener('input',checkStep3);
+document.getElementById('back3').addEventListener('click',()=>{state.step=2;updateUI();});
+document.getElementById('next3').addEventListener('click',()=>{
+  state.nombre=nombreInp.value;
+  state.email=emailInp.value;
+  state.telefono=document.getElementById('f-telefono').value;
+  state.instagram=document.getElementById('f-instagram').value;
+  document.getElementById('res-tipo').textContent=state.tipo||'—';
+  document.getElementById('res-proyecto').textContent=state.nombreProyecto||'—';
+  document.getElementById('res-desc').textContent=state.descripcion||'—';
+  document.getElementById('res-fecha').textContent=state.fecha||'—';
+  document.getElementById('res-budget').textContent=state.presupuesto||'—';
+  document.getElementById('res-nombre').textContent=state.nombre||'—';
+  document.getElementById('res-email').textContent=state.email||'—';
+  document.getElementById('res-tel').textContent=state.telefono||'—';
+  state.step=4;updateUI();
+});
+
+/* ── PASO 4 ── */
+document.getElementById('back4').addEventListener('click',()=>{state.step=3;updateUI();});
+document.getElementById('btnEnviar').addEventListener('click',async()=>{
+  const btn=document.getElementById('btnEnviar');
+  btn.textContent='Enviando...';btn.disabled=true;
+  document.getElementById('hSubject').value=`Nuevo proyecto: ${state.tipo} — ${state.nombre}`;
+  document.getElementById('hTipo').value=state.tipo;
+  document.getElementById('hProyecto').value=state.nombreProyecto;
+  document.getElementById('hDescripcion').value=state.descripcion;
+  document.getElementById('hFecha').value=state.fecha;
+  document.getElementById('hPresupuesto').value=state.presupuesto;
+  document.getElementById('hNombre').value=state.nombre;
+  document.getElementById('hEmail').value=state.email;
+  document.getElementById('hTelefono').value=state.telefono;
+  document.getElementById('hInstagram').value=state.instagram;
+  try{
+    const form=document.getElementById('hiddenForm');
+    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){state.step=5;updateUI();}
+    else{btn.textContent='Error — intenta de nuevo';btn.disabled=false;}
+  }catch(e){btn.textContent='Error de conexión';btn.disabled=false;}
+});
+
+updateUI();
+</script>
+</body>
+</html>
