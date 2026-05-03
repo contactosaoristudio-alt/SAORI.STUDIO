@@ -192,8 +192,15 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
         </div>
         <div class="field">
           <label class="flbl">¿Dónde nos encontraste?</label>
-          <input type="text" class="finp" id="f-fuente" placeholder="Instagram, Behance, recomendación, Google...">
         </div>
+      </div>
+      <div class="budget-opts">
+        <button class="budget-opt fuente-opt" data-val="Instagram">Instagram</button>
+        <button class="budget-opt fuente-opt" data-val="TikTok">TikTok</button>
+        <button class="budget-opt fuente-opt" data-val="Behance">Behance</button>
+        <button class="budget-opt fuente-opt" data-val="Agencia">Agencia</button>
+        <button class="budget-opt fuente-opt" data-val="Recomendación">Recomendación</button>
+        <button class="budget-opt fuente-opt" data-val="Otro">Otro</button>
       </div>
       <div class="step-actions">
         <button class="btn-back" id="back3">
@@ -306,11 +313,16 @@ const emailInp=document.getElementById('f-email');
 emailInp.addEventListener('input',()=>{
   document.getElementById('next3').disabled=!emailInp.value.includes('@');
 });
+document.querySelectorAll('.fuente-opt').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fuente-opt').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.fuente=btn.dataset.val;
+  });
+});
 document.getElementById('back3').addEventListener('click',()=>go(2));
 document.getElementById('next3').addEventListener('click',()=>{
   state.email=emailInp.value;
-  state.fuente=document.getElementById('f-fuente').value;
-  /* llenar resumen */
   document.getElementById('res-nombre').textContent=state.nombre||'—';
   document.getElementById('res-proyecto').textContent=state.nombreProyecto||'—';
   document.getElementById('res-desc').textContent=state.descripcion||'—';
