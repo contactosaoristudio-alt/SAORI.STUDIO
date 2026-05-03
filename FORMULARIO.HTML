@@ -30,6 +30,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scaleUp{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
 
+/* HEADER */
 header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 44px;background:rgba(8,8,8,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
 .h-logo{position:absolute;left:50%;transform:translateX(-50%);}
 .logo{height:38px;object-fit:contain;}
@@ -39,22 +40,28 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
 .back-btn svg{transition:transform .3s;}
 .back-btn:hover svg{transform:translateX(-3px);}
 
+/* PROGRESS */
 .progress-bar{position:fixed;top:68px;left:0;width:100%;height:1px;background:var(--border);z-index:499;}
 .progress-fill{height:100%;background:var(--white);transition:width .6s cubic-bezier(.22,1,.36,1);width:0%;}
 
+/* LAYOUT */
 .form-shell{min-height:100vh;padding-top:68px;display:flex;justify-content:center;position:relative;z-index:1;}
 .form-main{width:100%;max-width:680px;display:flex;flex-direction:column;}
 
+/* PANELS */
 .step-panel{display:none;min-height:calc(100vh - 68px);padding:clamp(4rem,8vh,7rem) clamp(1.4rem,4vw,3rem);flex-direction:column;justify-content:center;animation:scaleUp .4s ease both;}
 .step-panel.active{display:flex;}
 .success-panel{display:none;min-height:calc(100vh - 68px);padding:clamp(4rem,8vh,7rem) clamp(1.4rem,4vw,3rem);flex-direction:column;justify-content:center;animation:fadeUp .6s ease both;}
 .success-panel.active{display:flex;}
 
+/* EYEBROW */
 .step-q{font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:.8rem;margin-bottom:1.8rem;}
 .step-q::before{content:'';display:block;width:1.6rem;height:1px;background:rgba(255,255,255,.55);}
 
+/* HEADING */
 .step-heading{font-size:clamp(2.2rem,5vw,4.2rem);font-weight:900;letter-spacing:-.02em;line-height:.9;margin-bottom:3rem;color:#ffffff;}
 
+/* INPUTS */
 .fields{display:flex;flex-direction:column;gap:1.6rem;max-width:540px;margin-bottom:2.5rem;}
 .field{display:flex;flex-direction:column;gap:.5rem;}
 .flbl{font-size:.75rem;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.7);}
@@ -63,18 +70,21 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
 .finp::placeholder,.ftxt::placeholder{color:rgba(255,255,255,.28);font-weight:300;}
 .ftxt{min-height:96px;}
 
+/* OPCIONES (servicios, presupuesto) */
 .opts-label{font-size:.75rem;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.55);margin-bottom:1rem;display:block;}
 .opts{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;}
 .opt{font-size:.8rem;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.6);border:1px solid var(--border);padding:.7rem 1.3rem;cursor:pointer;transition:all .25s;background:transparent;font-family:var(--font);}
 .opt:hover{color:var(--white);border-color:rgba(255,255,255,.3);}
 .opt.selected{color:var(--black);background:var(--white);border-color:var(--white);}
 
+/* RESUMEN */
 .resumen{display:flex;flex-direction:column;gap:0;max-width:540px;margin-bottom:2.5rem;border:1px solid var(--border);}
 .res-row{display:grid;grid-template-columns:140px 1fr;border-bottom:1px solid var(--border);}
 .res-row:last-child{border-bottom:none;}
 .res-lbl{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);padding:1rem 1.2rem;border-right:1px solid var(--border);display:flex;align-items:flex-start;}
 .res-val{font-size:.9rem;font-weight:400;padding:1rem 1.2rem;color:#ffffff;display:flex;align-items:flex-start;word-break:break-word;}
 
+/* BOTONES */
 .step-actions{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;}
 .btn-next{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--white);color:var(--black);border:none;padding:.9rem 2.6rem;cursor:pointer;font-family:var(--font);transition:opacity .3s;display:inline-flex;align-items:center;gap:.5rem;}
 .btn-next:hover{opacity:.82;}
@@ -84,6 +94,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
 .btn-back svg{transition:transform .3s;}
 .btn-back:hover svg{transform:translateX(-3px);}
 
+/* ÉXITO */
 .success-deco{font-size:clamp(4rem,12vw,11rem);font-weight:900;letter-spacing:-.06em;color:rgba(255,255,255,.04);line-height:1;margin-bottom:-1.5rem;text-transform:uppercase;}
 .success-title{font-size:clamp(2.2rem,6vw,5rem);font-weight:900;letter-spacing:-.02em;line-height:.92;margin-bottom:1.6rem;color:#ffffff;}
 .success-desc{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.5);line-height:2.1;max-width:420px;margin-bottom:3rem;}
@@ -164,6 +175,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
           <label class="flbl">Nombre del proyecto</label>
           <input type="text" class="finp" id="f-nombre-proyecto" placeholder="¿Cómo se llama o cómo lo imaginas?">
         </div>
+      
         <div class="field">
           <label class="flbl">Descripción</label>
           <textarea class="ftxt" id="f-descripcion" placeholder="¿De qué trata? ¿A quién va dirigido? ¿Qué quieres transmitir?"></textarea>
@@ -262,7 +274,7 @@ function showStep(){
 }
 function go(n){state.step=n;setProgress();showStep();}
 
-/* PASO 1 */
+/* PASO 1 — Nombre */
 const nombreInp=document.getElementById('f-nombre');
 nombreInp.addEventListener('input',()=>{
   document.getElementById('next1').disabled=!nombreInp.value.trim();
@@ -272,7 +284,7 @@ document.getElementById('next1').addEventListener('click',()=>{
   go(2);
 });
 
-/* PASO 2 */
+/* PASO 2 — Servicio */
 document.querySelectorAll('#step-2 .opt').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('#step-2 .opt').forEach(b=>b.classList.remove('selected'));
@@ -284,7 +296,7 @@ document.querySelectorAll('#step-2 .opt').forEach(btn=>{
 document.getElementById('back2').addEventListener('click',()=>go(1));
 document.getElementById('next2').addEventListener('click',()=>go(3));
 
-/* PASO 3 */
+/* PASO 3 — Proyecto */
 document.querySelectorAll('#step-3 .opt').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('#step-3 .opt').forEach(b=>b.classList.remove('selected'));
@@ -299,7 +311,7 @@ document.getElementById('next3').addEventListener('click',()=>{
   go(4);
 });
 
-/* PASO 4 */
+/* PASO 4 — Email */
 const emailInp=document.getElementById('f-email');
 emailInp.addEventListener('input',()=>{
   document.getElementById('next4').style.opacity=emailInp.value.includes('@')?'1':'.28';
@@ -322,7 +334,7 @@ document.getElementById('next4').addEventListener('click',()=>{
   go(5);
 });
 
-/* PASO 5 */
+/* PASO 5 — Enviar */
 document.getElementById('back5').addEventListener('click',()=>go(4));
 document.getElementById('btnEnviar').addEventListener('click',async()=>{
   const btn=document.getElementById('btnEnviar');
@@ -331,12 +343,12 @@ document.getElementById('btnEnviar').addEventListener('click',async()=>{
   const payload={
     _subject: `Nuevo proyecto de ${state.nombre} — ${state.servicio}`,
     _replyto: state.email,
-    Nombre:      state.nombre,
-    Servicio:    state.servicio,
-    Proyecto:    state.nombreProyecto,
-    Descripcion: state.descripcion,
-    Presupuesto: state.presupuesto,
-    Correo:      state.email
+    Nombre:       state.nombre,
+    Servicio:     state.servicio,
+    Proyecto:     state.nombreProyecto,
+    Descripción:  state.descripcion,
+    Presupuesto:  state.presupuesto,
+    Correo:       state.email
   };
 
   try{
