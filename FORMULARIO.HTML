@@ -160,6 +160,10 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
           <input type="text" class="finp" id="f-nombre-proyecto" placeholder="¿Cómo se llama o cómo lo imaginas?">
         </div>
         <div class="field">
+          <label class="flbl">¿Qué necesitas?</label>
+          <textarea class="ftxt" id="f-necesitas" placeholder="Cuéntame qué tienes en mente, qué problema quieres resolver o qué resultado esperas..."></textarea>
+        </div>
+        <div class="field">
           <label class="flbl">Descripción</label>
           <textarea class="ftxt" id="f-descripcion" placeholder="¿De qué trata? ¿A quién va dirigido? ¿Qué quieres transmitir?"></textarea>
         </div>
@@ -218,6 +222,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
       <div class="resumen">
         <div class="res-row"><div class="res-lbl">Nombre</div><div class="res-val" id="res-nombre">—</div></div>
         <div class="res-row"><div class="res-lbl">Proyecto</div><div class="res-val" id="res-proyecto">—</div></div>
+        <div class="res-row"><div class="res-lbl">Qué necesita</div><div class="res-val" id="res-necesitas">—</div></div>
         <div class="res-row"><div class="res-lbl">Descripción</div><div class="res-val" id="res-desc">—</div></div>
         <div class="res-row"><div class="res-lbl">Presupuesto</div><div class="res-val" id="res-budget">—</div></div>
         <div class="res-row"><div class="res-lbl">Correo</div><div class="res-val" id="res-email">—</div></div>
@@ -247,6 +252,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
 <form id="hiddenForm" action="https://formspree.io/f/xdayppwq" method="POST" style="display:none;">
   <input type="hidden" name="_subject"    id="hSubject">
   <input type="hidden" name="nombre"      id="hNombre">
+  <input type="hidden" name="necesitas"    id="hNecesitas">
   <input type="hidden" name="proyecto"    id="hProyecto">
   <input type="hidden" name="descripcion" id="hDescripcion">
   <input type="hidden" name="presupuesto" id="hPresupuesto">
@@ -265,7 +271,7 @@ if(cur&&curR){
 }
 
 /* STATE */
-const state={step:1,nombre:'',nombreProyecto:'',descripcion:'',presupuesto:'',email:'',fuente:''};
+const state={step:1,nombre:'',nombreProyecto:'',necesitas:'',descripcion:'',presupuesto:'',email:'',fuente:''};
 const TOTAL=4;
 
 function setProgress(){
@@ -304,6 +310,7 @@ document.querySelectorAll('.budget-opt').forEach(btn=>{
 document.getElementById('back2').addEventListener('click',()=>go(1));
 document.getElementById('next2').addEventListener('click',()=>{
   state.nombreProyecto=document.getElementById('f-nombre-proyecto').value;
+  state.necesitas=document.getElementById('f-necesitas').value;
   state.descripcion=document.getElementById('f-descripcion').value;
   go(3);
 });
@@ -325,6 +332,7 @@ document.getElementById('next3').addEventListener('click',()=>{
   state.email=emailInp.value;
   document.getElementById('res-nombre').textContent=state.nombre||'—';
   document.getElementById('res-proyecto').textContent=state.nombreProyecto||'—';
+  document.getElementById('res-necesitas').textContent=state.necesitas||'—';
   document.getElementById('res-desc').textContent=state.descripcion||'—';
   document.getElementById('res-budget').textContent=state.presupuesto||'—';
   document.getElementById('res-email').textContent=state.email||'—';
@@ -339,6 +347,7 @@ document.getElementById('btnEnviar').addEventListener('click',async()=>{
   btn.textContent='Enviando...';btn.disabled=true;
   document.getElementById('hSubject').value=`Nuevo proyecto de ${state.nombre}`;
   document.getElementById('hNombre').value=state.nombre;
+  document.getElementById('hNecesitas').value=state.necesitas;
   document.getElementById('hProyecto').value=state.nombreProyecto;
   document.getElementById('hDescripcion').value=state.descripcion;
   document.getElementById('hPresupuesto').value=state.presupuesto;
