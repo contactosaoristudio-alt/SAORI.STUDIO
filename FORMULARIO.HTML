@@ -138,10 +138,10 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
     <!-- PASO 1 — Nombre -->
     <div class="step-panel active" id="step-1">
       <div class="step-q">Paso 01 de 04</div>
-      <h3 class="step-heading">¿Cómo te llamas?</h3>
+      <h3 class="step-heading">Hola ¿Cómo te llamas?</h3>
       <div class="fields">
         <div class="field">
-          <label class="flbl">Nombre completo</label>
+          <label class="flbl">Nombre y apellido</label>
           <input type="text" class="finp" id="f-nombre" placeholder="Tu nombre">
         </div>
       </div>
@@ -159,10 +159,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
           <label class="flbl">Nombre del proyecto</label>
           <input type="text" class="finp" id="f-nombre-proyecto" placeholder="¿Cómo se llama o cómo lo imaginas?">
         </div>
-        <div class="field">
-          <label class="flbl">¿Qué necesitas?</label>
-          <textarea class="ftxt" id="f-necesitas" placeholder="Cuéntame qué tienes en mente, qué problema quieres resolver o qué resultado esperas..."></textarea>
-        </div>
+       
         <div class="field">
           <label class="flbl">Descripción</label>
           <textarea class="ftxt" id="f-descripcion" placeholder="¿De qué trata? ¿A quién va dirigido? ¿Qué quieres transmitir?"></textarea>
@@ -170,7 +167,7 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
       </div>
       <span class="budget-section-label">Presupuesto aproximado</span>
       <div class="budget-opts">
-        <button class="budget-opt" data-val="Menos de $5,000 MXN">Menos de $5k</button>
+        
         <button class="budget-opt" data-val="$5,000 – $15,000 MXN">$5k – $15k</button>
         <button class="budget-opt" data-val="$15,000 – $30,000 MXN">$15k – $30k</button>
         <button class="budget-opt" data-val="Más de $30,000 MXN">+$30k</button>
@@ -211,7 +208,6 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
       <div class="resumen">
         <div class="res-row"><div class="res-lbl">Nombre</div><div class="res-val" id="res-nombre">—</div></div>
         <div class="res-row"><div class="res-lbl">Proyecto</div><div class="res-val" id="res-proyecto">—</div></div>
-        <div class="res-row"><div class="res-lbl">Qué necesita</div><div class="res-val" id="res-necesitas">—</div></div>
         <div class="res-row"><div class="res-lbl">Descripción</div><div class="res-val" id="res-desc">—</div></div>
         <div class="res-row"><div class="res-lbl">Presupuesto</div><div class="res-val" id="res-budget">—</div></div>
         <div class="res-row"><div class="res-lbl">Correo</div><div class="res-val" id="res-email">—</div></div>
@@ -235,6 +231,118 @@ header{position:fixed;top:0;width:100%;height:68px;z-index:500;display:flex;alig
 
   </main>
 </div>
+
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+if(cur&&curR){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+}
+
+/* STATE */
+const state={step:1,nombre:'',nombreProyecto:'',necesitas:'',descripcion:'',presupuesto:'',email:''};
+const TOTAL=4;
+
+function setProgress(){
+  document.getElementById('progressFill').style.width=
+    state.step>TOTAL?'100%':((state.step/TOTAL)*100)+'%';
+}
+
+function showStep(){
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('successPanel').classList.remove('active');
+  if(state.step>TOTAL) document.getElementById('successPanel').classList.add('active');
+  else document.getElementById('step-'+state.step).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function go(n){state.step=n;setProgress();showStep();}
+
+/* PASO 1 */
+const nombreInp=document.getElementById('f-nombre');
+nombreInp.addEventListener('input',()=>{
+  document.getElementById('next1').disabled=!nombreInp.value.trim();
+});
+document.getElementById('next1').addEventListener('click',()=>{
+  state.nombre=nombreInp.value.trim();
+  go(2);
+});
+
+/* PASO 2 */
+document.querySelectorAll('.budget-opt').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.budget-opt').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.presupuesto=btn.dataset.val;
+  });
+});
+document.getElementById('back2').addEventListener('click',()=>go(1));
+document.getElementById('next2').addEventListener('click',()=>{
+  state.nombreProyecto=document.getElementById('f-nombre-proyecto').value;
+  state.necesitas=document.getElementById('f-necesitas').value;
+  state.descripcion=document.getElementById('f-descripcion').value;
+  go(3);
+});
+
+/* PASO 3 */
+const emailInp=document.getElementById('f-email');
+emailInp.addEventListener('input',()=>{
+  document.getElementById('next3').disabled=!emailInp.value.includes('@');
+});
+document.getElementById('back3').addEventListener('click',()=>go(2));
+document.getElementById('next3').addEventListener('click',()=>{
+  state.email=emailInp.value;
+  document.getElementById('res-nombre').textContent=state.nombre||'—';
+  document.getElementById('res-proyecto').textContent=state.nombreProyecto||'—';
+  document.getElementById('res-necesitas').textContent=state.necesitas||'—';
+  document.getElementById('res-desc').textContent=state.descripcion||'—';
+  document.getElementById('res-budget').textContent=state.presupuesto||'—';
+  document.getElementById('res-email').textContent=state.email||'—';
+  go(4);
+});
+
+/* PASO 4 */
+document.getElementById('back4').addEventListener('click',()=>go(3));
+document.getElementById('btnEnviar').addEventListener('click',async()=>{
+  const btn=document.getElementById('btnEnviar');
+  btn.textContent='Enviando...';btn.disabled=true;
+
+  const payload={
+    _subject: `Nuevo proyecto de ${state.nombre}`,
+    _replyto: state.email,
+    Nombre:      state.nombre,
+    'Qué necesita': state.necesitas,
+    Proyecto:    state.nombreProyecto,
+    Descripción: state.descripcion,
+    Presupuesto: state.presupuesto,
+    Correo:      state.email
+  };
+
+  try{
+    const res=await fetch('https://formspree.io/f/xdayppwq',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(res.ok){go(5);}
+    else{
+      const data=await res.json();
+      console.error('Formspree error:',data);
+      btn.textContent='Error — intenta de nuevo';btn.disabled=false;
+    }
+  }catch(e){
+    console.error(e);
+    btn.textContent='Error de conexión';btn.disabled=false;
+  }
+});
+
+setProgress();
+</script>
+</body>
+</html>
 
 
 <script>
