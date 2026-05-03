@@ -296,13 +296,6 @@ const emailInp=document.getElementById('f-email');
 emailInp.addEventListener('input',()=>{
   document.getElementById('next3').disabled=!emailInp.value.includes('@');
 });
-document.querySelectorAll('.fuente-opt').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.fuente-opt').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    state.fuente=btn.dataset.val;
-  });
-});
 document.getElementById('back3').addEventListener('click',()=>go(2));
 document.getElementById('next3').addEventListener('click',()=>{
   state.email=emailInp.value;
@@ -312,7 +305,6 @@ document.getElementById('next3').addEventListener('click',()=>{
   document.getElementById('res-desc').textContent=state.descripcion||'—';
   document.getElementById('res-budget').textContent=state.presupuesto||'—';
   document.getElementById('res-email').textContent=state.email||'—';
-  document.getElementById('res-fuente').textContent=state.fuente||'—';
   go(4);
 });
 
@@ -330,8 +322,7 @@ document.getElementById('btnEnviar').addEventListener('click',async()=>{
     Proyecto:    state.nombreProyecto,
     Descripción: state.descripcion,
     Presupuesto: state.presupuesto,
-    Correo:      state.email,
-    'Nos encontró en': state.fuente
+    Correo:      state.email
   };
 
   try{
