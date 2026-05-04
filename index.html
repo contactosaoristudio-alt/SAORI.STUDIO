@@ -373,8 +373,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   #cur,#curR{display:none;}
   .sec{padding:4rem 1.4rem;}
   header{padding:0 1.4rem;}
-  .hero-title-wrap{padding:0 1rem;}
-  .hero-saori,.hero-line-2{font-size:clamp(1.6rem,8.5vw,3.2rem);letter-spacing:-.03em;}
+  .hero-title-wrap{padding:0 1rem;flex-direction:column;align-items:center;gap:.2rem;}
+  .hero-saori::after{content:'';}
+  .hero-saori,.hero-line-2{font-size:clamp(3.5rem,18vw,6rem);letter-spacing:-.04em;}
   .presentation-wrap{padding:3.5rem 1.4rem 4rem;}
   .pres-title{font-size:clamp(1.4rem,7vw,2.6rem);white-space:normal;}
   .port-item,.port-item.featured{flex:0 0 100%!important;aspect-ratio:4/3!important;}
@@ -388,7 +389,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
 }
 @media(max-width:480px){
-  .hero-saori,.hero-line-2{font-size:clamp(1.4rem,7.5vw,2.4rem);}
+  .hero-saori,.hero-line-2{font-size:clamp(3rem,16vw,5rem);}
   .statement-content h2{font-size:clamp(1.8rem,8vw,3rem);}
   .sec{padding:3.5rem 1.2rem;}
 }
@@ -563,7 +564,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
       <div class="f-tagline">Diseñador Gráfico Creativo — México</div>
     </div>
     <div>
-     
+      
       </nav>
     </div>
     <div>
@@ -618,7 +619,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
     studio.style.transition = 'opacity 1s ease';
     saori.style.opacity = '1';
     studio.style.opacity = '1';
-  }, 3000);
+  }, 900);
 })();
 
 /* ── CARRUSEL ── */
