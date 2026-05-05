@@ -54,7 +54,7 @@ header{
 .logo{height:40px;object-fit:contain;}
 .logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
 .back-btn{
-  font-size:.48rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  font-size:.75rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
   color:var(--dim);display:flex;align-items:center;gap:.6rem;transition:color .3s;
 }
 .back-btn:hover{color:var(--white);}
@@ -88,14 +88,12 @@ header{
 .menu-footer{position:absolute;bottom:3rem;left:clamp(2rem,7vw,5.5rem);font-size:.44rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);}
 
 /* ════════════════════════════════
-   HERO — pantalla completa
+   HERO
 ════════════════════════════════ */
 .project-hero{
-  margin-top:68px;
-  position:relative;
+  margin-top:68px;position:relative;
   height:calc(100vh - 68px);
-  overflow:hidden;
-  display:flex;align-items:flex-end;
+  overflow:hidden;display:flex;align-items:flex-end;
 }
 .project-hero-img{
   position:absolute;inset:0;width:100%;height:100%;
@@ -108,8 +106,7 @@ header{
 .project-hero-content{
   position:relative;z-index:2;
   padding:0 clamp(1.4rem,6vw,6rem) clamp(3rem,5vh,5rem);
-  width:100%;
-  opacity:0;animation:fadeUp 1s ease .4s forwards;
+  width:100%;opacity:0;animation:fadeUp 1s ease .4s forwards;
 }
 .proj-eyebrow{
   font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
@@ -121,27 +118,19 @@ h1.proj-title{
   line-height:.86;letter-spacing:-.04em;text-transform:uppercase;
 }
 .proj-scroll-hint{
-  margin-top:2rem;
-  font-size:.46rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;
+  margin-top:2rem;font-size:.46rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;
   color:rgba(255,255,255,.2);display:flex;align-items:center;gap:.8rem;
 }
 .proj-scroll-hint::after{
   content:'';display:block;width:1px;height:2.5rem;
-  background:rgba(255,255,255,.18);
-  animation:scrollPulse 2s ease-in-out infinite;
+  background:rgba(255,255,255,.18);animation:scrollPulse 2s ease-in-out infinite;
 }
 
 /* ════════════════════════════════
    INFO STRIP
 ════════════════════════════════ */
-.info-strip{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border-bottom:1px solid var(--border);
-}
-.info-cell{
-  padding:clamp(1.5rem,3vh,2.5rem) clamp(1.4rem,3vw,3rem);
-  border-right:1px solid var(--border);
-}
+.info-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+.info-cell{padding:clamp(1.5rem,3vh,2.5rem) clamp(1.4rem,3vw,3rem);border-right:1px solid var(--border);}
 .info-cell:last-child{border-right:none;}
 .info-lbl{font-size:.42rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem;}
 .info-val{font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
@@ -151,8 +140,7 @@ h1.proj-title{
 ════════════════════════════════ */
 .saori-cat-section{
   display:grid;grid-template-columns:1fr 1fr;
-  border-bottom:1px solid var(--border);
-  background:var(--dark);
+  border-bottom:1px solid var(--border);background:var(--dark);
 }
 .saori-cat-left{
   padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
@@ -165,15 +153,12 @@ h1.proj-title{
 }
 .saori-cat-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
 .saori-cat-name{
-  font-size:clamp(2.5rem,6vw,6rem);
-  font-weight:900;letter-spacing:-.04em;text-transform:uppercase;
-  line-height:.88;
+  font-size:clamp(2.5rem,6vw,6rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;
 }
 .saori-cat-name span{
-  font-weight:200;font-style:italic;
-  color:rgba(244,242,238,.45);
-  display:block;font-size:clamp(1.5rem,3.5vw,3.5rem);
-  margin-bottom:.3rem;
+  font-weight:200;font-style:italic;color:rgba(244,242,238,.45);
+  display:block;font-size:clamp(1.5rem,3.5vw,3.5rem);margin-bottom:.3rem;
 }
 .saori-cat-right{
   padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
@@ -186,13 +171,12 @@ h1.proj-title{
 .saori-tags{display:flex;flex-wrap:wrap;gap:.6rem;}
 .saori-tag{
   font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--dim);border:1px solid var(--border);padding:.5rem 1rem;
-  transition:all .3s;
+  color:var(--dim);border:1px solid var(--border);padding:.5rem 1rem;transition:all .3s;
 }
 .saori-tag:hover{color:var(--white);border-color:rgba(255,255,255,.25);}
 
 /* ════════════════════════════════
-   GALERÍA
+   GALERÍA — 1 por fila, 16:9
 ════════════════════════════════ */
 .fotos-section{
   padding:clamp(3rem,5vh,5rem) clamp(1.4rem,5vw,5rem) clamp(5rem,8vh,8rem);
@@ -202,104 +186,90 @@ h1.proj-title{
   color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:3.5rem;
 }
 .fotos-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
-.fotos-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,2vw,2rem);}
 
+.fotos-grid{
+  display:flex;flex-direction:column;
+  gap:clamp(.8rem,2vw,2rem);
+}
 .foto-item{
-  overflow:hidden;background:var(--card);
-  opacity:0;transform:translateY(50px);
+  overflow:hidden;background:var(--card);width:100%;
+  opacity:0;transform:translateY(40px);
   transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
 }
-.foto-item:nth-child(even){transform:translateY(-50px);}
 .foto-item.visible{opacity:1;transform:translateY(0);}
 .foto-inner{overflow:hidden;position:relative;}
 .foto-inner img{
-  width:100%;height:clamp(240px,35vw,480px);
+  width:100%;
+  aspect-ratio:16/9;
   object-fit:cover;display:block;
   transition:transform .8s cubic-bezier(.22,1,.36,1);
 }
-.foto-item:hover img{transform:scale(1.05);}
+.foto-item:hover img{transform:scale(1.03);}
 .foto-num{
-  position:absolute;bottom:.8rem;right:1rem;
+  position:absolute;bottom:.8rem;right:1.2rem;
   font-size:.4rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);
-  opacity:0;transition:opacity .3s;
+  color:rgba(255,255,255,.3);opacity:0;transition:opacity .3s;
 }
 .foto-item:hover .foto-num{opacity:1;}
 
 /* ════════════════════════════════
-   SIGUIENTE PROYECTO — transición fullscreen
+   SIGUIENTE PROYECTO — footer centrado
 ════════════════════════════════ */
 .next-project{
+  display:block;
   position:relative;
-  height:100vh;
   overflow:hidden;
-  display:flex;align-items:flex-end;
   cursor:pointer;
+  border-top:1px solid var(--border);
+}
+
+/* Label + título centrados */
+.next-header{
+  padding:clamp(3rem,6vh,5rem) clamp(1.4rem,6vw,6rem) clamp(2rem,4vh,3rem);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:1rem;background:var(--black);
+  position:relative;z-index:2;
+}
+.next-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;
+}
+.next-label::before,.next-label::after{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
+.next-title{
+  font-size:clamp(2rem,6vw,5rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;
+  color:var(--white);
+}
+.next-cat{
+  font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+}
+
+/* Imagen de transición */
+.next-img-wrap{
+  position:relative;width:100%;overflow:hidden;
+  height:55vh;
 }
 .next-project-img{
   position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;
-  transform:scale(1.08);
-  transition:transform 1.2s cubic-bezier(.22,1,.36,1);
+  transform:scale(1.06);
+  transition:transform 1.4s cubic-bezier(.22,1,.36,1);
 }
 .next-project:hover .next-project-img{transform:scale(1);}
 .next-project-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(8,8,8,.2) 20%,rgba(8,8,8,.6) 60%,rgba(8,8,8,.95) 100%);
-  transition:background .6s ease;
+  background:linear-gradient(to bottom,rgba(8,8,8,.55) 0%,rgba(8,8,8,.1) 100%);
+  transition:opacity .6s ease;
 }
-.next-project:hover .next-project-overlay{
-  background:linear-gradient(to bottom,rgba(8,8,8,.3) 20%,rgba(8,8,8,.7) 60%,rgba(8,8,8,.98) 100%);
-}
-.next-project-content{
-  position:relative;z-index:2;
-  padding:0 clamp(1.4rem,6vw,6rem) clamp(4rem,7vh,7rem);
-  width:100%;
-}
-.next-label{
-  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
-  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:1.4rem;
-}
-.next-label::before{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
-.next-title{
-  font-size:clamp(3.5rem,9vw,10rem);font-weight:900;
-  letter-spacing:-.04em;text-transform:uppercase;line-height:.86;
-  color:var(--white);
-  transform:translateY(20px);
-  transition:transform .8s cubic-bezier(.22,1,.36,1);
-}
-.next-project:hover .next-title{transform:translateY(0);}
-.next-cat{
-  font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
-  color:rgba(255,255,255,.4);margin-top:1rem;
-  display:flex;align-items:center;gap:.8rem;
-}
+.next-project:hover .next-project-overlay{opacity:.6;}
 .next-arrow{
-  display:inline-flex;align-items:center;gap:.6rem;
-  font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--white);margin-top:1.8rem;
-  opacity:0;transform:translateX(-8px);
-  transition:opacity .5s ease,transform .5s ease;
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%) translateY(6px);
+  font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--white);z-index:2;
+  opacity:0;transition:opacity .5s ease,transform .5s ease;
 }
-.next-project:hover .next-arrow{opacity:1;transform:translateX(0);}
-
-/* ─── FOOTER ─── */
-footer{background:var(--black);border-top:1px solid var(--border);padding:4rem clamp(1.4rem,5vw,5rem) 2.5rem;}
-.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
-.f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
-.f-tagline{font-size:.56rem;font-weight:300;font-style:italic;color:var(--dim);margin-top:.4rem;}
-.soc-lbl{font-size:.44rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:1.2rem;}
-.soc-list{display:flex;flex-direction:column;gap:.55rem;}
-.soc{display:flex;align-items:center;gap:.9rem;font-size:.72rem;color:var(--dim);padding:.28rem 0;border-bottom:1px solid transparent;transition:all .3s;}
-.soc:hover{color:var(--white);border-bottom-color:var(--border);}
-.soc-ico{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;transition:border-color .3s;}
-.soc:hover .soc-ico{border-color:rgba(255,255,255,.3);}
-.soc-arr{margin-left:auto;opacity:0;transition:opacity .3s,transform .3s;}
-.soc:hover .soc-arr{opacity:1;transform:translateX(3px);}
-.foot-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-.f-copy{font-size:.48rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
-.f-up{font-size:.48rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);transition:color .3s;}
-.f-up:hover{color:var(--white);}
+.next-project:hover .next-arrow{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ════════════════════════════════
    RESPONSIVE
@@ -318,15 +288,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
   h1.proj-title{font-size:clamp(2.8rem,11vw,5rem);}
   .info-cell{padding:1.4rem;}
   .saori-cat-left,.saori-cat-right{padding:3rem 1.4rem;}
-  .fotos-section{padding:3rem 1.4rem 5rem;}
-  .fotos-grid{grid-template-columns:1fr;gap:.8rem;}
-  .foto-item:nth-child(even){transform:translateY(50px);}
-  .foto-inner img{height:clamp(220px,55vw,360px);}
-  .next-project-content{padding:0 1.4rem 4rem;}
-  .next-title{font-size:clamp(2.8rem,11vw,5rem);}
-  footer{padding:3rem 1.4rem 2rem;}
-  .foot-top{flex-direction:column;gap:2rem;}
-  .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
+  .fotos-section{padding:3rem 1.4rem 4rem;}
+  .next-img-wrap{height:40vh;}
 }
 </style>
 </head>
@@ -363,7 +326,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
 
 <!-- HERO -->
 <section class="project-hero">
-  <img src="NUEVO AMANECER\PORTADA.jpg" alt="Nuevo Amanecer" class="project-hero-img"
+  <img src="NUEVO AMANECER/1x/Recurso 3portada 2.jpg" alt="Nuevo Amanecer" class="project-hero-img"
        onerror="this.style.background='var(--card)';this.style.opacity='.3';">
   <div class="project-hero-overlay"></div>
   <div class="project-hero-content">
@@ -387,96 +350,86 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem c
     <div class="saori-cat-label">Disciplina</div>
     <div class="saori-cat-name">
       <span>SAORI.</span>
-      Naming<br>& Visual
+      Editorial<br>& Visual
     </div>
   </div>
   <div class="saori-cat-right">
     <p class="saori-cat-desc">
-      Nuevo Amanecer es un proyecto de identidad visual que busca transmitir renovación, fuerza y comienzos. La dirección de arte parte de la tensión entre lo orgánico y lo estructurado, generando un sistema coherente capaz de adaptarse a múltiples soportes.
     </p>
     <p class="saori-cat-desc" style="margin-top:0;">
-      El desarrollo abarca desde la conceptualización del logotipo hasta la definición de la paleta cromática, el sistema tipográfico y las aplicaciones en materiales de comunicación.
-    </p>
+Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel preescolar es un proyecto realizado en colaboración con el Instituto Nuevo Amanecer. El trabajo abarcó la creación de la identidad gráfica y editorial del libro, incluyendo lenguaje visual, maquetación y gestión de impresión. Cada decisión de diseño se enfocó en mejorar la lectura, la comprensión y la cercanía con el contenido. El libro busca apoyar a escuelas y docentes en la construcción de entornos más inclusivos, ofreciendo herramientas para acompañar el aprendizaje de niños con parálisis cerebral. Es una propuesta de diseño con propósito, orientada a generar impacto real.    </p>
     <div class="saori-tags">
-      <span class="saori-tag">Logotipo</span>
-      <span class="saori-tag">Tipografía</span>
-      <span class="saori-tag">Paleta</span>
-      <span class="saori-tag">Sistema Gráfico</span>
-      <span class="saori-tag">Aplicaciones</span>
-    </div>
+     
   </div>
 </section>
 
-<!-- GALERÍA -->
+<!-- GALERÍA — 8 fotos 1 por fila 16:9 -->
 <section class="fotos-section">
   <div class="fotos-label">Galería del proyecto</div>
   <div class="fotos-grid">
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="GARABATOS/PORTADA.jpg" alt="01" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_01.jpg" alt="01" onerror="this.style.background='var(--card)';">
       <span class="foto-num">01</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="" alt="02" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_02.jpg" alt="02" onerror="this.style.background='var(--card)';">
       <span class="foto-num">02</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_03.jpg" alt="03" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_03.jpg" alt="03" onerror="this.style.background='var(--card)';">
       <span class="foto-num">03</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_04.jpg" alt="04" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_04.jpg" alt="04" onerror="this.style.background='var(--card)';">
       <span class="foto-num">04</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_05.jpg" alt="05" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_05.jpg" alt="05" onerror="this.style.background='var(--card)';">
       <span class="foto-num">05</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_06.jpg" alt="06" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_06.jpg" alt="06" onerror="this.style.background='var(--card)';">
       <span class="foto-num">06</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_07.jpg" alt="07" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_07.jpg" alt="07" onerror="this.style.background='var(--card)';">
       <span class="foto-num">07</span>
     </div></div>
 
     <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_08.jpg" alt="08" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
+      <img src="NUEVO AMANECER/FOTO_08.jpg" alt="08" onerror="this.style.background='var(--card)';">
       <span class="foto-num">08</span>
-    </div></div>
-
-    <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_09.jpg" alt="09" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
-      <span class="foto-num">09</span>
-    </div></div>
-
-    <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_10.jpg" alt="10" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
-      <span class="foto-num">10</span>
-    </div></div>
-
-    <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_11.jpg" alt="11" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
-      <span class="foto-num">11</span>
-    </div></div>
-
-    <div class="foto-item"><div class="foto-inner">
-      <img src="NUEVO AMANEER/FOTO_12.jpg" alt="12" onerror="this.style.background='var(--card)';this.style.minHeight='300px';">
-      <span class="foto-num">12</span>
     </div></div>
 
   </div>
 </section>
 
-<!-- SIGUIENTE PROYECTO — transición por scroll -->
-<div id="next-trigger" style="height:2px;background:transparent;"></div>
+<!-- SIGUIENTE PROYECTO -->
+<a href="proyecto-nuevo-amanecer.html" class="next-project" id="nextProject">
+
+  <!-- Texto centrado -->
+  <div class="next-header">
+    <div class="next-label">Siguiente Proyecto</div>
+    <div class="next-title">Garabatos</div>
+    <div class="next-cat">Fotografía — 02</div>
+  </div>
+
+  <!-- Imagen de transición -->
+  <div class="next-img-wrap">
+    <img src="NUEVO AMANECER/1x/Recurso 2portada 1.jpg" alt="Garabatos" class="next-project-img"
+         onerror="this.style.background='var(--card)';this.style.opacity='.4';">
+    <div class="next-project-overlay"></div>
+    <div class="next-arrow">Ver proyecto →</div>
+  </div>
+
+</a>
 
 <script>
 /* ── CURSOR ── */
@@ -510,26 +463,23 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
         obs.unobserve(entry.target);
       }
     });
-  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
   items.forEach(el=>obs.observe(el));
 })();
 
 /* ── SCROLL TO NEXT PROJECT ── */
 (function(){
-  const next = 'proyecto-garabatos.html';
+  const nextUrl = 'proyecto-nuevo-amanecer.html';
   let triggered = false;
-
   window.addEventListener('scroll', function(){
     if(triggered) return;
     const scrolled = window.scrollY + window.innerHeight;
     const total = document.body.scrollHeight;
-    // Cuando llega al fondo
     if(scrolled >= total - 2){
       triggered = true;
-      // Fade out suave y navega
       document.body.style.transition = 'opacity 0.4s ease';
       document.body.style.opacity = '0';
-      setTimeout(()=>{ window.location.href = next; }, 420);
+      setTimeout(()=>{ window.location.href = nextUrl; }, 420);
     }
   });
 })();
