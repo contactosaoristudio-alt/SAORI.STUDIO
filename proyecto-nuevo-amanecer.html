@@ -419,14 +419,14 @@ Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel 
         allowfullscreen
         frameborder="0">
       </iframe>
-      <button id="muteBtn" onclick="toggleMute()">🔇 Activar sonido</button>
+      <button id="muteBtn" onclick="toggleMute()"> Activar sonido</button>
     </div>
 
   </div>
 </section>
 
 <!-- SIGUIENTE PROYECTO -->
-<a href="garabatos.html" class="next-project" id="nextProject">
+<a href="proyecto-nuevo-amanecer.html" class="next-project" id="nextProject">
   <div class="next-header">
     <div class="next-label">Siguiente Proyecto</div>
     <div class="next-title">Garabatos</div>
@@ -483,10 +483,10 @@ function toggleMute(){
   const btn = document.getElementById('muteBtn');
   if(muted){
     frame.src = frame.src.replace('&mute=1','&mute=0');
-    btn.textContent = '🔊 Silenciar';
+    btn.textContent = ' Silenciar';
   } else {
     frame.src = frame.src.replace('&mute=0','&mute=1');
-    btn.textContent = '🔇 Activar sonido';
+    btn.textContent = ' Activar sonido';
   }
   muted = !muted;
 }
