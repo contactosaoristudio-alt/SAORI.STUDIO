@@ -302,6 +302,20 @@ h1.proj-title{
   .fotos-section{padding:3rem 1.4rem 4rem;}
   .next-img-wrap{height:40vh;}
 }
+/* ── VIDEO YOUTUBE ── */
+.yt-wrap{
+  position:relative;width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--card);
+}
+.yt-wrap iframe{
+  position:absolute;
+  top:50%;left:50%;
+  width:100%;height:100%;
+  transform:translate(-50%,-50%);
+  border:none;
+}
 </style>
 </head>
 <body>
@@ -450,6 +464,8 @@ if(cur&&curR){
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
   (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
 }
+
+
 
 /* ── MENU ── */
 const menuBtn=document.getElementById('menuBtn');
