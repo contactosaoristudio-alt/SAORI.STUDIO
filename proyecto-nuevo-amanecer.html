@@ -212,6 +212,21 @@ h1.proj-title{
 }
 .foto-item:hover .foto-num{opacity:1;}
 
+/* ── VIDEO YOUTUBE ── */
+.yt-wrap{
+  position:relative;width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--card);
+}
+.yt-wrap iframe{
+  position:absolute;
+  top:50%;left:50%;
+  width:100%;height:100%;
+  transform:translate(-50%,-50%);
+  border:none;
+}
+
 /* ════════════════════════════════
    SIGUIENTE PROYECTO — footer centrado
 ════════════════════════════════ */
@@ -222,8 +237,6 @@ h1.proj-title{
   cursor:pointer;
   border-top:1px solid var(--border);
 }
-
-/* Label + título centrados */
 .next-header{
   padding:clamp(3rem,6vh,5rem) clamp(1.4rem,6vw,6rem) clamp(2rem,4vh,3rem);
   display:flex;flex-direction:column;align-items:center;text-align:center;
@@ -244,8 +257,6 @@ h1.proj-title{
   font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
   color:rgba(255,255,255,.35);
 }
-
-/* Imagen de transición */
 .next-img-wrap{
   position:relative;width:100%;overflow:hidden;
   height:55vh;
@@ -359,11 +370,11 @@ h1.proj-title{
     <p class="saori-cat-desc" style="margin-top:0;">
 Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel preescolar es un proyecto realizado en colaboración con el Instituto Nuevo Amanecer. El trabajo abarcó la creación de la identidad gráfica y editorial del libro, incluyendo lenguaje visual, maquetación y gestión de impresión. Cada decisión de diseño se enfocó en mejorar la lectura, la comprensión y la cercanía con el contenido. El libro busca apoyar a escuelas y docentes en la construcción de entornos más inclusivos, ofreciendo herramientas para acompañar el aprendizaje de niños con parálisis cerebral. Es una propuesta de diseño con propósito, orientada a generar impacto real.    </p>
     <div class="saori-tags">
-     
+    </div>
   </div>
 </section>
 
-<!-- GALERÍA — 8 fotos 1 por fila 16:9 -->
+<!-- GALERÍA -->
 <section class="fotos-section">
   <div class="fotos-label">Galería del proyecto</div>
   <div class="fotos-grid">
@@ -399,16 +410,14 @@ Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel 
     </div></div>
 
     <!-- VIDEO YOUTUBE -->
-<div class="yt-wrap">
-  <iframe
-    src="https://www.youtube.com/watch?v=mdekaQMTJdA"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
-    frameborder="0">
-  </iframe>
-</div>
-
-    </div></div>
+    <div class="yt-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/mdekaQMTJdA?autoplay=1&mute=1&loop=1&playlist=mdekaQMTJdA&controls=0&modestbranding=1&rel=0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        frameborder="0">
+      </iframe>
+    </div>
 
   </div>
 </section>
@@ -434,9 +443,6 @@ Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel 
 </a>
 
 <script>
-
-
-
 /* ── CURSOR ── */
 const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
