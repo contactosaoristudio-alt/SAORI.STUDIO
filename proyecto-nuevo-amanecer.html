@@ -186,7 +186,6 @@ h1.proj-title{
   color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:3.5rem;
 }
 .fotos-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
-
 .fotos-grid{
   display:flex;flex-direction:column;
   gap:clamp(.8rem,2vw,2rem);
@@ -199,8 +198,7 @@ h1.proj-title{
 .foto-item.visible{opacity:1;transform:translateY(0);}
 .foto-inner{overflow:hidden;position:relative;}
 .foto-inner img{
-  width:100%;
-  aspect-ratio:16/9;
+  width:100%;aspect-ratio:16/9;
   object-fit:cover;display:block;
   transition:transform .8s cubic-bezier(.22,1,.36,1);
 }
@@ -226,22 +224,29 @@ h1.proj-title{
   transform:translate(-50%,-50%);
   border:none;
 }
+#muteBtn{
+  position:absolute;bottom:1rem;right:1rem;
+  background:rgba(0,0,0,.6);color:var(--white);
+  border:1px solid rgba(255,255,255,.2);
+  padding:.5rem 1.2rem;font-family:var(--font);
+  font-size:.7rem;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;cursor:pointer;
+  transition:background .3s,border-color .3s;z-index:10;
+}
+#muteBtn:hover{background:rgba(0,0,0,.9);border-color:rgba(255,255,255,.45);}
 
 /* ════════════════════════════════
-   SIGUIENTE PROYECTO — footer centrado
+   SIGUIENTE PROYECTO
 ════════════════════════════════ */
 .next-project{
-  display:block;
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
+  display:block;position:relative;
+  overflow:hidden;cursor:pointer;
   border-top:1px solid var(--border);
 }
 .next-header{
   padding:clamp(3rem,6vh,5rem) clamp(1.4rem,6vw,6rem) clamp(2rem,4vh,3rem);
   display:flex;flex-direction:column;align-items:center;text-align:center;
-  gap:1rem;background:var(--black);
-  position:relative;z-index:2;
+  gap:1rem;background:var(--black);position:relative;z-index:2;
 }
 .next-label{
   font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
@@ -250,21 +255,18 @@ h1.proj-title{
 .next-label::before,.next-label::after{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
 .next-title{
   font-size:clamp(2rem,6vw,5rem);font-weight:900;
-  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;
-  color:var(--white);
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;color:var(--white);
 }
 .next-cat{
   font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
   color:rgba(255,255,255,.35);
 }
 .next-img-wrap{
-  position:relative;width:100%;overflow:hidden;
-  height:55vh;
+  position:relative;width:100%;overflow:hidden;height:55vh;
 }
 .next-project-img{
   position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;
-  transform:scale(1.06);
+  object-fit:cover;transform:scale(1.06);
   transition:transform 1.4s cubic-bezier(.22,1,.36,1);
 }
 .next-project:hover .next-project-img{transform:scale(1);}
@@ -301,20 +303,6 @@ h1.proj-title{
   .saori-cat-left,.saori-cat-right{padding:3rem 1.4rem;}
   .fotos-section{padding:3rem 1.4rem 4rem;}
   .next-img-wrap{height:40vh;}
-}
-/* ── VIDEO YOUTUBE ── */
-.yt-wrap{
-  position:relative;width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  background:var(--card);
-}
-.yt-wrap iframe{
-  position:absolute;
-  top:50%;left:50%;
-  width:100%;height:100%;
-  transform:translate(-50%,-50%);
-  border:none;
 }
 </style>
 </head>
@@ -424,13 +412,14 @@ Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel 
     </div></div>
 
     <!-- VIDEO YOUTUBE -->
-    <div class="yt-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/mdekaQMTJdA?autoplay=1&mute=1&loop=1&playlist=mdekaQMTJdA&controls=0&modestbranding=1&rel=0"
+    <div class="yt-wrap" id="ytWrap">
+      <iframe id="ytFrame"
+        src="https://www.youtube.com/embed/mdekaQMTJdA?autoplay=1&mute=1&loop=1&playlist=mdekaQMTJdA&controls=0&modestbranding=1&rel=0&enablejsapi=1"
         allow="autoplay; encrypted-media"
         allowfullscreen
         frameborder="0">
       </iframe>
+      <button id="muteBtn" onclick="toggleMute()">🔇 Activar sonido</button>
     </div>
 
   </div>
@@ -438,22 +427,17 @@ Aprendiendo juntos: guía inclusiva para niños con parálisis cerebral a nivel 
 
 <!-- SIGUIENTE PROYECTO -->
 <a href="garabatos.html" class="next-project" id="nextProject">
-
-  <!-- Texto centrado -->
   <div class="next-header">
     <div class="next-label">Siguiente Proyecto</div>
     <div class="next-title">Garabatos</div>
     <div class="next-cat">Fotografía — 02</div>
   </div>
-
-  <!-- Imagen de transición -->
   <div class="next-img-wrap">
     <img src="NUEVO AMANECER/1x/Recurso 2portada 1.jpg" alt="Garabatos" class="next-project-img"
          onerror="this.style.background='var(--card)';this.style.opacity='.4';">
     <div class="next-project-overlay"></div>
     <div class="next-arrow">Ver proyecto →</div>
   </div>
-
 </a>
 
 <script>
@@ -464,8 +448,6 @@ if(cur&&curR){
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
   (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
 }
-
-
 
 /* ── MENU ── */
 const menuBtn=document.getElementById('menuBtn');
@@ -493,6 +475,21 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
   items.forEach(el=>obs.observe(el));
 })();
+
+/* ── MUTE TOGGLE ── */
+let muted = true;
+function toggleMute(){
+  const frame = document.getElementById('ytFrame');
+  const btn = document.getElementById('muteBtn');
+  if(muted){
+    frame.src = frame.src.replace('&mute=1','&mute=0');
+    btn.textContent = '🔊 Silenciar';
+  } else {
+    frame.src = frame.src.replace('&mute=0','&mute=1');
+    btn.textContent = '🔇 Activar sonido';
+  }
+  muted = !muted;
+}
 
 /* ── SCROLL TO NEXT PROJECT ── */
 (function(){
