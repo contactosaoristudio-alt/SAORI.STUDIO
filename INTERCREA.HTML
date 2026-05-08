@@ -3,22 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAORI.STUDIO — Diseñador Gráfico</title>
+<title>Nuevo Amanecer — SAORI.STUDIO</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black:   #080808;
-  --dark:    #111111;
-  --card:    #171717;
-  --border:  rgba(255,255,255,0.08);
-  --white:   #F4F2EE;
-  --dim:     #666666;
-  --font:    'Montserrat', sans-serif;
+  --black:  #080808;
+  --dark:   #111111;
+  --card:   #171717;
+  --border: rgba(255,255,255,0.08);
+  --white:  #F4F2EE;
+  --dim:    #666666;
+  --font:   'Montserrat', sans-serif;
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--black);color:var(--white);font-family:var(--font);overflow-x:hidden;cursor:none;}
+@media(max-width:768px){body{cursor:auto;}}
 a{text-decoration:none;color:inherit;}
 
 ::-webkit-scrollbar{width:2px;}
@@ -26,7 +27,8 @@ a{text-decoration:none;color:inherit;}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);}
 
 #cur{position:fixed;width:7px;height:7px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s;}
-#curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s;}
+#curR{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s;}
+@media(max-width:768px){#cur,#curR{display:none;}}
 body:has(a:hover) #cur{transform:translate(-50%,-50%) scale(0);}
 body:has(a:hover) #curR{width:52px;height:52px;border-color:rgba(255,255,255,.45);}
 
@@ -36,12 +38,11 @@ body::before{
   opacity:.018;
 }
 
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(1.06);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes scrollPulse{0%,100%{opacity:.2}50%{opacity:.7}}
 
-/* ════════════════════════════════
-   HEADER
-════════════════════════════════ */
+/* ─── HEADER ─── */
 header{
   position:fixed;top:0;width:100%;height:68px;z-index:500;
   display:flex;align-items:center;justify-content:space-between;
@@ -49,22 +50,22 @@ header{
   background:rgba(8,8,8,.88);backdrop-filter:blur(24px);
   border-bottom:1px solid var(--border);
 }
-.h-logo{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
+.h-logo{position:absolute;left:50%;transform:translateX(-50%);}
 .logo{height:40px;object-fit:contain;}
-.logo-text{font-size:.9rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
-.menu-btn{
-  width:26px;height:16px;cursor:pointer;
-  display:flex;flex-direction:column;justify-content:space-between;
-  background:none;border:none;padding:0;
+.logo-text{font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;}
+.back-btn{
+  font-size:.75rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.6rem;transition:color .3s;
 }
-.menu-btn span{
-  height:1px;background:var(--white);display:block;
-  transform-origin:left;transition:transform .4s cubic-bezier(.77,0,.175,1),opacity .3s;
-}
-.menu-btn.active span:nth-child(1){transform:rotate(38deg) translateY(-2px);}
-.menu-btn.active span:nth-child(2){transform:rotate(-38deg) translateY(2px);}
+.back-btn:hover{color:var(--white);}
+.back-btn svg{transition:transform .3s;}
+.back-btn:hover svg{transform:translateX(-4px);}
+.menu-btn{width:26px;height:16px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:none;border:none;padding:0;}
+.menu-btn span{height:1px;background:var(--white);display:block;}
 
-/* ── SIDE MENU ── */
+/* ─── SIDE MENU ─── */
+.menu-overlay{display:none;position:fixed;inset:0;z-index:599;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);}
+.menu-overlay.active{display:block;}
 .side-menu{
   position:fixed;top:0;right:-100%;width:min(520px,100%);height:100vh;
   background:var(--dark);
@@ -73,277 +74,235 @@ header{
   transition:.55s cubic-bezier(.77,0,.175,1);z-index:600;
   border-left:1px solid var(--border);
 }
-.menu-overlay{display:none;position:fixed;inset:0;z-index:599;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);}
-.menu-overlay.active{display:block;}
-.side-menu a{
-  font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:800;
-  letter-spacing:-.01em;text-transform:uppercase;
-  color:rgba(255,255,255,.18);transition:color .3s,letter-spacing .3s;display:block;
-}
-.side-menu a:hover{color:var(--white);letter-spacing:.01em;}
+.side-menu a{font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:800;letter-spacing:-.01em;text-transform:uppercase;color:rgba(255,255,255,.18);transition:color .3s;display:block;}
+.side-menu a:hover{color:var(--white);}
 .side-menu.active{right:0;}
 .side-menu.active a{animation:fadeUp .45s ease both;}
 .side-menu.active a:nth-child(1){animation-delay:.06s}
 .side-menu.active a:nth-child(2){animation-delay:.13s}
 .side-menu.active a:nth-child(3){animation-delay:.20s}
-.menu-close{
-  position:absolute;top:28px;right:28px;
-  width:40px;height:40px;border:1px solid var(--border);
-  background:none;cursor:pointer;color:rgba(255,255,255,.55);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;transition:border-color .3s,color .3s;
-}
+.side-menu.active a:nth-child(4){animation-delay:.27s}
+.side-menu.active a:nth-child(5){animation-delay:.34s}
+.menu-close{position:absolute;top:28px;right:28px;width:40px;height:40px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--dim);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:border-color .3s,color .3s;}
 .menu-close:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
-.menu-footer{
-  position:absolute;bottom:3rem;left:clamp(2rem,7vw,5.5rem);
-  font-size:1rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);
-}
+.menu-footer{position:absolute;bottom:3rem;left:clamp(2rem,7vw,5.5rem);font-size:.44rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);}
 
 /* ════════════════════════════════
-   BASE SECTION
+   HERO
 ════════════════════════════════ */
-.sec{padding:7rem 5rem;}
-.s-label{
-  font-size:1rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
-  color:rgba(255,255,255,.55);display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;
-}
-.s-label::before{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
-.s-title{
-  font-size:clamp(2.2rem,4.5vw,4rem);font-weight:900;
-  letter-spacing:-.03em;text-transform:uppercase;line-height:.9;
-}
-.s-head{margin-bottom:4rem;}
-
-/* ════════════════════════════════
-   HERO — VIDEO FULLSCREEN
-════════════════════════════════ */
-#inicio{
-  position:relative;width:100%;
+.project-hero{
+  margin-top:68px;position:relative;
   height:calc(100vh - 68px);
-  overflow:hidden;margin-top:68px;
+  overflow:hidden;display:flex;align-items:flex-end;
 }
-.hero-video{
+.project-hero-img{
   position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:block;
+  object-fit:cover;animation:scaleIn 1.2s ease forwards;
 }
-.hero-video-overlay{
+.project-hero-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(8,8,8,.2) 0%,rgba(8,8,8,.6) 100%);
-  z-index:1;
+  background:linear-gradient(to bottom,rgba(8,8,8,.1) 20%,rgba(8,8,8,.5) 60%,rgba(8,8,8,.97) 100%);
 }
-.hero-center-text{
-  position:absolute;inset:0;z-index:2;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;
-}
-.hero-title-wrap{
-  display:inline-flex;align-items:baseline;padding:0 2rem;
-}
-.hero-saori{
-  font-size:clamp(2.6rem,8vw,9rem);
-  font-weight:900;letter-spacing:-.04em;
-  text-transform:uppercase;line-height:1;
-  color:#F4F2EE;white-space:nowrap;
-}
-.hero-saori::after{content:'\00A0';}
-.hero-line-2{
-  font-size:clamp(2.6rem,8vw,9rem);
-  font-weight:900;font-style:normal;
-  letter-spacing:-.04em;text-transform:uppercase;
-  line-height:1;color:#F4F2EE;
-  white-space:nowrap;display:inline-block;
-  transition:opacity 0.35s ease;
-}
-
-/* ════════════════════════════════
-   PRESENTACIÓN
-════════════════════════════════ */
-#hero-desc{
-  background:var(--black);
-  border-bottom:1px solid var(--border);
-}
-.presentation-wrap{
-  padding:clamp(5rem,10vh,9rem) clamp(1.4rem,6vw,6rem);
-  display:flex;flex-direction:column;
-  align-items:center;text-align:center;
-  max-width:900px;margin:0 auto;
-}
-.pres-eyebrow{
-  font-size:.75rem;font-weight:700;letter-spacing:.48em;text-transform:uppercase;
-  color:rgba(255,255,255,.55);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;
-}
-.pres-eyebrow::before,.pres-eyebrow::after{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
-.pres-title{
-  font-size:clamp(1.8rem,4.5vw,4.8rem);
-  font-weight:900;letter-spacing:-.035em;
-  text-transform:uppercase;line-height:.9;
-  margin-bottom:2.2rem;white-space:nowrap;
-}
-.pres-title em{font-style:normal;font-weight:900;}
-.pres-body{max-width:560px;}
-.pres-body p{
-  font-size:clamp(.82rem,1.5vw,.95rem);font-weight:300;
-  color:rgba(244,242,238,.58);line-height:2.3;margin-bottom:1rem;
-}
-.pres-body p:last-child{margin-bottom:0;}
-
-/* ════════════════════════════════
-   PORTAFOLIO
-════════════════════════════════ */
-#portafolio{background:var(--black);}
-.carousel-outer{
-  overflow:hidden;
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  cursor:grab;
-}
-.carousel-outer:active{cursor:grabbing;}
-.carousel-track{
-  display:flex;gap:1px;
-  will-change:transform;background:var(--border);user-select:none;
-}
-.port-item{
-  flex:0 0 calc(50% - .5px);position:relative;overflow:hidden;
-  background:var(--card);aspect-ratio:4/3;
-}
-.port-item.featured{flex:0 0 calc(58.333% - .5px);aspect-ratio:16/9;}
-.pp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;}
-.pp img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;pointer-events:none;}
-.port-item:hover .pp img{transform:scale(1.05);}
-.pp-ico{font-size:1.6rem;opacity:.07;}
-.pp-lbl{font-size:.75rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:.3;}
-.port-ov{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(8,8,8,.96) 40%,rgba(8,8,8,.55));
-  display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
-}
-.port-item:hover .port-ov{transform:translateY(0);}
-.ov-cat{font-size:.75rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
-.ov-title{font-size:1rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;}
-.ov-desc{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.55);margin-top:.4rem;line-height:1.8;}
-.ov-link{
-  margin-top:1rem;font-size:.95rem;font-weight:700;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--white);
-  display:inline-flex;align-items:center;gap:.5rem;transition:gap .3s;
-}
-.ov-link:hover{gap:.8rem;}
-.swipe-hint{
-  display:flex;align-items:center;gap:.8rem;margin-top:1.8rem;
-  font-size:1rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.55);
-}
-.swipe-hint::before{content:'';display:block;width:1.8rem;height:1px;background:var(--dim);}
-.ver-proyectos-wrap{
-  display:flex;justify-content:center;
-  margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);
-}
-.btn-ver-proyectos{
-  font-size:.96rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--white);border:1px solid rgba(255,255,255,.18);
-  padding:1rem 3rem;display:inline-flex;align-items:center;gap:.8rem;transition:all .35s;
-}
-.btn-ver-proyectos:hover{background:var(--white);color:var(--black);border-color:var(--white);}
-.btn-ver-proyectos span{transition:transform .3s;}
-.btn-ver-proyectos:hover span{transform:translateX(5px);}
-
-/* ════════════════════════════════
-   STATEMENT BANNER
-════════════════════════════════ */
-#statement-banner{
-  position:relative;width:100%;height:90vh;
-  overflow:hidden;display:flex;align-items:center;justify-content:center;
-}
-.statement-img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center;display:block;
-}
-.statement-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(8,8,8,.42) 0%,rgba(8,8,8,.78) 100%);
-  z-index:1;
-}
-.statement-content{
+.project-hero-content{
   position:relative;z-index:2;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1.8rem;text-align:center;padding:2rem;
-  opacity:0;transition:opacity 1s ease;
+  padding:0 clamp(1.4rem,6vw,6rem) clamp(3rem,5vh,5rem);
+  width:100%;opacity:0;animation:fadeUp 1s ease .4s forwards;
 }
-.statement-content.visible{opacity:1;}
-.statement-content h2{
-  font-size:clamp(3rem,10vw,8rem);
-  font-weight:900;letter-spacing:-.04em;
-  text-transform:uppercase;line-height:.88;color:var(--white);
+.proj-eyebrow{
+  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:1.4rem;
 }
-.statement-email{
-  display:inline-flex;align-items:center;gap:.7rem;
-  font-size:clamp(1rem,3vw,1.5rem);
-  font-weight:600;letter-spacing:.22em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);
-  border-bottom:1px solid rgba(255,255,255,.2);
-  padding-bottom:.35rem;margin-top:.2rem;
-  transition:color .3s,border-color .3s;
+.proj-eyebrow::before{content:'';width:2rem;height:1px;background:var(--dim);display:block;}
+h1.proj-title{
+  font-size:clamp(3.5rem,9vw,10rem);font-weight:900;
+  line-height:.86;letter-spacing:-.04em;text-transform:uppercase;
 }
-.statement-email:hover{color:var(--white);border-color:rgba(255,255,255,.5);}
+.proj-scroll-hint{
+  margin-top:2rem;font-size:.46rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);display:flex;align-items:center;gap:.8rem;
+}
+.proj-scroll-hint::after{
+  content:'';display:block;width:1px;height:2.5rem;
+  background:rgba(255,255,255,.18);animation:scrollPulse 2s ease-in-out infinite;
+}
 
 /* ════════════════════════════════
-   FOOTER
+   INFO STRIP
 ════════════════════════════════ */
-footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5rem 2.5rem;}
-.foot-top{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:4rem;
-  padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;
+.info-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+.info-cell{padding:clamp(1.5rem,3vh,2.5rem) clamp(1.4rem,3vw,3rem);border-right:1px solid var(--border);}
+.info-cell:last-child{border-right:none;}
+.info-lbl{font-size:.42rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem;}
+.info-val{font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+
+/* ════════════════════════════════
+   SAORI CATEGORY SECTION
+════════════════════════════════ */
+.saori-cat-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border);background:var(--dark);
 }
-.f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
-.f-tagline{font-size:.97rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.55);margin-top:.5rem;}
-.soc-lbl{font-size:1rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.4rem;}
-.soc-list{display:flex;flex-direction:column;gap:.55rem;}
-.soc{
-  display:flex;align-items:center;gap:.9rem;font-size:.9rem;color:rgba(255,255,255,.55);
-  padding:.28rem 0;border-bottom:1px solid transparent;transition:all .3s;
+.saori-cat-left{
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;
 }
-.soc:hover{color:var(--white);border-bottom-color:var(--border);}
-.soc-ico{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;transition:border-color .3s;}
-.soc:hover .soc-ico{border-color:rgba(255,255,255,.3);}
-.soc-arr{margin-left:auto;opacity:0;transition:opacity .3s,transform .3s;}
-.soc:hover .soc-arr{opacity:1;transform:translateX(3px);}
-.foot-bot{display:flex;justify-content:space-between;align-items:center;}
-.f-copy{font-size:.95rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);}
-.f-up{font-size:.95rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .3s;display:flex;align-items:center;gap:.5rem;}
-.f-up:hover{color:var(--white);}
+.saori-cat-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;
+}
+.saori-cat-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+.saori-cat-name{
+  font-size:clamp(2.5rem,6vw,6rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;
+}
+.saori-cat-name span{
+  font-weight:200;font-style:italic;color:rgba(244,242,238,.45);
+  display:block;font-size:clamp(1.5rem,3.5vw,3.5rem);margin-bottom:.3rem;
+}
+.saori-cat-right{
+  padding:clamp(4rem,8vh,7rem) clamp(1.4rem,6vw,6rem);
+  display:flex;flex-direction:column;justify-content:center;gap:2.5rem;
+}
+.saori-cat-desc{
+  font-size:clamp(.82rem,1.5vw,.92rem);font-weight:300;
+  color:rgba(244,242,238,.55);line-height:2.2;max-width:480px;
+}
+.saori-tags{display:flex;flex-wrap:wrap;gap:.6rem;}
+.saori-tag{
+  font-size:.42rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--border);padding:.5rem 1rem;transition:all .3s;
+}
+.saori-tag:hover{color:var(--white);border-color:rgba(255,255,255,.25);}
+
+/* ════════════════════════════════
+   GALERÍA — 1 por fila, 16:9
+════════════════════════════════ */
+.fotos-section{
+  padding:clamp(3rem,5vh,5rem) clamp(1.4rem,5vw,5rem) clamp(5rem,8vh,8rem);
+}
+.fotos-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.38em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;margin-bottom:3.5rem;
+}
+.fotos-label::before{content:'';display:block;width:1.6rem;height:1px;background:var(--dim);}
+.fotos-grid{
+  display:flex;flex-direction:column;
+  gap:clamp(.8rem,2vw,2rem);
+}
+.foto-item{
+  overflow:hidden;background:var(--card);width:100%;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);
+}
+.foto-item.visible{opacity:1;transform:translateY(0);}
+.foto-inner{overflow:hidden;position:relative;}
+.foto-inner img{
+  width:100%;aspect-ratio:16/9;
+  object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+.foto-item:hover img{transform:scale(1.03);}
+.foto-num{
+  position:absolute;bottom:.8rem;right:1.2rem;
+  font-size:.4rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);opacity:0;transition:opacity .3s;
+}
+.foto-item:hover .foto-num{opacity:1;}
+
+/* ── VIDEO YOUTUBE ── */
+.yt-wrap{
+  position:relative;width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--card);
+}
+.yt-wrap iframe{
+  position:absolute;
+  top:50%;left:50%;
+  width:100%;height:100%;
+  transform:translate(-50%,-50%);
+  border:none;
+}
+#muteBtn{
+  position:absolute;bottom:1rem;right:1rem;
+  background:rgba(0,0,0,.6);color:var(--white);
+  border:1px solid rgba(255,255,255,.2);
+  padding:.5rem 1.2rem;font-family:var(--font);
+  font-size:.7rem;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;cursor:pointer;
+  transition:background .3s,border-color .3s;z-index:10;
+}
+#muteBtn:hover{background:rgba(0,0,0,.9);border-color:rgba(255,255,255,.45);}
+
+/* ════════════════════════════════
+   SIGUIENTE PROYECTO
+════════════════════════════════ */
+.next-project{
+  display:block;position:relative;
+  overflow:hidden;cursor:pointer;
+  border-top:1px solid var(--border);
+}
+.next-header{
+  padding:clamp(3rem,6vh,5rem) clamp(1.4rem,6vw,6rem) clamp(2rem,4vh,3rem);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:1rem;background:var(--black);position:relative;z-index:2;
+}
+.next-label{
+  font-size:.44rem;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:.9rem;
+}
+.next-label::before,.next-label::after{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
+.next-title{
+  font-size:clamp(2rem,6vw,5rem);font-weight:900;
+  letter-spacing:-.04em;text-transform:uppercase;line-height:.88;color:var(--white);
+}
+.next-cat{
+  font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+}
+.next-img-wrap{
+  position:relative;width:100%;overflow:hidden;height:55vh;
+}
+.next-project-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;transform:scale(1.06);
+  transition:transform 1.4s cubic-bezier(.22,1,.36,1);
+}
+.next-project:hover .next-project-img{transform:scale(1);}
+.next-project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(8,8,8,.55) 0%,rgba(8,8,8,.1) 100%);
+  transition:opacity .6s ease;
+}
+.next-project:hover .next-project-overlay{opacity:.6;}
+.next-arrow{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%) translateY(6px);
+  font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--white);z-index:2;
+  opacity:0;transition:opacity .5s ease,transform .5s ease;
+}
+.next-project:hover .next-arrow{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ════════════════════════════════
    RESPONSIVE
 ════════════════════════════════ */
-@media(max-width:1200px){
-  .foot-top{grid-template-columns:1fr 1fr;gap:3rem;}
-}
 @media(max-width:1024px){
-  .port-item,.port-item.featured{flex:0 0 calc(80% - .5px)!important;aspect-ratio:4/3!important;}
-  .hero-saori,.hero-line-2{font-size:clamp(2.2rem,6.5vw,6rem);}
+  .info-strip{grid-template-columns:1fr 1fr;}
+  .info-cell:nth-child(2){border-right:none;}
+  .info-cell:nth-child(3){border-top:1px solid var(--border);}
+  .info-cell:nth-child(4){border-top:1px solid var(--border);border-right:none;}
+  .saori-cat-section{grid-template-columns:1fr;}
+  .saori-cat-left{border-right:none;border-bottom:1px solid var(--border);}
 }
 @media(max-width:768px){
-  body{cursor:auto;}
-  #cur,#curR{display:none;}
-  .sec{padding:4rem 1.4rem;}
   header{padding:0 1.4rem;}
-  .hero-title-wrap{padding:0 1rem;flex-direction:column;align-items:center;gap:.2rem;}
-  .hero-saori::after{content:'';}
-  .hero-saori,.hero-line-2{font-size:clamp(3.5rem,18vw,6rem);letter-spacing:-.04em;}
-  .presentation-wrap{padding:3.5rem 1.4rem 4rem;}
-  .pres-title{font-size:clamp(1.4rem,7vw,2.6rem);white-space:normal;}
-  .port-item,.port-item.featured{flex:0 0 100%!important;aspect-ratio:4/3!important;}
-  .s-title{font-size:clamp(1.9rem,8vw,2.6rem);}
-  .statement-content h2{font-size:clamp(2.8rem,12vw,5rem);}
-  .statement-email{font-size:clamp(.82rem,3.8vw,1.1rem);letter-spacing:.12em;word-break:break-all;text-align:center;}
-  footer{padding:3rem 1.4rem 2rem;}
-  .foot-top{grid-template-columns:1fr;gap:2.5rem;}
-  .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
-  .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
-}
-@media(max-width:480px){
-  .hero-saori,.hero-line-2{font-size:clamp(3rem,16vw,5rem);}
-  .statement-content h2{font-size:clamp(2.2rem,11vw,3.5rem);}
-  .statement-email{font-size:clamp(.75rem,4vw,1rem);letter-spacing:.08em;}
-  .sec{padding:3.5rem 1.2rem;}
+  .project-hero-content{padding:0 1.4rem 3.5rem;}
+  h1.proj-title{font-size:clamp(2.8rem,11vw,5rem);}
+  .info-cell{padding:1.4rem;}
+  .saori-cat-left,.saori-cat-right{padding:3rem 1.4rem;}
+  .fotos-section{padding:3rem 1.4rem 4rem;}
+  .next-img-wrap{height:40vh;}
 }
 </style>
 </head>
@@ -353,161 +312,116 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
 <div id="curR"></div>
 <div class="menu-overlay" id="menuOverlay"></div>
 
-<!-- ════ HEADER ════ -->
+<!-- HEADER -->
 <header>
-  <div style="width:26px;"></div>
+  <a href="index.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Inicio
+  </a>
   <div class="h-logo">
     <img src="SAORI ARCHIVE/LOGO.jpg" alt="Logo" class="logo"
          onerror="this.outerHTML='<span class=\'logo-text\'>SAORI.STUDIO</span>'">
   </div>
-  <button class="menu-btn" id="menuBtn" aria-label="Menú">
-    <span></span><span></span>
-  </button>
+  <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
 </header>
 
-<!-- ════ SIDE MENU ════ -->
 <nav class="side-menu" id="sideMenu">
   <button class="menu-close" id="menuClose" aria-label="Cerrar">✕</button>
-  <a href="#inicio">Inicio</a>
+  <a href="index.html#inicio">Inicio</a>
+  
+
   <a href="https://www.behance.net/saoristudio" target="_blank">Behance ↗</a>
-  <a href="FORMULARIO.HTML">Contacto</a>
-  <div class="menu-footer">SAORI.STUDIO © 2025</div>
+  <a href="index.html#contacto">Contacto</a>
+  <div class="menu-footer"></div>
 </nav>
 
-<!-- ════ HERO ════ -->
-<section id="inicio">
-  <video class="hero-video" autoplay muted loop playsinline
-         src="SAORI ARCHIVE\saori 1.mp4">
-  </video>
-  <div class="hero-video-overlay"></div>
-  <div class="hero-center-text">
-    <div class="hero-title-wrap">
-      <span class="hero-saori">SAORI.</span><span class="hero-line-2" id="heroWord">STUDIO</span>
+<!-- HERO -->
+<section class="project-hero">
+  <img src="INTERCREA\Recurso 22INTERCREA.jpg" alt="drift" class="project-hero-img"
+       onerror="this.style.background='var(--card)';this.style.opacity='.3';">
+  <div class="project-hero-overlay"></div>
+  <div class="project-hero-content">
+    <div class="proj-eyebrow">SAORI. Visual — 2025</div>
+    <h1 class="proj-title"><br>INTERCREA</h1>
+   
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-cell"><div class="info-lbl">Categoría</div><div class="info-val">SAORI. </div>VISUAL & NAMING</div>
+  <div class="info-cell"><div class="info-lbl">Año</div><div class="info-val">2025</div></div>
+  <div class="info-cell"><div class="info-lbl">Ubicación</div><div class="info-val">México</div></div>
+  <div class="info-cell"><div class="info-lbl">Cliente</div><div class="info-val">UNIVERSIDAD LUX</div></div>
+</div>
+
+<!-- SAORI CATEGORY -->
+<section class="saori-cat-section">
+  <div class="saori-cat-left">
+   
+    <div class="saori-cat-name">
+      <span>SAORI.</span>Visual
+      <br> & Naming
+    </div>
+  </div>
+  <div class="saori-cat-right">
+    <p class="saori-cat-desc">
+    </p>
+    <p class="saori-cat-desc" style="margin-top:0;">
+Intercrea 2025 fue una propuesta conceptual y visual desarrollada para la Universidad LUX, inspirada en la conexión entre distintas disciplinas creativas. El proyecto buscó representar cómo áreas como diseño, arquitectura, ingeniería y comunicación convergen para generar ideas innovadoras a través de la colaboración. La identidad visual se construyó para transmitir dinamismo, creatividad y diversidad, reflejando a Intercrea como un espacio donde el intercambio de ideas y el trabajo colectivo impulsan nuevas formas de crear.   </p>
+    <div class="saori-tags">
     </div>
   </div>
 </section>
 
-<!-- ════ PRESENTACIÓN ════ -->
-<section id="hero-desc">
-  <div class="presentation-wrap">
-    <div class="pres-eyebrow">Saori Studio — México</div>
-    <h2 class="pres-title">Vivir, existir <em>y diseñar.</em></h2>
-    <div class="pres-body">
-      <p>SAORI.STUDIO es un estudio de dirección creativa enfocado en branding, diseño editorial y experiencias de marca. Cada proyecto se desarrolla como un proceso único, donde la exploración, la intuición y el detalle dan forma a soluciones con carácter.</p>
+<!-- GALERÍA -->
+<section class="fotos-section">
+
+  <div class="fotos-grid">
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="INTERCREA\Recurso 19INTERCREA.jpg" alt="01" onerror="this.style.background='var(--card)';">
+      <span class="foto-num">01</span>
+    </div></div>
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="INTERCREA\Recurso 21INTERCREA.jpg" alt="02" onerror="this.style.background='var(--card)';">
+      <span class="foto-num">02</span>
+    </div></div>
+
+    
+
+   
+
+    <div class="foto-item"><div class="foto-inner">
+      <img src="INTERCREA\Recurso 24INTERCREA.jpg" alt="05" onerror="this.style.background='var(--card)';">
+      <span class="foto-num">05</span>
+    </div></div>
+
+   
+    <!-- VIDEO YOUTUBE -->
+    
     </div>
+
   </div>
 </section>
 
-<!-- ════ PORTAFOLIO ════ -->
-<section id="portafolio">
-  <div class="sec">
-    <div class="s-head">
-      <div class="s-label">Portafolio</div>
-      <h2 class="s-title">Proyectos</h2>
-    </div>
-    <div class="carousel-outer" id="carOuter">
-      <div class="carousel-track" id="carTrack">
-
-        <!-- PROYECTO 01 -->
-        <div class="port-item featured">
-          <div class="pp">
-            <img src="NUEVO AMANECER\1x\Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
-          </div>
-          <div class="port-ov">
-            <div class="ov-cat">Branding</div>
-            <div class="ov-title">Nuevo Amanecer — 01</div>
-            <div class="ov-desc">Identidad visual para proyecto comunitario.</div>
-            <a href="proyecto-nuevo-amanecer.html" class="ov-link">Ver proyecto →</a>
-          </div>
-        </div>
-
-        <!-- PROYECTO 02 -->
-        <div class="port-item">
-          <div class="pp">
-            <img src="GARABATOS\PORTADA.jpg" alt="Garabatos" onerror="this.style.display='none'" draggable="false">
-          
-          </div>
-          <div class="port-ov">
-            <div class="ov-cat">Fotografía</div>
-            <div class="ov-title">Garabatos — 02</div>
-            <div class="ov-desc">BRANDING.</div>
-            <a href="garabatos.html" class="ov-link">Ver proyecto →</a>
-          </div>
-
-
-        </div>
-         <div class="port-item featured">
-          <div class="pp">
-            <img src="DRIFT\Recurso 18DRIFT.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
-          </div>
-          <div class="port-ov">
-            <div class="ov-cat">Branding</div>
-            <div class="ov-title">DRIFT — 03</div>
-            <div class="ov-desc">BRANDING .</div>
-            <a href="drift.html" class="ov-link">Ver proyecto →</a>
-          </div>
-
-
-            </div>
-         <div class="port-item featured">
-          <div class="pp">
-            <img src="INTERCREA\Recurso 19INTERCREA.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
-          </div>
-          <div class="port-ov">
-            <div class="ov-cat">Branding</div>
-            <div class="ov-title">INTERCREA — 04</div>
-            <div class="ov-desc">BRANDING .</div>
-            <a href="INTERCREA.HTML" class="ov-link">Ver proyecto →</a>
-          </div>
-
-      </div><!-- /carousel-track -->
-    </div><!-- /carousel-outer -->
-
-    <div class="swipe-hint">Desliza para explorar</div>
-    <div class="ver-proyectos-wrap">
-     
+<!-- SIGUIENTE PROYECTO -->
+<a href="garabatos.html"
+ class="next-header">
+    <div class="next-label">Siguiente Proyecto</div>
+    <div class="next-title">NUEVO AMANECER</div>
+    <div class="next-cat"></div>
   </div>
-</section>
-
-<!-- ════ STATEMENT BANNER ════ -->
-<section id="statement-banner">
-  <video class="statement-img" src="SAORI ARCHIVE\saori 1.mp4" autoplay muted loop playsinline></video>
-  <div class="statement-overlay"></div>
-  <div class="statement-content" id="statementContent">
-    <div class="pres-eyebrow" style="justify-content:center;">Saori Studio</div>
-    <h2>Hagamos<br>algo.</h2>
-    <a href="mailto:contacto.saori.studio@gmail.com" target="_blank" rel="noopener" class="statement-email">
-      contacto.saori.studio@gmail.com ↗
-    </a>
+  <div class="next-img-wrap">
+    <img src="NUEVO AMANECER\1x\Recurso 2portada 2.jpg"
+         onerror="this.style.background='var(--card)';this.style.opacity='.4';">
+    <div class="next-project-overlay"></div>
+    <div class="next-arrow">Ver proyecto →</div>
   </div>
-</section>
-
-<!-- ════ FOOTER ════ -->
-<footer>
-  <div class="foot-top">
-    <div>
-      <div class="f-logo">ADRIAN<br>MASCORRO<br>LEOS</div>
-      <div class="f-tagline">Diseñador Gráfico — México</div>
-    </div>
-    <div></div>
-    <div>
-      <div class="soc-lbl">Redes & Contacto</div>
-      <div class="soc-list">
-        <a href="https://www.youtube.com/@SAORISTUDIO-g2i" target="_blank" class="soc"><div class="soc-ico">▶</div><span>YouTube</span><span class="soc-arr">↗</span></a>
-        <a href="https://www.instagram.com/sa0ri.studio/" target="_blank" class="soc"><div class="soc-ico">◎</div><span>Instagram</span><span class="soc-arr">↗</span></a>
-        <a href="https://www.behance.net/saoristudio" target="_blank" class="soc"><div class="soc-ico">Bē</div><span>Behance</span><span class="soc-arr">↗</span></a>
-        <a href="mailto:contacto.saori.studio@gmail.com" target="_blank" rel="noopener" class="soc"><div class="soc-ico">@</div><span>Correo</span><span class="soc-arr">↗</span></a>
-      </div>
-    </div>
-  </div>
-  <div class="foot-bot">
-    <div class="f-copy">© 2026 Saori Studio — Todos los derechos reservados</div>
-    <a href="#inicio" class="f-up">↑ Volver arriba</a>
-  </div>
-</footer>
+</a>
 
 <script>
 /* ── CURSOR ── */
@@ -523,87 +437,59 @@ const menuBtn=document.getElementById('menuBtn');
 const menuClose=document.getElementById('menuClose');
 const sideMenu=document.getElementById('sideMenu');
 const menuOverlay=document.getElementById('menuOverlay');
-const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');menuBtn.classList.add('active');document.body.style.overflow='hidden';};
-const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');menuBtn.classList.remove('active');document.body.style.overflow='';};
+const openMenu=()=>{sideMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow='hidden';};
+const closeMenu=()=>{sideMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow='';};
 menuBtn.addEventListener('click',()=>sideMenu.classList.contains('active')?closeMenu():openMenu());
 menuClose.addEventListener('click',closeMenu);
 menuOverlay.addEventListener('click',closeMenu);
 sideMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
-/* ── HERO TITLE FADE IN ── */
+/* ── FOTOS REVEAL ── */
 (function(){
-  const saori=document.querySelector('.hero-saori');
-  const studio=document.getElementById('heroWord');
-  if(!saori||!studio)return;
-  saori.style.opacity='0';
-  studio.style.opacity='0';
-  studio.textContent='STUDIO';
-  setTimeout(function(){
-    saori.style.transition='opacity 1s ease';
-    studio.style.transition='opacity 1s ease';
-    saori.style.opacity='1';
-    studio.style.opacity='1';
-  },900);
-})();
-
-/* ── CARRUSEL ── */
-(function(){
-  const outer=document.getElementById('carOuter');
-  const track=document.getElementById('carTrack');
-  const items=Array.from(track.querySelectorAll('.port-item'));
-  let pos=0,isDragging=false,startX=0,startPos=0,velX=0,lastX=0;
-  function maxScroll(){return Math.max(0,track.scrollWidth-outer.clientWidth);}
-  function clamp(v){return Math.max(0,Math.min(v,maxScroll()));}
-  function applyPos(p,animate){
-    pos=clamp(p);
-    track.style.transition=animate?'transform .42s cubic-bezier(.25,.46,.45,.94)':'none';
-    track.style.transform=`translateX(${-pos}px)`;
-  }
-  outer.addEventListener('mousedown',e=>{isDragging=true;startX=e.clientX;startPos=pos;velX=0;lastX=e.clientX;applyPos(pos,false);e.preventDefault();});
-  window.addEventListener('mousemove',e=>{if(!isDragging)return;velX=e.clientX-lastX;lastX=e.clientX;applyPos(startPos+(startX-e.clientX),false);});
-  window.addEventListener('mouseup',()=>{if(!isDragging)return;isDragging=false;const iw=items[0].getBoundingClientRect().width+1;applyPos(Math.round((pos-velX*4)/iw)*iw,true);});
-  outer.addEventListener('touchstart',e=>{const t=e.touches[0];startX=t.clientX;startPos=pos;velX=0;lastX=t.clientX;applyPos(pos,false);},{passive:true});
-  outer.addEventListener('touchmove',e=>{const t=e.touches[0];velX=t.clientX-lastX;lastX=t.clientX;applyPos(startPos+(startX-t.clientX),false);},{passive:true});
-  outer.addEventListener('touchend',()=>{const iw=items[0].getBoundingClientRect().width+1;applyPos(Math.round((pos-velX*4)/iw)*iw,true);},{passive:true});
-})();
-
-/* ── STATEMENT BANNER ── */
-(function(){
-  const content=document.getElementById('statementContent');
-  if(!content)return;
+  const items=document.querySelectorAll('.foto-item');
   const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        setTimeout(()=>{
-          content.classList.add('visible');
-          const email=content.querySelector('.statement-email');
-          if(email){
-            email.style.opacity='0';
-            email.style.transform='translateY(12px)';
-            email.style.transition='opacity .7s ease .4s,transform .7s ease .4s';
-            requestAnimationFrame(()=>{
-              email.style.opacity='1';
-              email.style.transform='translateY(0)';
-            });
-          }
-        },1000);
-        obs.unobserve(e.target);
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        setTimeout(()=>entry.target.classList.add('visible'),80);
+        obs.unobserve(entry.target);
       }
     });
-  },{threshold:.25});
-  obs.observe(document.getElementById('statement-banner'));
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  items.forEach(el=>obs.observe(el));
 })();
 
-/* ── FADE IN ── */
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
-},{threshold:.1});
-document.querySelectorAll('.ci').forEach(el=>{
-  el.style.opacity='0';el.style.transform='translateY(16px)';
-  el.style.transition='opacity .6s ease,transform .6s ease';
-  obs.observe(el);
-});
+/* ── MUTE TOGGLE ── */
+let muted = true;
+function toggleMute(){
+  const frame = document.getElementById('ytFrame');
+  const btn = document.getElementById('muteBtn');
+  if(muted){
+    frame.src = frame.src.replace('&mute=1','&mute=0');
+    btn.textContent = ' Silenciar';
+  } else {
+    frame.src = frame.src.replace('&mute=0','&mute=1');
+    btn.textContent = ' Activar sonido';
+  }
+  muted = !muted;
+}
+
+/* ── SCROLL TO NEXT PROJECT ── */
+(function(){
+  const nextUrl = 'proyecto-nuevo-amanecer.html'
+  let triggered = false;
+  window.addEventListener('scroll', function(){
+    if(triggered) return;
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.body.scrollHeight;
+    if(scrolled >= total - 2){
+      triggered = true;
+      document.body.style.transition = 'opacity 0.4s ease';
+      document.body.style.opacity = '0';
+      setTimeout(()=>{ window.location.href = nextUrl; }, 420);
+    }
+  });
+})();
 </script>
 </body>
 </html>
