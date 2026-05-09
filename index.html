@@ -556,7 +556,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
     // Mostrar overlay en los visibles después de 4 segundos
     ovTimer=setTimeout(function(){
       getVisibleItems().forEach(el=>el.classList.add('show-ov'));
-    }, 4000);
+    }, 2000);
   }
 
   function maxScroll(){return Math.max(0,track.scrollWidth-outer.clientWidth);}
