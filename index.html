@@ -208,16 +208,22 @@ header{
 .port-item.featured{flex:0 0 calc(58.333% - .5px);aspect-ratio:16/9;}
 .pp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;}
 .pp img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;pointer-events:none;}
-.port-item:hover .pp img{transform:scale(1.05);}
+.port-item:hover .pp img{transform:scale(1.08);}
 .pp-ico{font-size:1.6rem;opacity:.07;}
 .pp-lbl{font-size:.75rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:.3;}
+
+/* ── OVERLAY visible por defecto, se oculta en hover ── */
 .port-ov{
   position:absolute;inset:0;
   background:linear-gradient(to top,rgba(8,8,8,.96) 40%,rgba(8,8,8,.55));
   display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
+  transform:translateY(0);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
 }
-.port-item:hover .port-ov{transform:translateY(0);}
+.port-item:hover .port-ov{
+  transform:translateY(100%);
+}
+
 .ov-cat{font-size:.75rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
 .ov-title{font-size:1rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;}
 .ov-desc{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.55);margin-top:.4rem;line-height:1.8;}
@@ -232,18 +238,6 @@ header{
   font-size:1rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.55);
 }
 .swipe-hint::before{content:'';display:block;width:1.8rem;height:1px;background:var(--dim);}
-.ver-proyectos-wrap{
-  display:flex;justify-content:center;
-  margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);
-}
-.btn-ver-proyectos{
-  font-size:.96rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--white);border:1px solid rgba(255,255,255,.18);
-  padding:1rem 3rem;display:inline-flex;align-items:center;gap:.8rem;transition:all .35s;
-}
-.btn-ver-proyectos:hover{background:var(--white);color:var(--black);border-color:var(--white);}
-.btn-ver-proyectos span{transition:transform .3s;}
-.btn-ver-proyectos:hover span{transform:translateX(5px);}
 
 /* ════════════════════════════════
    STATEMENT BANNER
@@ -410,8 +404,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
         <!-- PROYECTO 01 -->
         <div class="port-item featured">
           <div class="pp">
-            <img src="NUEVO AMANECER/Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
+            <img src="NUEVO AMANECER\1x\Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
           </div>
           <div class="port-ov">
             <div class="ov-cat">Branding</div>
@@ -425,7 +418,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
         <div class="port-item">
           <div class="pp">
             <img src="GARABATOS\PORTADA.jpg" alt="Garabatos" onerror="this.style.display='none'" draggable="false">
-          
           </div>
           <div class="port-ov">
             <div class="ov-cat">Fotografía</div>
@@ -434,37 +426,38 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
             <a href="garabatos.html" class="ov-link">Ver proyecto →</a>
           </div>
         </div>
-         <div class="port-item featured">
+
+        <!-- PROYECTO 03 -->
+        <div class="port-item featured">
           <div class="pp">
-            <img src="DRIFT\Recurso 18DRIFT.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
+            <img src="DRIFT\Recurso 18DRIFT.jpg" alt="Drift" onerror="this.style.display='none'" draggable="false">
           </div>
           <div class="port-ov">
             <div class="ov-cat">Branding</div>
             <div class="ov-title">DRIFT — 03</div>
-            <div class="ov-desc">BRANDING .</div>
+            <div class="ov-desc">BRANDING.</div>
             <a href="drift.html" class="ov-link">Ver proyecto →</a>
           </div>
+        </div>
 
-           
-            </div>
-         <div class="port-item featured">
+        <!-- PROYECTO 04 -->
+        <div class="port-item featured">
           <div class="pp">
-            <img src="INTERCREA/INTERCREA2025 (1).gif" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
-         
+            <img src="INTERCREA/INTERCREA2025 (1).gif" alt="Intercrea" onerror="this.style.display='none'" draggable="false">
           </div>
           <div class="port-ov">
             <div class="ov-cat">Branding</div>
             <div class="ov-title">INTERCREA — 04</div>
-            <div class="ov-desc">BRANDING .</div>
+            <div class="ov-desc">BRANDING.</div>
             <a href="INTERCREA.HTML" class="ov-link">Ver proyecto →</a>
           </div>
+        </div>
+
       </div><!-- /carousel-track -->
     </div><!-- /carousel-outer -->
 
     <div class="swipe-hint">Desliza para explorar</div>
-   
-    </div>
+
   </div>
 </section>
 
@@ -484,9 +477,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
 <!-- ════ FOOTER ════ -->
 <footer>
   <div class="foot-top">
-    <div>
-      
-    </div>
+    <div></div>
     <div></div>
     <div>
       <div class="soc-lbl">Redes & Contacto</div>
