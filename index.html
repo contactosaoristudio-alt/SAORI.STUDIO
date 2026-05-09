@@ -544,12 +544,14 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 })();
 
 /* ── CARRUSEL con overlay automático 4s ── */
+/* ── CARRUSEL con overlay automático 4s ── */
 (function(){
   const outer=document.getElementById('carOuter');
   const track=document.getElementById('carTrack');
   const items=Array.from(track.querySelectorAll('.port-item'));
   let pos=0,isDragging=false,startX=0,startPos=0,velX=0,lastX=0;
   let ovTimer=null;
+  let didDrag=false;
 
   function getVisibleItems(){
     const outerRect=outer.getBoundingClientRect();
@@ -561,9 +563,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
 
   function resetOverlays(){
     clearTimeout(ovTimer);
-    // Quitar overlay de todos
     items.forEach(el=>el.classList.remove('show-ov'));
-    // Mostrar overlay en los visibles después de 4 segundos
     ovTimer=setTimeout(function(){
       getVisibleItems().forEach(el=>el.classList.add('show-ov'));
     }, 1000);
@@ -578,23 +578,53 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   }
 
   outer.addEventListener('mousedown',e=>{
-    isDragging=true;startX=e.clientX;startPos=pos;velX=0;lastX=e.clientX;
+    isDragging=true;didDrag=false;
+    startX=e.clientX;startPos=pos;velX=0;lastX=e.clientX;
     applyPos(pos,false);e.preventDefault();
-    // Al empezar a deslizar, quitar overlays inmediatamente
-    items.forEach(el=>el.classList.remove('show-ov'));
-    clearTimeout(ovTimer);
   });
   window.addEventListener('mousemove',e=>{
     if(!isDragging)return;
+    const dx=Math.abs(e.clientX-startX);
+    if(dx>5) didDrag=true;
     velX=e.clientX-lastX;lastX=e.clientX;
     applyPos(startPos+(startX-e.clientX),false);
   });
-  window.addEventListener('mouseup',()=>{
+  window.addEventListener('mouseup',e=>{
     if(!isDragging)return;
     isDragging=false;
-    const iw=items[0].getBoundingClientRect().width+1;
-    applyPos(Math.round((pos-velX*4)/iw)*iw,true);
-    resetOverlays();
+    if(didDrag){
+      const iw=items[0].getBoundingClientRect().width+1;
+      applyPos(Math.round((pos-velX*4)/iw)*iw,true);
+      items.forEach(el=>el.classList.remove('show-ov'));
+      clearTimeout(ovTimer);
+      resetOverlays();
+    }
+    // Si no hubo drag real, dejar que el click pase al link
+  });
+
+  outer.addEventListener('touchstart',e=>{
+    const t=e.touches[0];startX=t.clientX;startPos=pos;velX=0;lastX=t.clientX;didDrag=false;
+    applyPos(pos,false);
+  },{passive:true});
+  outer.addEventListener('touchmove',e=>{
+    const t=e.touches[0];
+    const dx=Math.abs(t.clientX-startX);
+    if(dx>5) didDrag=true;
+    velX=t.clientX-lastX;lastX=t.clientX;
+    applyPos(startPos+(startX-t.clientX),false);
+  },{passive:true});
+  outer.addEventListener('touchend',()=>{
+    if(didDrag){
+      const iw=items[0].getBoundingClientRect().width+1;
+      applyPos(Math.round((pos-velX*4)/iw)*iw,true);
+      items.forEach(el=>el.classList.remove('show-ov'));
+      clearTimeout(ovTimer);
+      resetOverlays();
+    }
+  },{passive:true});
+
+  resetOverlays();
+})();
   });
 
   outer.addEventListener('touchstart',e=>{
