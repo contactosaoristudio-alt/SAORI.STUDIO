@@ -219,10 +219,20 @@ header{
   display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;
   transform:translateY(100%);
   transition:transform .2s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
 }
 .port-item.show-ov .port-ov{
   transform:translateY(0);
+  pointer-events:auto;
 }
+.ov-link{
+  margin-top:1rem;font-size:.95rem;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--white);
+  display:inline-flex;align-items:center;gap:.5rem;transition:gap .3s;
+  pointer-events:auto;
+  position:relative;z-index:10;
+}
+.ov-link:hover{gap:.8rem;}
 
 .ov-cat{font-size:.75rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
 .ov-title{font-size:1rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;}
