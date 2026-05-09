@@ -557,7 +557,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
     items.forEach(el=>el.classList.remove('show-ov'));
     ovTimer=setTimeout(function(){
       getVisibleItems().forEach(el=>el.classList.add('show-ov'));
-    }, 2000); /* ← 2 segundos */
+    }, 800); /* ← 2 segundos */
   }
 
   function maxScroll(){return Math.max(0,track.scrollWidth-outer.clientWidth);}
