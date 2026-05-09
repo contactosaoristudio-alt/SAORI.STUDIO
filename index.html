@@ -218,13 +218,13 @@ header{
   background:linear-gradient(to top,rgba(8,8,8,.96) 40%,rgba(8,8,8,.55));
   display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;
   transform:translateY(100%);
-  transition:transform .1s cubic-bezier(.4,0,.2,1) .1s;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.port-item.show-ov .port-ov{
+  transform:translateY(0);
 }
 .port-item:hover .port-ov{
   transform:translateY(0);
-}
-.port-item:not(:hover) .port-ov{
-  transition:transform .1s cubic-bezier(.4,0,.2,1) 0s;
 }
 
 .ov-cat{font-size:.75rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
@@ -557,6 +557,12 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   outer.addEventListener('touchend',()=>{const iw=items[0].getBoundingClientRect().width+1;applyPos(Math.round((pos-velX*4)/iw)*iw,true);},{passive:true});
 })();
 
+  /* ── AUTO OVERLAY ── */
+setTimeout(function(){
+  document.querySelectorAll('.port-item').forEach(function(item){
+    item.classList.add('show-ov');
+  });
+}, 1000);
 /* ── STATEMENT BANNER ── */
 (function(){
   const content=document.getElementById('statementContent');
