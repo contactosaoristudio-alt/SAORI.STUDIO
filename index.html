@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -212,27 +213,19 @@ header{
 .pp-ico{font-size:1.6rem;opacity:.07;}
 .pp-lbl{font-size:.75rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:.3;}
 
-/* ── OVERLAY: oculto por defecto, sube con .show-ov ── */
+/* ── OVERLAY ── */
 .port-ov{
   position:absolute;inset:0;
   background:linear-gradient(to top,rgba(8,8,8,.96) 40%,rgba(8,8,8,.55));
   display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;
   transform:translateY(100%);
-  transition:transform .2s cubic-bezier(.4,0,.2,1);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
   pointer-events:none;
 }
 .port-item.show-ov .port-ov{
   transform:translateY(0);
   pointer-events:auto;
 }
-.ov-link{
-  margin-top:1rem;font-size:.95rem;font-weight:700;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--white);
-  display:inline-flex;align-items:center;gap:.5rem;transition:gap .3s;
-  pointer-events:auto;
-  position:relative;z-index:10;
-}
-.ov-link:hover{gap:.8rem;}
 
 .ov-cat{font-size:.75rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
 .ov-title{font-size:1rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;}
@@ -241,6 +234,7 @@ header{
   margin-top:1rem;font-size:.95rem;font-weight:700;letter-spacing:.22em;
   text-transform:uppercase;color:var(--white);
   display:inline-flex;align-items:center;gap:.5rem;transition:gap .3s;
+  pointer-events:auto;position:relative;z-index:10;
 }
 .ov-link:hover{gap:.8rem;}
 .swipe-hint{
@@ -296,8 +290,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
   display:grid;grid-template-columns:1fr 1fr 1fr;gap:4rem;
   padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;
 }
-.f-logo{font-size:1.7rem;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1;}
-.f-tagline{font-size:.97rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.55);margin-top:.5rem;}
 .soc-lbl{font-size:1rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.4rem;}
 .soc-list{display:flex;flex-direction:column;gap:.55rem;}
 .soc{
@@ -414,7 +406,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 5
         <!-- PROYECTO 01 -->
         <div class="port-item featured">
           <div class="pp">
-            <img src="Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
+            <img src="NUEVO AMANECER\1x\Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'" draggable="false">
           </div>
           <div class="port-ov">
             <div class="ov-cat">Branding</div>
@@ -543,8 +535,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   },900);
 })();
 
-/* ── CARRUSEL con overlay automático 4s ── */
-/* ── CARRUSEL con overlay automático 4s ── */
+/* ── CARRUSEL con overlay automático 2s ── */
 (function(){
   const outer=document.getElementById('carOuter');
   const track=document.getElementById('carTrack');
@@ -566,7 +557,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
     items.forEach(el=>el.classList.remove('show-ov'));
     ovTimer=setTimeout(function(){
       getVisibleItems().forEach(el=>el.classList.add('show-ov'));
-    }, 1000);
+    }, 2000); /* ← 2 segundos */
   }
 
   function maxScroll(){return Math.max(0,track.scrollWidth-outer.clientWidth);}
@@ -584,12 +575,11 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   });
   window.addEventListener('mousemove',e=>{
     if(!isDragging)return;
-    const dx=Math.abs(e.clientX-startX);
-    if(dx>5) didDrag=true;
+    if(Math.abs(e.clientX-startX)>5) didDrag=true;
     velX=e.clientX-lastX;lastX=e.clientX;
     applyPos(startPos+(startX-e.clientX),false);
   });
-  window.addEventListener('mouseup',e=>{
+  window.addEventListener('mouseup',()=>{
     if(!isDragging)return;
     isDragging=false;
     if(didDrag){
@@ -599,7 +589,6 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
       clearTimeout(ovTimer);
       resetOverlays();
     }
-    // Si no hubo drag real, dejar que el click pase al link
   });
 
   outer.addEventListener('touchstart',e=>{
@@ -608,8 +597,7 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
   },{passive:true});
   outer.addEventListener('touchmove',e=>{
     const t=e.touches[0];
-    const dx=Math.abs(t.clientX-startX);
-    if(dx>5) didDrag=true;
+    if(Math.abs(t.clientX-startX)>5) didDrag=true;
     velX=t.clientX-lastX;lastX=t.clientX;
     applyPos(startPos+(startX-t.clientX),false);
   },{passive:true});
@@ -623,27 +611,6 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
     }
   },{passive:true});
 
-  resetOverlays();
-})();
-  });
-
-  outer.addEventListener('touchstart',e=>{
-    const t=e.touches[0];startX=t.clientX;startPos=pos;velX=0;lastX=t.clientX;
-    applyPos(pos,false);
-    items.forEach(el=>el.classList.remove('show-ov'));
-    clearTimeout(ovTimer);
-  },{passive:true});
-  outer.addEventListener('touchmove',e=>{
-    const t=e.touches[0];velX=t.clientX-lastX;lastX=t.clientX;
-    applyPos(startPos+(startX-t.clientX),false);
-  },{passive:true});
-  outer.addEventListener('touchend',()=>{
-    const iw=items[0].getBoundingClientRect().width+1;
-    applyPos(Math.round((pos-velX*4)/iw)*iw,true);
-    resetOverlays();
-  },{passive:true});
-
-  // Al cargar la página: 4 segundos y aparece el overlay
   resetOverlays();
 })();
 
