@@ -347,32 +347,72 @@ footer{
 }
 @media(max-width:900px){
   #portafolio{padding:4rem 1.4rem 5rem;}
+  .port-header{flex-direction:column;align-items:flex-start;gap:.5rem;}
 }
 @media(max-width:768px){
   body{cursor:auto;}
   #cur,#curR{display:none;}
+
+  /* HEADER */
   header{padding:0 1.4rem;}
-  #inicio{padding:0 1.4rem 2.5rem;}
-  .hero-big{font-size:clamp(3.5rem,15vw,7rem);}
-  .presentation-wrap{padding:3.5rem 1.4rem 4rem;}
-  .pres-title{font-size:clamp(1.4rem,7vw,2.6rem);white-space:normal;}
+
+  /* HERO */
+  #inicio{
+    padding:0 1.4rem 3rem;
+    min-height:100svh;
+    align-items:flex-end;
+  }
+  .hero-big{font-size:clamp(3.2rem,16vw,6rem);letter-spacing:-.04em;line-height:.85;}
+
+  /* PRESENTACIÓN */
+  .presentation-wrap{padding:3rem 1.4rem 3.5rem;}
+  .pres-title{font-size:clamp(1.6rem,7vw,2.4rem);white-space:normal;}
+  .pres-body p{font-size:.85rem;}
+
+  /* PORTAFOLIO */
+  #portafolio{padding:3rem 1.4rem 4rem;}
+  .port-header{flex-direction:column;align-items:flex-start;gap:.4rem;margin-bottom:2rem;}
   .port-grid{grid-template-columns:1fr;gap:2px;}
-  .port-card{aspect-ratio:4/3;}
-  .port-ov{transform:translateY(0);}
+  .port-card{aspect-ratio:3/2;}
+  .port-ov{transform:translateY(100%)!important;}
+  .port-static{display:block!important;}
   .port-static{display:none;}
   .port-num{display:none;}
-  .statement-content h2{font-size:clamp(2.8rem,12vw,5rem);}
-  .statement-email{font-size:clamp(.82rem,3.8vw,1.1rem);letter-spacing:.12em;word-break:break-all;text-align:center;}
+
+  /* STATEMENT */
+  .statement-content h2{font-size:clamp(2.6rem,11vw,5rem);}
+  .statement-email{
+    font-size:clamp(.78rem,3.5vw,1rem);
+    letter-spacing:.1em;
+    word-break:break-all;
+    text-align:center;
+  }
+
+  /* FOOTER */
   footer{padding:3rem 1.4rem 2rem;}
-  footer{padding:3rem 1.4rem 2rem;}
-  .foot-bot{flex-direction:column;align-items:flex-start;gap:.8rem;}
+  .foot-logo{margin-bottom:2rem;}
+  .foot-nav{margin-bottom:2.5rem;}
+  .foot-nav a{font-size:clamp(1.8rem,10vw,3.5rem);}
+  .foot-socials{gap:0;margin-bottom:2rem;}
+  .foot-soc{padding:1rem 1.2rem;}
+  .foot-bot{flex-direction:column;align-items:flex-start;gap:.6rem;}
+
+  /* MENU */
   .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
 }
 @media(max-width:480px){
-  .hero-big{font-size:clamp(3rem,14vw,5.5rem);}
-  .statement-content h2{font-size:clamp(2.2rem,11vw,3.5rem);}
-  .statement-email{font-size:clamp(.75rem,4vw,1rem);letter-spacing:.08em;}
-  .port-title{font-size:clamp(2rem,8vw,3rem);}
+  #inicio{padding:0 1.2rem 2.5rem;}
+  .hero-big{font-size:clamp(2.8rem,15vw,5rem);}
+  .presentation-wrap{padding:2.5rem 1.2rem 3rem;}
+  .pres-title{font-size:clamp(1.4rem,8vw,2rem);}
+  #portafolio{padding:2.5rem 1.2rem 3.5rem;}
+  .port-card{aspect-ratio:4/3;}
+  .ov-title{font-size:1.2rem;}
+  .ov-desc{font-size:.78rem;}
+  .statement-content h2{font-size:clamp(2rem,12vw,3.5rem);}
+  .statement-email{font-size:clamp(.72rem,4vw,.9rem);letter-spacing:.07em;}
+  footer{padding:2.5rem 1.2rem 1.8rem;}
+  .foot-nav a{font-size:clamp(1.6rem,11vw,3rem);}
 }
 </style>
 </head>
@@ -612,6 +652,7 @@ document.querySelectorAll('.ci').forEach(el=>{
   el.style.transition='opacity .6s ease,transform .6s ease';
   obs.observe(el);
 });
+
 </script>
 </body>
 </html>
