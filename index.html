@@ -101,14 +101,18 @@ header{
   padding:0 3rem 3.5rem;
   overflow:hidden;
 }
-/* línea decorativa lateral */
-#inicio::before{
-  content:'';
-  position:absolute;top:50%;left:-1.2rem;
-  transform:translateY(-50%) rotate(-90deg);
-  font-size:.6rem;font-weight:700;letter-spacing:.5em;
-  text-transform:uppercase;color:#F4F2EE;
-  white-space:nowrap;pointer-events:none;z-index:1;
+#inicio-video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  opacity:0.35;
+  pointer-events:none;
+  z-index:0;
+}
+#inicio-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(8,8,8,.7) 0%, rgba(8,8,8,.1) 60%);
+  z-index:1;
+  pointer-events:none;
 }
 .hero-inner{
   width:100%;z-index:2;
@@ -123,12 +127,6 @@ header{
   display:block;
 }
 
-
-
-
-
-
-
 /* PRESENTACIÓN */
 #hero-desc{background:var(--black);border-bottom:1px solid var(--border);}
 .presentation-wrap{
@@ -140,7 +138,8 @@ header{
   font-size:.75rem;font-weight:700;letter-spacing:.48em;text-transform:uppercase;
   color:rgba(255,255,255,.55);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;
 }
-.pres-eyebrow::before{content:'';display:block;width:2rem;height:1px;background:var(--dim);}.pres-eyebrow::after{display:none;}
+.pres-eyebrow::before{content:'';display:block;width:2rem;height:1px;background:var(--dim);}
+.pres-eyebrow::after{display:none;}
 .pres-title{
   font-size:clamp(1.8rem,4.5vw,4.8rem);font-weight:900;letter-spacing:-.035em;
   text-transform:uppercase;line-height:.9;margin-bottom:2.2rem;white-space:nowrap;
@@ -153,15 +152,12 @@ header{
 }
 .pres-body p:last-child{margin-bottom:0;}
 
-/* ════════════════════════════════
-   PORTAFOLIO — GRID 4 TARJETAS
-════════════════════════════════ */
+/* PORTAFOLIO */
 #portafolio{
   background:var(--black);
   padding:5rem 3rem 6rem;
   border-top:1px solid var(--border);
 }
-
 .port-header{
   display:flex;align-items:flex-end;justify-content:space-between;
   margin-bottom:3rem;
@@ -181,32 +177,27 @@ header{
   color:rgba(255,255,255,.25);text-transform:uppercase;
   padding-bottom:.4rem;
 }
-
 .port-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:3px;
 }
-
 .port-card{
   position:relative;overflow:hidden;
   aspect-ratio:16/10;
   background:var(--card);
   cursor:pointer;
 }
-
 .port-card img{
   position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;display:block;
   transition:transform .7s cubic-bezier(.4,0,.2,1);
 }
 .port-card:hover img{transform:scale(1.06);}
-
 .port-card::before{
   content:'';position:absolute;inset:0;z-index:1;
   background:linear-gradient(to top,rgba(8,8,8,.55) 0%,transparent 60%);
 }
-
 .port-num{
   position:absolute;top:1.4rem;right:1.6rem;z-index:3;
   font-size:.65rem;font-weight:700;letter-spacing:.4em;
@@ -214,8 +205,6 @@ header{
   transition:opacity .35s;
 }
 .port-card:hover .port-num{opacity:0;}
-
-/* overlay deslizante */
 .port-ov{
   position:absolute;inset:0;z-index:2;
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -225,7 +214,6 @@ header{
   transition:transform .52s cubic-bezier(.4,0,.2,1);
 }
 .port-card:hover .port-ov{transform:translateY(0);}
-
 .ov-cat{
   font-size:.65rem;font-weight:700;letter-spacing:.42em;
   text-transform:uppercase;color:rgba(255,255,255,.45);
@@ -251,7 +239,6 @@ header{
   width:fit-content;
 }
 .ov-link:hover{gap:.85rem;border-color:rgba(255,255,255,.5);}
-
 .port-static{
   position:absolute;bottom:1.6rem;left:2rem;z-index:3;
   transition:opacity .35s;
@@ -331,7 +318,6 @@ footer{
   border-right:none;
   display:flex;align-items:center;justify-content:center;
 }
-
 .foot-soc:hover{color:var(--white);background:rgba(255,255,255,.04);}
 .foot-bot{
   display:flex;justify-content:space-between;align-items:center;
@@ -352,24 +338,12 @@ footer{
 @media(max-width:768px){
   body{cursor:auto;}
   #cur,#curR{display:none;}
-
-  /* HEADER */
   header{padding:0 1.4rem;}
-
-  /* HERO */
-  #inicio{
-    padding:0 1.4rem 3rem;
-    min-height:100svh;
-    align-items:flex-end;
-  }
+  #inicio{padding:0 1.4rem 3rem;min-height:100svh;align-items:flex-end;}
   .hero-big{font-size:clamp(3.2rem,16vw,6rem);letter-spacing:-.04em;line-height:.85;}
-
-  /* PRESENTACIÓN */
   .presentation-wrap{padding:3rem 1.4rem 3.5rem;}
   .pres-title{font-size:clamp(1.6rem,7vw,2.4rem);white-space:normal;}
   .pres-body p{font-size:.85rem;}
-
-  /* PORTAFOLIO */
   #portafolio{padding:3rem 1.4rem 4rem;}
   .port-header{flex-direction:column;align-items:flex-start;gap:.4rem;margin-bottom:2rem;}
   .port-grid{grid-template-columns:1fr;gap:2px;}
@@ -377,17 +351,8 @@ footer{
   .port-ov{transform:translateY(100%)!important;transition:none!important;}
   .port-static{display:block!important;opacity:1!important;}
   .port-num{display:none;}
-
-  /* STATEMENT */
   .statement-content h2{font-size:clamp(2.6rem,11vw,5rem);}
-  .statement-email{
-    font-size:clamp(.78rem,3.5vw,1rem);
-    letter-spacing:.1em;
-    word-break:break-all;
-    text-align:center;
-  }
-
-  /* FOOTER */
+  .statement-email{font-size:clamp(.78rem,3.5vw,1rem);letter-spacing:.1em;word-break:break-all;text-align:center;}
   footer{padding:3rem 1.4rem 2rem;}
   .foot-logo{margin-bottom:2rem;}
   .foot-nav{margin-bottom:2.5rem;}
@@ -395,8 +360,6 @@ footer{
   .foot-socials{gap:0;margin-bottom:2rem;}
   .foot-soc{padding:1rem 1.2rem;}
   .foot-bot{flex-direction:column;align-items:flex-start;gap:.6rem;}
-
-  /* MENU */
   .side-menu a{font-size:clamp(1.6rem,7vw,2.2rem);}
 }
 @media(max-width:480px){
@@ -443,6 +406,8 @@ footer{
 
 <!-- HERO -->
 <section id="inicio">
+  <video id="inicio-video" src="SAORI ARCHIVE/saori 1.mp4" autoplay muted loop playsinline></video>
+  <div id="inicio-overlay"></div>
   <div class="hero-inner">
     <span class="hero-big">SAORI.</span>
     <span class="hero-big">STUDIO</span>
@@ -452,7 +417,6 @@ footer{
 <!-- PRESENTACIÓN -->
 <section id="hero-desc">
   <div class="presentation-wrap">
-    
     <h2 class="pres-title">Vivir, existir <em>y diseñar.</em></h2>
     <div class="pres-body">
       <p>SAORI.STUDIO es un estudio de dirección creativa enfocado en branding, diseño editorial y experiencias de marca. Cada proyecto se desarrolla como un proceso único, donde la exploración, la intuición y el detalle dan forma a soluciones con carácter.</p>
@@ -462,18 +426,15 @@ footer{
 
 <!-- PORTAFOLIO -->
 <section id="portafolio">
-
   <div class="port-header">
     <div>
-
       <h2 class="port-title">Proyectos</h2>
     </div>
-    
   </div>
 
   <div class="port-grid">
 
-    <!-- 01 — cambia #0D1F3C para otro color -->
+    <!-- 01 -->
     <div class="port-card">
       <img src="NUEVO AMANECER/Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'">
       <div class="port-num">01</div>
@@ -489,7 +450,7 @@ footer{
       </div>
     </div>
 
-    <!-- 02 — cambia #2E1503 para otro color -->
+    <!-- 02 -->
     <div class="port-card">
       <img src="GARABATOS/PORTADA.jpg" alt="Garabatos" onerror="this.style.display='none'">
       <div class="port-num">02</div>
@@ -505,7 +466,7 @@ footer{
       </div>
     </div>
 
-    <!-- 03 — cambia #141414 para otro color -->
+    <!-- 03 -->
     <div class="port-card">
       <img src="DRIFT/Recurso 18DRIFT.jpg" alt="Drift" onerror="this.style.display='none'">
       <div class="port-num">03</div>
@@ -521,7 +482,7 @@ footer{
       </div>
     </div>
 
-    <!-- 04 — cambia #1A0D2E para otro color -->
+    <!-- 04 -->
     <div class="port-card">
       <img src="INTERCREA/INTERCREA2025 (1).gif" alt="Intercrea" onerror="this.style.display='none'">
       <div class="port-num">04</div>
@@ -531,7 +492,7 @@ footer{
       </div>
       <div class="port-ov" style="--ov-color:#0747f2;">
         <div class="ov-cat">Branding</div>
-        <div class="ov-title">Intercrea</div>
+        <div class="ov-title">Inter-<br>crea</div>
         <div class="ov-desc"></div>
         <a href="INTERCREA.HTML" class="ov-link">Ver proyecto →</a>
       </div>
@@ -545,7 +506,6 @@ footer{
   <video class="statement-img" src="SAORI ARCHIVE/saori 1.mp4" autoplay muted loop playsinline></video>
   <div class="statement-overlay"></div>
   <div class="statement-content" id="statementContent">
-    
     <h2>Hagamos<br>algo.</h2>
     <a href="mailto:contacto.saori.studio@gmail.com" target="_blank" rel="noopener" class="statement-email">
       contacto.saori.studio@gmail.com ↗
@@ -616,7 +576,6 @@ document.addEventListener('keydown',e=>e.key==='Escape'&&closeMenu());
       el.style.opacity='1';el.style.transform='translateY(0)';
     },300+i*150);
   });
-
 })();
 
 /* STATEMENT BANNER */
@@ -663,7 +622,6 @@ document.querySelectorAll('.ci').forEach(el=>{
     });
   });
 })();
-
 </script>
 </body>
 </html>
