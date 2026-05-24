@@ -465,10 +465,10 @@ footer{
 
   <div class="port-header">
     <div>
-      <div class="port-label">Portafolio</div>
+
       <h2 class="port-title">Proyectos</h2>
     </div>
-    <div class="port-count">04 trabajos</div>
+    
   </div>
 
   <div class="port-grid">
@@ -478,13 +478,13 @@ footer{
       <img src="NUEVO AMANECER/Recurso 2portada 2.jpg" alt="Nuevo Amanecer" onerror="this.style.display='none'">
       <div class="port-num">01</div>
       <div class="port-static">
-        <div class="port-static-cat">Editorial</div>
+        <div class="port-static-cat">Branding</div>
         <div class="port-static-title">Nuevo Amanecer</div>
       </div>
       <div class="port-ov" style="--ov-color:#0D1F3C;">
-        <div class="ov-cat">Editorial</div>
+        <div class="ov-cat">Branding</div>
         <div class="ov-title">Nuevo<br>Amanecer</div>
-        <div class="ov-desc"></div>
+        <div class="ov-desc">Identidad visual para proyecto comunitario. Diseño con propósito social y narrativa visual clara.</div>
         <a href="proyecto-nuevo-amanecer.html" class="ov-link">Ver proyecto →</a>
       </div>
     </div>
@@ -494,13 +494,13 @@ footer{
       <img src="GARABATOS/PORTADA.jpg" alt="Garabatos" onerror="this.style.display='none'">
       <div class="port-num">02</div>
       <div class="port-static">
-        <div class="port-static-cat">Branding</div>
+        <div class="port-static-cat">Fotografía</div>
         <div class="port-static-title">Garabatos</div>
       </div>
       <div class="port-ov" style="--ov-color:#2E1503;">
-        <div class="ov-cat">Branding</div>
-        <div class="ov-title">Garabatos<br></div>
-        <div class="ov-desc"></div>
+        <div class="ov-cat">Fotografía</div>
+        <div class="ov-title">Gara-<br>batos</div>
+        <div class="ov-desc">Branding con personalidad y carácter. Identidad visual que juega con lo crudo y lo expresivo.</div>
         <a href="garabatos.html" class="ov-link">Ver proyecto →</a>
       </div>
     </div>
@@ -516,7 +516,7 @@ footer{
       <div class="port-ov" style="--ov-color:#141414;">
         <div class="ov-cat">Branding</div>
         <div class="ov-title">DRIFT</div>
-        <div class="ov-desc"></div>
+        <div class="ov-desc">Identidad para marca con estética urbana y dinámica. Tipografía como elemento central del sistema.</div>
         <a href="drift.html" class="ov-link">Ver proyecto →</a>
       </div>
     </div>
@@ -531,7 +531,7 @@ footer{
       </div>
       <div class="port-ov" style="--ov-color:#1A0D2E;">
         <div class="ov-cat">Branding</div>
-        <div class="ov-title">Intercrea<br></div>
+        <div class="ov-title">Inter-<br>crea</div>
         <div class="ov-desc">Sistema de identidad para evento creativo. Diseño que conecta comunidades y disciplinas.</div>
         <a href="INTERCREA.HTML" class="ov-link">Ver proyecto →</a>
       </div>
@@ -652,9 +652,18 @@ document.querySelectorAll('.ci').forEach(el=>{
   obs.observe(el);
 });
 
-</script>
-</body>
-</html>
+/* MOBILE TAP → IR A PROYECTO */
+(function(){
+  if(window.innerWidth > 768) return;
+  document.querySelectorAll('.port-card').forEach(card=>{
+    const link = card.querySelector('.ov-link');
+    if(!link) return;
+    card.addEventListener('click', ()=>{
+      window.location.href = link.getAttribute('href');
+    });
+  });
+})();
+
 </script>
 </body>
 </html>
