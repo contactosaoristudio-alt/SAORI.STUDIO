@@ -127,13 +127,37 @@ header{
   display:block;
 }
 
+
+
 /* PRESENTACIÓN */
 #hero-desc{background:var(--black);border-bottom:1px solid var(--border);}
 .presentation-wrap{
+  width:100%;
+  max-width:1400px;
+  margin:auto;
   padding:clamp(5rem,10vh,9rem) clamp(1.4rem,6vw,6rem);
-  display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-  max-width:900px;
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:center;
 }
+
+.pres-body{
+  max-width:none;
+}
+
+.pres-video video{
+  width:100%;
+  display:block;
+  border-radius:12px;
+}
+@media(max-width:768px){
+  .presentation-wrap{
+    grid-template-columns:1fr;
+  }
+}
+
 .pres-eyebrow{
   font-size:.75rem;font-weight:700;letter-spacing:.48em;text-transform:uppercase;
   color:rgba(255,255,255,.55);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;
@@ -375,6 +399,7 @@ footer{
   .statement-email{font-size:clamp(.72rem,4vw,.9rem);letter-spacing:.07em;}
   footer{padding:2.5rem 1.2rem 1.8rem;}
   .foot-nav a{font-size:clamp(1.6rem,11vw,3rem);}
+  
 }
 </style>
 </head>
@@ -417,12 +442,35 @@ footer{
 <!-- PRESENTACIÓN -->
 <section id="hero-desc">
   <div class="presentation-wrap">
-    <h2 class="pres-title"> <em></em></h2>
+
     <div class="pres-body">
-      <p>SAORI.STUDIO es un estudio de dirección creativa enfocado en branding, diseño editorial y experiencias de marca. Cada proyecto se desarrolla como un proceso único, donde la exploración, la intuición y el detalle dan forma a soluciones con carácter.</p>
+      <p>
+        SAORI.STUDIO es un estudio de dirección creativa enfocado en branding,
+        diseño editorial y experiencias de marca. Cada proyecto se desarrolla
+        como un proceso único, donde la exploración, la intuición y el detalle
+        dan forma a soluciones con carácter.
+      </p>
     </div>
+
+   <div class="pres-video">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source src="SAORI ARCHIVE\prueba2.mp4" type="video/mp4">
+  </video>
+</div>
+      </video>
+    </div>
+
   </div>
 </section>
+
+</section>
+
 
 <!-- PORTAFOLIO -->
 <section id="portafolio">
@@ -628,3 +676,4 @@ document.querySelectorAll('.ci').forEach(el=>{
 </script>
 </body>
 </html>
+
